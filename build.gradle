@@ -13,6 +13,16 @@ buildscript {
 apply plugin: 'gwt'
 apply plugin: 'war'
 
+dependencies{
+        compile 'com.googlecode.mgwt:mgwt:2.0.1-SNAPSHOT'
+        compile 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
+        compile project(':shared') 
+	compile project(':domain')
+//      compile files(project(":domain").sourceSets.main.java.srcDirs)
+//      compile files(project(":shared").sourceSets.main.java.srcDirs)
+}
+
+
 sourceSets {
         main {
                 java {
@@ -44,14 +54,7 @@ gwt {
     		noPrecompile=true
   	}
 
-//	src += files(project(':domain').sourceSets.main.allJava.srcDirs) + files(project(':domain').sourceSets.main.output.resourcesDir)
-//	src += files(project(':shared').sourceSets.main.allJava.srcDirs) + files(project(':shared').sourceSets.main.output.resourcesDir)
+	src += files(project(':domain').sourceSets.main.allJava.srcDirs) + files(project(':domain').sourceSets.main.output.resourcesDir)
+	src += files(project(':shared').sourceSets.main.allJava.srcDirs) + files(project(':shared').sourceSets.main.output.resourcesDir)
 }
 
-dependencies{
-	compile 'com.googlecode.mgwt:mgwt:2.0.1-SNAPSHOT'
- 	compile 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
-	compile project(':shared'), project(':domain')
-//	compile files(project(":domain").sourceSets.main.java.srcDirs)
-//	compile files(project(":shared").sourceSets.main.java.srcDirs)
-}
