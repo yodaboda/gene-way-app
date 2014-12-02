@@ -35,6 +35,21 @@ war{
         webAppDirName = file('war') 
 }
 
+task constantsJar(type: Jar, dependsOn: compileJava) {
+    	from sourceSets.main.output.classesDir
+    	include 'src/com/nutrinfomics/geneway/client/constants/*.properties'
+	baseName = 'constants'
+	jar.includeEmptyDirs = false
+}
+
+configurations {
+    constants
+}
+
+artifacts {
+    constants constantsJar
+}
+
 gwt {
         gwtVersion='2.7.0'
 
@@ -54,7 +69,7 @@ gwt {
     		noPrecompile=true
   	}
 
-	src += files(project(':domain').sourceSets.main.allJava.srcDirs) + files(project(':domain').sourceSets.main.output.resourcesDir)
-	src += files(project(':shared').sourceSets.main.allJava.srcDirs) + files(project(':shared').sourceSets.main.output.resourcesDir)
+//	src += files(project(':domain').sourceSets.main.allJava.srcDirs) + files(project(':domain').sourceSets.main.output.resourcesDir)
+//	src += files(project(':shared').sourceSets.main.allJava.srcDirs) + files(project(':shared').sourceSets.main.output.resourcesDir)
 }
 
