@@ -1,0 +1,20 @@
+<module>
+ <replace-with class="com.nutrinfomics.geneway.client.icon.LocalImageHolderDefaultAppearance">
+   <when-type-is class="com.nutrinfomics.geneway.client.icon.LocalImageHolder.LocalImageHolderAppearance" />
+ </replace-with>
+
+ <replace-with class="com.nutrinfomics.geneway.client.icon.LocalImageHolderDefaultHighAppearance">
+   <when-type-is class="com.nutrinfomics.geneway.client.icon.LocalImageHolder.LocalImageHolderAppearance" />
+   <any>
+     <when-property-is name="mgwt.density" value="high" />
+   </any>
+
+ </replace-with>
+ <replace-with class="com.nutrinfomics.geneway.client.icon.LocalImageHolderDefaultXHighAppearance">
+   <when-type-is class="com.nutrinfomics.geneway.client.icon.LocalImageHolder.LocalImageHolderAppearance" />
+   <any>
+     <when-property-is name="mgwt.density" value="xhigh" />
+   </any>
+ </replace-with>
+
+</module>

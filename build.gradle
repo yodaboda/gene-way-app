@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        maven {
+            url 'http://dl.bintray.com/steffenschaefer/maven'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.5'
+    }
+}
+
+apply plugin: 'gwt'
+apply plugin: 'war'
+
+sourceSets {
+        main {
+                java {
+                        srcDir 'src'
+                }
+        }
+}
+
+war{ 
+        webAppDirName = file('war') 
+}
+
+gwt {
+        gwtVersion='2.7.0'
+
+	maxHeapSize = "1024M"
+
+        modules 'com.nutrinfomics.geneway.App'
+	devModules 'com.nutrinfomics.geneway.App'
+
+        compiler {
+                strict = true;
+                enableClosureCompiler = true;
+                disableClassMetadata = true;
+                disableCastChecking = true;
+        }
+
+	superDev {
+    		noPrecompile=true
+  	}
+
+//	src += files(project(':domain').sourceSets.main.allJava.srcDirs) + files(project(':domain').sourceSets.main.output.resourcesDir)
+//	src += files(project(':shared').sourceSets.main.allJava.srcDirs) + files(project(':shared').sourceSets.main.output.resourcesDir)
+}
+
+dependencies{
+	compile 'com.googlecode.mgwt:mgwt:2.0.1-SNAPSHOT'
+ 	compile 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
+	compile project(':shared'), project(':domain')
+//	compile files(project(":domain").sourceSets.main.java.srcDirs)
+//	compile files(project(":shared").sourceSets.main.java.srcDirs)
+}

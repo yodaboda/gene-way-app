@@ -1,0 +1,8 @@
+@CHARSET "UTF-8";
+
+@def BUTTON_BACKGROUND_COLOR #7E7F7E;
+@def BUTTON_BACKGROUND_SELECTED_COLOR #FFFFFF;
+
+.mgwt-TabBar-Button-selected .mgwt-TabBar-Button-text {
+  color: BUTTON_BACKGROUND_SELECTED_COLOR;
+}

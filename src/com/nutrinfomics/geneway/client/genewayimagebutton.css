@@ -1,0 +1,19 @@
+@def ICON_BACKGROUND_COLOR #FFFFFF;
+@def ICON_BACKGROUND_COLOR_ACTIVE #FFFFFF;
+
+.mgwt-ImageButton{
+	border: 0px none transparent;
+	background-color: transparent;
+	border-radius:0px;
+	box-shadow: none;
+	background-color: #008000;
+}
+
+.mgwt-ImageButton-small{
+	background-color: #008000;
+}
+
+.mgwt-ImageButton-image{
+	background-color: #65CC00;
+	margin: 0 auto;
+}

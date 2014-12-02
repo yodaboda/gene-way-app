@@ -1,0 +1,9 @@
+.mgwt-ImageButton{
+	border: 0px none transparent;
+	background-color: transparent;
+	border-radius:0px;
+}
+
+.mgwt-ImageButton-image{
+	background-color: #65CC00;
+}

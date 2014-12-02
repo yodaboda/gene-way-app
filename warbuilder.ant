@@ -1,0 +1,18 @@
+<project name="gene-way" basedir="." default="default">
+ 
+	<target name="default" depends="buildwar,deploy"></target>
+ 
+	<target name="buildwar">
+		<war basedir="war" destfile="gene-way.war" webxml="war/WEB-INF/web.xml">
+			<exclude name="WEB-INF/**" />
+			<webinf dir="war/WEB-INF/">
+				<include name="**/*.jar" />
+			</webinf>
+		</war>
+	</target>
+ 
+	<target name="deploy">
+		<copy file="gene-way.war" todir="/home/firas/wildfly-8.0.0.Final/standalone/deployments/" />
+	</target>
+ 
+</project>

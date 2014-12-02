@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+.mgwt-WidgetList{
+	border-top: 10px solid #65cc00;
+	margin: auto;
+	background-color: #65CC00;
+}
+
+.mgwt-WidgetList-Entry{
+	border: 10px solid #65cc00;
+}
+
+.mgwt-WidgetList-Entry-selectable{
+	border: 10px solid #65cc00;
+}
+
+.mgwt-WidgetList-Entry-first{
+	border: 10px solid #65cc00;
+}
+
+.mgwt-WidgetList-Entry-last{
+	border: 10px solid #65cc00;
+}
