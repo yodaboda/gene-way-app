@@ -7,8 +7,7 @@ import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.Cell;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.server.domain.plan.FoodItem;
-import com.nutrinfomics.geneway.server.domain.plan.Snack;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.FoodItemProxy;
 
 public class SnackTrackerCell implements Cell<SnackTracker>{
 
@@ -26,7 +25,7 @@ public class SnackTrackerCell implements Cell<SnackTracker>{
 
 	private String getDisplayString(SnackTracker model) {
 		String string = "";
-		for(FoodItem foodItem : model.getSnack().getFoodItems()){
+		for(FoodItemProxy foodItem : model.getSnack().getFoodItems()){
 			string += ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(foodItem.getFoodType().toString()) + " + ";
 		}
 		if(!string.isEmpty()) string = string.substring(0, string.length() - 3);

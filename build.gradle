@@ -17,9 +17,7 @@ dependencies{
         compile 'com.googlecode.mgwt:mgwt:2.0.1-SNAPSHOT'
         compile 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
         compile project(':shared') 
-	compile project(':domain')
-//      compile files(project(":domain").sourceSets.main.java.srcDirs)
-//      compile files(project(":shared").sourceSets.main.java.srcDirs)
+		compile project(':domain')
 }
 
 
@@ -32,12 +30,12 @@ sourceSets {
 }
 
 war{ 
-        webAppDirName = file('war') 
+        webAppDirName = file('webapp') 
 }
 
 task constantsJar(type: Jar, dependsOn: compileJava) {
-    	from sourceSets.main.output.classesDir
-    	include 'src/com/nutrinfomics/geneway/client/constants/*.properties'
+	from sourceSets.main.output.classesDir
+	include 'src/com/nutrinfomics/geneway/client/constants/*.properties'
 	baseName = 'constants'
 	jar.includeEmptyDirs = false
 }
@@ -51,25 +49,22 @@ artifacts {
 }
 
 gwt {
-        gwtVersion='2.7.0'
+	gwtVersion='2.7.0'
 
 	maxHeapSize = "1024M"
 
-        modules 'com.nutrinfomics.geneway.App'
+	modules 'com.nutrinfomics.geneway.App'
 	devModules 'com.nutrinfomics.geneway.App'
 
-        compiler {
-                strict = true;
-                enableClosureCompiler = true;
-                disableClassMetadata = true;
-                disableCastChecking = true;
-        }
+	compiler {
+		strict = true;
+		enableClosureCompiler = true;
+		disableClassMetadata = true;
+		disableCastChecking = true;
+	}
 
 	superDev {
-    		noPrecompile=true
+		noPrecompile=true
   	}
-
-//	src += files(project(':domain').sourceSets.main.allJava.srcDirs) + files(project(':domain').sourceSets.main.output.resourcesDir)
-//	src += files(project(':shared').sourceSets.main.allJava.srcDirs) + files(project(':shared').sourceSets.main.output.resourcesDir)
 }
 
