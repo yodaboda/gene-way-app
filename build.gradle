@@ -16,10 +16,11 @@ apply plugin: 'war'
 dependencies{
         compile 'com.googlecode.mgwt:mgwt:2.0.1-SNAPSHOT'
         compile 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
+        compile 'com.google.web.bindery:requestfactory-apt:2.7.0'
+        compile 'javax.validation:validation-api:1.0.0.GA'
         compile project(':shared') 
 		compile project(':domain')
 }
-
 
 sourceSets {
         main {

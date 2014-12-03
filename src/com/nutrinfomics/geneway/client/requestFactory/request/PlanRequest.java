@@ -10,5 +10,5 @@ import com.nutrinfomics.geneway.server.domain.plan.Plan;
 @Service(Plan.class)
 public interface PlanRequest extends RequestContext{
 
-	Request<PlanProxy> findPlan(SessionProxy session);
+	Request<PlanProxy> findPlanForSession(SessionProxy session);
 }
