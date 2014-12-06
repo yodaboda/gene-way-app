@@ -4,11 +4,12 @@ import java.util.List;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
+import com.nutrinfomics.geneway.server.domain.EntityBaseLocator;
 import com.nutrinfomics.geneway.server.domain.plan.Plan;
 import com.nutrinfomics.geneway.shared.ActivitiesType;
 import com.nutrinfomics.geneway.shared.SupplementType;
 
-@ProxyFor(Plan.class)
+@ProxyFor(value = Plan.class, locator = EntityBaseLocator.class)
 public interface PlanProxy extends EntityProxy{
 
 	public SnackMenuProxy getSnackMenu();
