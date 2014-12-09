@@ -1,5 +1,7 @@
 package com.nutrinfomics.geneway.client;
 
+import java.util.Date;
+
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.gwt.user.client.Cookies;
@@ -7,6 +9,8 @@ import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.gwt.client.DefaultRequestTransport;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
+import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.PhoneGapAvailableEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapAvailableHandler;
@@ -17,6 +21,8 @@ import com.googlecode.mgwt.ui.client.MGWTSettings;
 import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.about.AboutViewImpl;
 import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
+import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
+import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.home.HomeViewImpl;
 import com.nutrinfomics.geneway.client.home.WeeklyCycle;
@@ -30,6 +36,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerPro
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.DeviceProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
+import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.client.waiting.WaitingViewImpl;
 
@@ -43,12 +50,12 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private GeneWayConstants constants;
 	static private HomeView homeView;
 	static private WaitingView waitingView;
-	static private SessionProxy session;
 	private FoodItemTypeConstants foodItemTypeConstants;
 	static private AboutView aboutView;
 	static private PlanProxy plan;
 	static private GeneWayRequestFactory requestFactory;
 	static private WeeklyCycle weeklyCycle;
+	static private FirstScreenView firstScreenView;
 	
 	@Override
 	public EventBus getEventBus() {
@@ -81,6 +88,14 @@ public class ClientFactoryImpl implements ClientFactory {
 		return registerView;
 	}
 
+	@Override
+	public FirstScreenView getFirstScreenView(){
+		if(firstScreenView == null){
+			firstScreenView = new FirstScreenViewImpl();
+		}
+		return firstScreenView;
+	}
+	
 	@Override
 	public GeneWayConstants getConstants() {
 		if(constants == null){
@@ -142,15 +157,34 @@ public class ClientFactoryImpl implements ClientFactory {
 		return requestFactory;
 	}
 
-	
 	@Override
-	public SessionProxy getSession() {
-		return session;
+	public SessionProxy buildSession(RequestContext requestContext) {
+		SessionProxy sessionProxy = requestContext.create(SessionProxy.class);
+		String sid = Cookies.getCookie(CookieConstants.SID.toString());
+		if(sid != null) sessionProxy.setSid(sid);
+		CustomerProxy customerProxy = requestContext.create(CustomerProxy.class);
+		DeviceProxy deviceProxy = requestContext.create(DeviceProxy.class);
+			
+		deviceProxy.setUuid(getPhoneGap().getDevice().getUuid());
+		deviceProxy.setCustomer(customerProxy);
+		customerProxy.setDevice(deviceProxy);
+			
+		sessionProxy.setCustomer(customerProxy);
+		customerProxy.setSession(sessionProxy);
+		
+		return sessionProxy;
 	}
 
 	@Override
-	public void setSession(SessionProxy session) {
-		ClientFactoryImpl.session = session;
+	public String getSID() {
+		return Cookies.getCookie(CookieConstants.SID.toString());
+	}
+
+	@Override
+	public void setSID(String sid) {
+		Date expires = new Date(System.currentTimeMillis() + Long.MAX_VALUE); //Indefinite duration
+		Cookies.setCookie(CookieConstants.SID.toString(), sid, expires, null, "/", false);
+
 	}
 
 	@Override
@@ -191,6 +225,5 @@ public class ClientFactoryImpl implements ClientFactory {
 	public WeeklyCycle getWeeklyCycle() {
 		if(weeklyCycle == null) weeklyCycle = new WeeklyCycle();
 		return weeklyCycle;
-	}
-	
+	}	
 }

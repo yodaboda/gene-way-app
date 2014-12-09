@@ -2,8 +2,9 @@ package com.nutrinfomics.geneway.client.home;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
+import com.nutrinfomics.geneway.client.GeneWayWidgetList;
 
-public class SnackWidgetList extends WidgetList {
+public class SnackWidgetList extends GeneWayWidgetList {
 
 	public SnackWidgetList(){
 		super(new SnackWidgetListAppearance());

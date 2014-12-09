@@ -15,13 +15,16 @@ import com.googlecode.mgwt.ui.client.widget.input.MPasswordTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.MPhoneNumberTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
+import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.DetailsViewImpl;
+import com.nutrinfomics.geneway.client.GeneWayWidgetList;
+import com.nutrinfomics.geneway.client.TextBoxViewImpl;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 
-public class RegisterViewImpl extends DetailsViewImpl implements RegisterView {
+public class RegisterViewImpl extends TextBoxViewImpl implements RegisterView {
 	private MTextBox firstNameField;
 	private MTextBox lastNameField;
 	private MEmailTextBox emailField;
@@ -38,18 +41,18 @@ public class RegisterViewImpl extends DetailsViewImpl implements RegisterView {
 
 	public RegisterViewImpl(){
 		ScrollPanel scrollPanel = new ScrollPanel();
-
-		FlowPanel container = new FlowPanel();
 		
-		GeneWayConstants constants = ClientFactoryFactory.getClientFactory().getConstants();
-
-		Form widgetList = new Form();
-		widgetList.setHeader(new Label(constants.register()));
+		WidgetList widgetList = new GeneWayWidgetList();
 	
 		firstNameField = new MTextBox();
-		widgetList.add(new FormEntry(constants.privatename(), firstNameField));
+		toggleBoxAppearance(firstNameField, constants.privatename());
+//		widgetList.add(firstNameField);
+		
 		lastNameField = new MTextBox();
-		widgetList.add(new FormEntry(constants.familyname(), lastNameField));
+		toggleBoxAppearance(lastNameField, constants.familyname());
+//		widgetList.add(lastNameField);
+		
+		
 //		phoneNumberField = new MPhoneNumberTextBox();
 //		widgetList.add(new FormEntry(constants.phonenumber(), phoneNumberField));
 //		birthdateField = new MDateBox();
@@ -62,30 +65,42 @@ public class RegisterViewImpl extends DetailsViewImpl implements RegisterView {
 //		genderField.addItem(constants.female());
 //		genderField.addItem(constants.male());
 //		widgetList.add(new FormEntry(constants.gender(), genderField));
+		
 		usernameField = new MTextBox();
-		widgetList.add(new FormEntry(constants.username(), usernameField));
+		toggleBoxAppearance(usernameField, constants.username());
+		widgetList.add(usernameField);
+		
 		emailField = new MEmailTextBox();
-		widgetList.add(new FormEntry(constants.email(), emailField));
+		toggleBoxAppearance(emailField, constants.email());
+//		widgetList.add(emailField);
+		
 		passwordField = new MPasswordTextBox();
-		widgetList.add(new FormEntry(constants.password(), passwordField));
+		toggleBoxAppearance(passwordField, constants.password());
+		widgetList.add(passwordField);
+		
 		repeatPasswordField = new MPasswordTextBox();
-		widgetList.add(new FormEntry(constants.repeatpassword(), repeatPasswordField));
-		container.add(widgetList);
+		toggleBoxAppearance(repeatPasswordField, constants.repeatpassword());
+		widgetList.add(repeatPasswordField);
+		
+		add(widgetList);
 
 	    registerButton = new Button(constants.register());
-	    container.add(new FlexSpacer());
-	    container.add(registerButton);
-		
-		scrollPanel.setScrollingEnabledX(false);
-		scrollPanel.setWidget(container);
-		// workaround for android formfields jumping around when using
-		// -webkit-transform
-		scrollPanel.setUsePos(MGWT.getOsDetection().isAndroid2x());
+	    toggleButtonAppearance(registerButton);
+	    
+	    add(new FlexSpacer());
+	    add(registerButton);
+	    bodyCenterAlign();
+	    
+//		scrollPanel.setScrollingEnabledX(false);
+//		scrollPanel.setWidget(container);
+//		// workaround for android formfields jumping around when using
+//		// -webkit-transform
+//		scrollPanel.setUsePos(MGWT.getOsDetection().isAndroid2x());
 		
 //		privateNameField.setFocus(true);
 		usernameField.setFocus(true);
 		
-		add(scrollPanel);
+//		add(scrollPanel);
 	}
 
 	@Override

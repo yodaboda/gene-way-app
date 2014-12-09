@@ -20,6 +20,8 @@ import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.register.RegisterException.RegisterExceptionType;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
+import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.server.domain.customer.Customer;
 import com.nutrinfomics.geneway.server.domain.customer.PersonalDetails;
 import com.nutrinfomics.geneway.server.domain.device.Device;
@@ -52,9 +54,13 @@ public class RegisterActivity extends MGWTAbstractActivity {
 	}
 
 	protected void register() {
+		AuthenticationRequest authenticationRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().authenticationRequest();
 
-		String uuid = ClientFactoryFactory.getClientFactory().getPhoneGap().getDevice().getUuid();
-		ClientFactoryFactory.getClientFactory().getRequestFactory().authenticationRequest().registerCustomer(registerView.getUsername(), registerView.getPassword(), uuid).fire(new GeneWayReceiver<CustomerProxy>() {
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().buildSession(authenticationRequest);
+		sessionProxy.getCustomer().setUsername(registerView.getUsername());
+		sessionProxy.getCustomer().setPassword(registerView.getPassword());
+		
+		authenticationRequest.registerCustomer(sessionProxy.getCustomer()).fire(new GeneWayReceiver<CustomerProxy>() {
 			private GeneWayConstants constants = ClientFactoryFactory.getClientFactory().getConstants();
 
 			public void onFailure(ServerFailure error) {

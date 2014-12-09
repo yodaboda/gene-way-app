@@ -60,9 +60,9 @@ public class MealsWidget extends AbstractTabBarWidget {
 
 
 		WidgetList widgetList = new SnackWidgetList();
-		widgetList.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN + Styles.BACKGROUND_COLOR +
-														"border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
-		widgetList.container.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
+//		widgetList.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN + Styles.BACKGROUND_COLOR +
+//														"border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
+//		widgetList.container.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
 		for(int i = 0; i < plan.getSnackMenu().getSnacks().size(); ++i){
 			SnackProxy snack = plan.getSnackMenu().getSnacks().get(i);
 			SnackWidget.State state = SnackWidget.State.TO_FOLLOW;

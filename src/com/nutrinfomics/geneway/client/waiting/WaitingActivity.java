@@ -27,7 +27,7 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		Timer timer = new Timer(){
 			  @Override
 			     public void run() {
-				  ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest().findPlanForSession(ClientFactoryFactory.getClientFactory().getSession()).fire(new GeneWayReceiver<PlanProxy>() {
+				  ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest().findPlanForSession(ClientFactoryFactory.getClientFactory().getSID()).fire(new GeneWayReceiver<PlanProxy>() {
 					  @Override
 					  public void onFailure(ServerFailure error) {
 						  Window.alert(error.getMessage());

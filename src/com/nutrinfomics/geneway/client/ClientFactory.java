@@ -2,9 +2,11 @@ package com.nutrinfomics.geneway.client;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
+import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.home.WeeklyCycle;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
@@ -14,6 +16,7 @@ import com.nutrinfomics.geneway.client.requestFactory.GeneWayRequestFactory;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
+import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.server.domain.plan.Plan;
 
@@ -37,9 +40,9 @@ public interface ClientFactory {
 
 	public HomeView getHomeView();
 
-	public SessionProxy getSession();
+	public String getSID();
 	
-	public void setSession(SessionProxy session);
+	public void setSID(String sid);
 
 	public FoodItemTypeConstants getFoodItemTypeConstants();
 
@@ -54,4 +57,8 @@ public interface ClientFactory {
 	public GeneWayRequestFactory getRequestFactory();
 
 	public WeeklyCycle getWeeklyCycle();
+
+	public FirstScreenView getFirstScreenView();
+
+	public SessionProxy buildSession(RequestContext requestContext);
 }

@@ -1,5 +1,6 @@
 package com.nutrinfomics.geneway.client.requestFactory.request;
 
+import com.google.web.bindery.requestfactory.shared.ExtraTypes;
 import com.google.web.bindery.requestfactory.shared.InstanceRequest;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.Service;
@@ -7,6 +8,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerPro
 import com.nutrinfomics.geneway.server.domain.customer.Customer;
 
 @Service(Customer.class)
+@ExtraTypes(CustomerProxy.class)
 public interface CustomerRequest extends RequestContext {
 
 //	InstanceRequest<CustomerProxy, Void> persist();

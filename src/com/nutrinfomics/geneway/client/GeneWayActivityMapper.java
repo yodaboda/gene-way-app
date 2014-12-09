@@ -5,6 +5,8 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.nutrinfomics.geneway.client.about.AboutActivity;
 import com.nutrinfomics.geneway.client.about.AboutPlace;
+import com.nutrinfomics.geneway.client.firstScreen.FirstScreenActivity;
+import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
 import com.nutrinfomics.geneway.client.home.HomeActivity;
 import com.nutrinfomics.geneway.client.home.HomePlace;
 import com.nutrinfomics.geneway.client.login.LoginActivity;
@@ -32,6 +34,9 @@ public class GeneWayActivityMapper implements ActivityMapper {
 		}
 		else if(place instanceof WaitingPlace){
 			return new WaitingActivity();
+		}
+		else if(place instanceof FirstScreenPlace){
+			return new FirstScreenActivity();
 		}
 		return null;
 	}

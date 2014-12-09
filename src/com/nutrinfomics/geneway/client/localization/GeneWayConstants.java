@@ -81,4 +81,10 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 
 	@DefaultStringValue("Meal time :)")	
 	String itsTimeToTakeYourMeal();
+
+	@DefaultStringValue("Existing Account")
+	String existingAccount();
+
+	@DefaultStringValue("New Account")
+	String newAccount();
 }
