@@ -38,9 +38,9 @@ public class MealsWidget extends AbstractTabBarWidget {
 	
 	public MealsWidget(){
 		
-		snackId = 0;
-		plan = ClientFactoryFactory.getClientFactory().getPlan();
-		weeklyCycle = ClientFactoryFactory.getClientFactory().getWeeklyCycle();
+//		snackId = 0;
+//		plan = ClientFactoryFactory.getClientFactory().getPlan();
+//		weeklyCycle = ClientFactoryFactory.getClientFactory().getWeeklyCycle();
 		
 //		cellList = new CellList<>(new SnackTrackerCell());
 //		add(cellList);
@@ -59,30 +59,30 @@ public class MealsWidget extends AbstractTabBarWidget {
 //		add(nextMeal);
 
 
-		WidgetList widgetList = new SnackWidgetList();
-//		widgetList.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN + Styles.BACKGROUND_COLOR +
-//														"border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
-//		widgetList.container.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
-		for(int i = 0; i < plan.getSnackMenu().getSnacks().size(); ++i){
-			SnackProxy snack = plan.getSnackMenu().getSnacks().get(i);
-			SnackWidget.State state = SnackWidget.State.TO_FOLLOW;
-			if(i == currentSnackWidget) state = SnackWidget.State.CURRENT;
-			
-			SnackWidget snackWidget = (snack.getSnackProperty() == SnackProperty.REST ? new VaryingSnackWidget(snack, state, this) : 
-																						new SnackWidget(snack, state, this));
-			snacksWidgets.add(snackWidget);
-			widgetList.add(snackWidget);
-		}
+//		WidgetList widgetList = new SnackWidgetList();
+////		widgetList.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN + Styles.BACKGROUND_COLOR +
+////														"border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
+////		widgetList.container.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
+//		for(int i = 0; i < plan.getSnackMenu().getSnacks().size(); ++i){
+//			SnackProxy snack = plan.getSnackMenu().getSnacks().get(i);
+//			SnackWidget.State state = SnackWidget.State.TO_FOLLOW;
+//			if(i == currentSnackWidget) state = SnackWidget.State.CURRENT;
+//			
+//			SnackWidget snackWidget = (snack.getSnackProperty() == SnackProperty.REST ? new VaryingSnackWidget(snack, state, this) : 
+//																						new SnackWidget(snack, state, this));
+//			snacksWidgets.add(snackWidget);
+//			widgetList.add(snackWidget);
+//		}
 		
-		VerticalPanel verticalPanel = new VerticalPanel();
-		ScrollPanel scrollPanel = new ScrollPanel();
-		scrollPanel.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN + Styles.BACKGROUND_COLOR);
+//		VerticalPanel verticalPanel = new VerticalPanel();
+//		ScrollPanel scrollPanel = new ScrollPanel();
+//		scrollPanel.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN + Styles.BACKGROUND_COLOR);
+//		
+//		
+//		verticalPanel.add(widgetList);
+//		scrollPanel.setWidget(verticalPanel);
 		
-		
-		verticalPanel.add(widgetList);
-		scrollPanel.setWidget(verticalPanel);
-		
-		add(scrollPanel);
+//		add(scrollPanel);
 		
 //		scrollPanel.setWidget(widgetList);
 //		scrollPanel.setHeight("2000px");

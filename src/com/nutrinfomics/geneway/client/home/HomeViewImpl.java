@@ -19,8 +19,8 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 		showHeaderPanel();
 		main.remove(bodyPanel);
 		
-		ScrollPanel scrollPanel = new ScrollPanel();
-		main.add(scrollPanel);
+//		ScrollPanel scrollPanel = new ScrollPanel();
+//		main.add(scrollPanel);
 		
 		
 		
@@ -38,25 +38,25 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 		
 		
 		mealsWidget = new MealsWidget();
-		scrollPanel.setWidget(mealsWidget);
+//		scrollPanel.setWidget(mealsWidget);
 		
-		ButtonBar footerPanel = new ButtonBar();
-		footerPanel.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
-		footerPanel.add(new MealsTabBarButton());
-		footerPanel.add(new IgnredientsTabBarButton());
-		main.add(footerPanel);
+//		ButtonBar footerPanel = new ButtonBar();
+//		footerPanel.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
+//		footerPanel.add(new MealsTabBarButton());
+//		footerPanel.add(new IgnredientsTabBarButton());
+//		main.add(footerPanel);
 		
-//		tabPanel.add(new MealsTabBarButton(), mealsWidget);
-////		tabPanel.add(new MealsTabBarButton(), new Label("meals widget"));
-//
-//	    ingredientsWidget = new IngredientsWidget();
-//		tabPanel.add(new IgnredientsTabBarButton(), ingredientsWidget);
-////		tabPanel.add(new IgnredientsTabBarButton(), new Label("ingredient widget"));
-//
-////	    tabPanel.add(new MyFavoritesTabBarButton(), new FavoritesWidget());
-//
-//		tabPanel.tabBar.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
-//		tabPanel.tabContainer.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
+		tabPanel.add(new MealsTabBarButton(), mealsWidget);
+//		tabPanel.add(new MealsTabBarButton(), new Label("meals widget"));
+
+	    ingredientsWidget = new IngredientsWidget();
+		tabPanel.add(new IgnredientsTabBarButton(), ingredientsWidget);
+//		tabPanel.add(new IgnredientsTabBarButton(), new Label("ingredient widget"));
+
+//	    tabPanel.add(new MyFavoritesTabBarButton(), new FavoritesWidget());
+
+		tabPanel.tabBar.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
+		tabPanel.tabContainer.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
 //
 //		main.remove(bodyPanel);
 //
@@ -66,7 +66,7 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 //////		flexPanel.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN);
 ////		main.add(flexPanel);
 //		
-//		main.add(tabPanel, 1);
+		main.add(tabPanel, 1);
 ////		main.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN);
 	}
 }
