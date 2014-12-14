@@ -5,6 +5,7 @@ import com.nutrinfomics.geneway.client.requestFactory.request.CustomerRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.SessionResquent;
+import com.nutrinfomics.geneway.client.requestFactory.request.SnackRequest;
 
 public interface GeneWayRequestFactory extends RequestFactory {
 	CustomerRequest customerRequest();
@@ -12,4 +13,5 @@ public interface GeneWayRequestFactory extends RequestFactory {
 //	DeviceRequest deviceRequest();
 	AuthenticationRequest authenticationRequest();
 	PlanRequest planRequest();
+	SnackRequest snackRequest();
 }

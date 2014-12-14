@@ -9,6 +9,7 @@ import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.google.web.bindery.requestfactory.gwt.client.DefaultRequestTransport;
+import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.googlecode.gwtphonegap.client.PhoneGap;
@@ -37,6 +38,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.device.DeviceProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
+import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.client.waiting.WaitingViewImpl;
 
@@ -52,7 +54,6 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private WaitingView waitingView;
 	private FoodItemTypeConstants foodItemTypeConstants;
 	static private AboutView aboutView;
-	static private PlanProxy plan;
 	static private GeneWayRequestFactory requestFactory;
 	static private WeeklyCycle weeklyCycle;
 	static private FirstScreenView firstScreenView;
@@ -159,9 +160,8 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public SessionProxy buildSession(RequestContext requestContext) {
-		SessionProxy sessionProxy = requestContext.create(SessionProxy.class);
-		String sid = Cookies.getCookie(CookieConstants.SID.toString());
-		if(sid != null) sessionProxy.setSid(sid);
+		SessionProxy sessionProxy = getNewSession(requestContext);
+		
 		CustomerProxy customerProxy = requestContext.create(CustomerProxy.class);
 		DeviceProxy deviceProxy = requestContext.create(DeviceProxy.class);
 			
@@ -212,18 +212,16 @@ public class ClientFactoryImpl implements ClientFactory {
 	}
 
 	@Override
-	public void setPlan(PlanProxy plan) {
-		ClientFactoryImpl.plan = plan;
-	}
-
-	@Override
-	public PlanProxy getPlan() {
-		return plan;
-	}
-
-	@Override
 	public WeeklyCycle getWeeklyCycle() {
 		if(weeklyCycle == null) weeklyCycle = new WeeklyCycle();
 		return weeklyCycle;
-	}	
+	}
+
+	@Override
+	public SessionProxy getNewSession(RequestContext requestContext) {
+		SessionProxy sessionProxy = requestContext.create(SessionProxy.class);
+		String sid = Cookies.getCookie(CookieConstants.SID.toString());
+		if(sid != null) sessionProxy.setSid(sid);
+		return sessionProxy;
+	}
 }

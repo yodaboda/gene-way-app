@@ -95,6 +95,9 @@ public class LocalImageHolderDefaultAppearance implements
 		@Source("resources/ic_action_squid_mdpi.png")
 		ImageResource squid();
 
+		@Source("resources/ic_action_persimmon_mdpi.png")
+		ImageResource persimmon();
+		
 		
 		@Source("resources/ic_action_leaf_mdpi.png")
 		ImageResource leaf();

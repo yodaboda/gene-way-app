@@ -113,7 +113,7 @@ public class SnackWidget extends HorizontalPanel{
 			@Override
 			public void onTap(TapEvent event) {
 				timer.cancel();
-				mealsWidget.nextMeal();
+				mealsWidget.getNextSnack();
 			}
 		});
 	}

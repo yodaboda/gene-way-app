@@ -2,6 +2,7 @@ package com.nutrinfomics.geneway.client;
 
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
+import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.nutrinfomics.geneway.client.about.AboutView;
@@ -17,6 +18,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerPro
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
+import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.server.domain.plan.Plan;
 
@@ -50,10 +52,6 @@ public interface ClientFactory {
 
 	public WaitingView getWaitingView();
 
-	public void setPlan(PlanProxy plan);
-	
-	public PlanProxy getPlan();
-
 	public GeneWayRequestFactory getRequestFactory();
 
 	public WeeklyCycle getWeeklyCycle();
@@ -61,4 +59,6 @@ public interface ClientFactory {
 	public FirstScreenView getFirstScreenView();
 
 	public SessionProxy buildSession(RequestContext requestContext);
+
+	public SessionProxy getNewSession(RequestContext requestContext);
 }

@@ -4,6 +4,7 @@ import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import com.nutrinfomics.geneway.client.DetailsViewImpl;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.style.Styles;
 
 public class HomeViewImpl extends DetailsViewImpl implements HomeView {
@@ -68,5 +69,15 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 //		
 		main.add(tabPanel, 1);
 ////		main.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN);
+	}
+	
+	@Override
+	public void start(){
+		mealsWidget.getNextSnack();
+	}
+
+	@Override
+	public void setSnack(SnackProxy snackProxy) {
+		mealsWidget.setSnack(snackProxy);
 	}
 }

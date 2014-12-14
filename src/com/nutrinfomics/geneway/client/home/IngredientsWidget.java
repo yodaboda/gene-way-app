@@ -19,12 +19,12 @@ import com.nutrinfomics.geneway.shared.FoodItemType;
 
 public class IngredientsWidget extends AbstractTabBarWidget {
 
-	private PlanProxy plan;
+//	private PlanProxy plan;
 	private CellList<FoodItemType> cellList;
 	
 	
 	public IngredientsWidget(){
-		plan = ClientFactoryFactory.getClientFactory().getPlan();
+//		plan = ClientFactoryFactory.getClientFactory().getPlan();
 		ScrollPanel scrollPanel = new ScrollPanel();
 		cellList = new CellList<>(new FoodItemTypeCell());
 		scrollPanel.add(cellList);
@@ -40,11 +40,11 @@ public class IngredientsWidget extends AbstractTabBarWidget {
 		});
 		
 		Set<FoodItemType> foodItemTypesList = new HashSet<>();
-		for(SnackProxy snack : plan.getSnackMenu().getSnacks()){
-			for(FoodItemProxy foodItem : snack.getFoodItems()){
-				foodItemTypesList.add(foodItem.getFoodType());
-			}
-		}
+//		for(SnackProxy snack : plan.getSnackMenu().getSnacks()){
+//			for(FoodItemProxy foodItem : snack.getFoodItems()){
+//				foodItemTypesList.add(foodItem.getFoodType());
+//			}
+//		}
 		
 		cellList.render( new ArrayList<>(foodItemTypesList) );
 

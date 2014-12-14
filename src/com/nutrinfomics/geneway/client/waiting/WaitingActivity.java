@@ -9,7 +9,11 @@ import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.home.HomePlace;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
+import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
+import com.nutrinfomics.geneway.shared.SnackStatus;
 
 public class WaitingActivity extends MGWTAbstractActivity {
 
@@ -27,17 +31,7 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		Timer timer = new Timer(){
 			  @Override
 			     public void run() {
-				  ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest().findPlanForSession(ClientFactoryFactory.getClientFactory().getSID()).fire(new GeneWayReceiver<PlanProxy>() {
-					  @Override
-					  public void onFailure(ServerFailure error) {
-						  Window.alert(error.getMessage());
-					  }
-					  @Override
-					  public void onSuccess(PlanProxy plan) {
-						  ClientFactoryFactory.getClientFactory().setPlan(plan);
-						  ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new HomePlace());
-					  }
-				  });
+				  ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new HomePlace());				  
 			  }
 		};
 		

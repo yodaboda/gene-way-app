@@ -15,8 +15,10 @@ import com.nutrinfomics.geneway.server.domain.plan.Snack;
 import com.nutrinfomics.geneway.shared.SnackStatus;
 
 @Service(Plan.class)
-@ExtraTypes(PlanProxy.class)
+@ExtraTypes({PlanProxy.class, SnackProxy.class})
 public interface PlanRequest extends RequestContext{
 
+	Request<PlanProxy> findPlanForSession(SessionProxy sessionProxy);
+	
 	Request<SnackProxy> getNextSnack(SnackProxy currentSnack, SnackStatus snackStatus, SessionProxy session, Date timestamp, int timeZoneOffset);
 }

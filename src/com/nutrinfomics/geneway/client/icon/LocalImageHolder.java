@@ -44,6 +44,8 @@ public class LocalImageHolder {
 			ImageResource shrimp();
 			ImageResource squid();
 			
+			ImageResource persimmon();
+			
 			ImageResource leaf();
 			ImageResource meals();
 			ImageResource ingredients();
@@ -86,6 +88,7 @@ public class LocalImageHolder {
 			case GILT_HEAD_BREAM: return images.fish();
 			case SHRIMP: return images.shrimp();
 			case SQUID: return images.squid();
+			case PERSIMMON_JAPANESE: return images.persimmon();
 			default: return images.leaf();
 		}
 	}

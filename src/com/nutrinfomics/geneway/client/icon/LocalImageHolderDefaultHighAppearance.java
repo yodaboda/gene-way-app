@@ -98,6 +98,9 @@ public class LocalImageHolderDefaultHighAppearance implements
 		@Source("resources/ic_action_squid_hdpi.png")
 		ImageResource squid();
 
+		@Source("resources/ic_action_persimmon_hdpi.png")
+		ImageResource persimmon();
+
 
 		@Source("resources/ic_action_leaf_hdpi.png")
 		ImageResource leaf();

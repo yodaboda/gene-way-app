@@ -2,7 +2,7 @@ package com.nutrinfomics.geneway.client.constants;
 
 /**
  * Interface to represent the constants contained in resource bundle:
- * 	'/home/firas/Documents/git/com.nutrinfomics.geneway/gene-way/src/com/nutrinfomics/geneway/client/model/plan/FoodItemTypeConstants.properties'.
+ * 	'/home/firas/Documents/gene-way-workspace/gene-way-app/app/src/com/nutrinfomics/geneway/client/constants/FoodItemTypeConstants.properties'.
  */
 public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.ConstantsWithLookup {
   
@@ -124,6 +124,24 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String BEEF_TENDERLOIN();
 
   /**
+   * Translated "blackberries".
+   * 
+   * @return translated "blackberries"
+   */
+  @DefaultStringValue("blackberries")
+  @Key("BLACKBERRIES")
+  String BLACKBERRIES();
+
+  /**
+   * Translated "blueberries".
+   * 
+   * @return translated "blueberries"
+   */
+  @DefaultStringValue("blueberries")
+  @Key("BLUEBERRIES")
+  String BLUEBERRIES();
+
+  /**
    * Translated "brazilnut".
    * 
    * @return translated "brazilnut"
@@ -178,6 +196,24 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String CARROT();
 
   /**
+   * Translated "carrot juice".
+   * 
+   * @return translated "carrot juice"
+   */
+  @DefaultStringValue("carrot juice")
+  @Key("CARROT_JUICE")
+  String CARROT_JUICE();
+
+  /**
+   * Translated "cauliflower".
+   * 
+   * @return translated "cauliflower"
+   */
+  @DefaultStringValue("cauliflower")
+  @Key("CAULIFLOWER")
+  String CAULIFLOWER();
+
+  /**
    * Translated "cottage cheese".
    * 
    * @return translated "cottage cheese"
@@ -194,6 +230,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("feta cheese")
   @Key("CHEESE_FETA")
   String CHEESE_FETA();
+
+  /**
+   * Translated "chestnut".
+   * 
+   * @return translated "chestnut"
+   */
+  @DefaultStringValue("chestnut")
+  @Key("CHESTNUT")
+  String CHESTNUT();
 
   /**
    * Translated "chicken".
@@ -241,6 +286,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String CHICKPEA();
 
   /**
+   * Translated "chocolate cake".
+   * 
+   * @return translated "chocolate cake"
+   */
+  @DefaultStringValue("chocolate cake")
+  @Key("CHOCOLATE_CAKE")
+  String CHOCOLATE_CAKE();
+
+  /**
    * Translated "coconut".
    * 
    * @return translated "coconut"
@@ -257,6 +311,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("coconut flakes")
   @Key("COCONUT_DESICCATED")
   String COCONUT_DESICCATED();
+
+  /**
+   * Translated "coconut flour".
+   * 
+   * @return translated "coconut flour"
+   */
+  @DefaultStringValue("coconut flour")
+  @Key("COCONUT_FLOUR")
+  String COCONUT_FLOUR();
 
   /**
    * Translated "coconut oil".
@@ -284,6 +347,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("crab")
   @Key("CRAB")
   String CRAB();
+
+  /**
+   * Translated "cranberries".
+   * 
+   * @return translated "cranberries"
+   */
+  @DefaultStringValue("cranberries")
+  @Key("CRANBERRIES")
+  String CRANBERRIES();
 
   /**
    * Translated "peeled cucumber".
@@ -367,6 +439,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String FIG_DRIED();
 
   /**
+   * Translated "garlic".
+   * 
+   * @return translated "garlic"
+   */
+  @DefaultStringValue("garlic")
+  @Key("GARLIC")
+  String GARLIC();
+
+  /**
    * Translated "gilt head beam".
    * 
    * @return translated "gilt head beam"
@@ -392,6 +473,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("grape")
   @Key("GRAPE")
   String GRAPE();
+
+  /**
+   * Translated "grapefruit".
+   * 
+   * @return translated "grapefruit"
+   */
+  @DefaultStringValue("grapefruit")
+  @Key("GRAPEFRUIT")
+  String GRAPEFRUIT();
 
   /**
    * Translated "grouper".
@@ -592,6 +682,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String OLIVE_OIL();
 
   /**
+   * Translated "red onion".
+   * 
+   * @return translated "red onion"
+   */
+  @DefaultStringValue("red onion")
+  @Key("ONION")
+  String ONION();
+
+  /**
    * Translated "green onion".
    * 
    * @return translated "green onion"
@@ -680,6 +779,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("sweet yellow pepper")
   @Key("PEPPERS_YELLOW")
   String PEPPERS_YELLOW();
+
+  /**
+   * Translated "japanese persimmon".
+   * 
+   * @return translated "japanese persimmon"
+   */
+  @DefaultStringValue("japanese persimmon")
+  @Key("PERSIMMON_JAPANESE")
+  String PERSIMMON_JAPANESE();
 
   /**
    * Translated "pineapple".
@@ -790,6 +898,24 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String PUMPKIN();
 
   /**
+   * Translated "radish".
+   * 
+   * @return translated "radish"
+   */
+  @DefaultStringValue("radish")
+  @Key("RADISH")
+  String RADISH();
+
+  /**
+   * Translated "raisin".
+   * 
+   * @return translated "raisin"
+   */
+  @DefaultStringValue("raisin")
+  @Key("RAISIN")
+  String RAISIN();
+
+  /**
    * Translated "rice".
    * 
    * @return translated "rice"
@@ -797,6 +923,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("rice")
   @Key("RICE")
   String RICE();
+
+  /**
+   * Translated "rock cake".
+   * 
+   * @return translated "rock cake"
+   */
+  @DefaultStringValue("rock cake")
+  @Key("ROCK_CAKE")
+  String ROCK_CAKE();
 
   /**
    * Translated "salmon".
@@ -835,6 +970,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String SPINACH();
 
   /**
+   * Translated "mung bean sprouts".
+   * 
+   * @return translated "mung bean sprouts"
+   */
+  @DefaultStringValue("mung bean sprouts")
+  @Key("SPROUT_MUNG_BEAN")
+  String SPROUT_MUNG_BEAN();
+
+  /**
    * Translated "summer squash".
    * 
    * @return translated "summer squash"
@@ -853,6 +997,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   String SQUID();
 
   /**
+   * Translated "strawberries".
+   * 
+   * @return translated "strawberries"
+   */
+  @DefaultStringValue("strawberries")
+  @Key("STRAWBERRIES")
+  String STRAWBERRIES();
+
+  /**
    * Translated "sweet potato".
    * 
    * @return translated "sweet potato"
@@ -869,6 +1022,15 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("mandarin")
   @Key("TANGERINES")
   String TANGERINES();
+
+  /**
+   * Translated "thyme".
+   * 
+   * @return translated "thyme"
+   */
+  @DefaultStringValue("thyme")
+  @Key("THYME")
+  String THYME();
 
   /**
    * Translated "tomato".
@@ -896,6 +1058,24 @@ public interface FoodItemTypeConstants extends com.google.gwt.i18n.client.Consta
   @DefaultStringValue("turkey")
   @Key("TURKEY")
   String TURKEY();
+
+  /**
+   * Translated "turmeric".
+   * 
+   * @return translated "turmeric"
+   */
+  @DefaultStringValue("turmeric")
+  @Key("TURMERIC")
+  String TURMERIC();
+
+  /**
+   * Translated "turnip".
+   * 
+   * @return translated "turnip"
+   */
+  @DefaultStringValue("turnip")
+  @Key("TURNIP")
+  String TURNIP();
 
   /**
    * Translated "wakame".

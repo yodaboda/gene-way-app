@@ -1,6 +1,7 @@
 package com.nutrinfomics.geneway.client.home;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Timer;
@@ -8,23 +9,29 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.CalendarUtil;
+import com.google.web.bindery.requestfactory.shared.Request;
+import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
+import com.nutrinfomics.geneway.client.home.SnackWidget.State;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
+import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.FoodItemProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
+import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.shared.SnackProperty;
+import com.nutrinfomics.geneway.shared.SnackStatus;
 
 public class MealsWidget extends AbstractTabBarWidget {
 	private HTML mealContentHTML;
 	private Label countdown;
 
-	private PlanProxy plan;
-	private int snackId;
 	private Timer timer;
 	
 	private NumberFormat format = NumberFormat.getFormat("00");
@@ -34,10 +41,46 @@ public class MealsWidget extends AbstractTabBarWidget {
 	private ArrayList<SnackWidget> snacksWidgets = new ArrayList<>();
 	private int currentSnackWidget = 0;
 	
-	private WeeklyCycle weeklyCycle;
+	private SnackProxy snackProxy = null;
+	private SnackStatus snackStatus = SnackStatus.UNKNOWN;
+	
+	private SnackWidget snackWidget;
+	
+	public void setSnack(SnackProxy snackProxy){
+		this.snackProxy = snackProxy;
+		if(snackWidget != null) this.remove(snackWidget);
+		Request<SnackProxy> findRequest = (Request<SnackProxy>) ClientFactoryFactory.getClientFactory().getRequestFactory().snackRequest().find(snackProxy.stableId());
+		findRequest.with("foodItems", "snackProperty", "time","foodItems.measurementUnit", "foodItems.foodType");
+		findRequest.fire(new GeneWayReceiver<SnackProxy>() {
+
+			@Override
+			public void onSuccess(SnackProxy snackProxy) {
+				snackWidget = new SnackWidget(snackProxy, State.CURRENT, MealsWidget.this);
+				add(snackWidget);
+			}
+		});;
+	}
+	
+	void getNextSnack(){
+		  PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
+		  SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().buildSession(planRequest);
+		  Date date = new Date();
+		  planRequest.getNextSnack(snackProxy, snackStatus, sessionProxy, date, date.getTimezoneOffset()).fire(new GeneWayReceiver<SnackProxy>() {
+			  @Override
+			  public void onFailure(ServerFailure error) {
+				  Window.alert(error.getMessage());
+			  }
+			  @Override
+			  public void onSuccess(SnackProxy snackProxy) {
+				  setSnack(snackProxy);
+				  
+			  }
+		  });
+	}
 	
 	public MealsWidget(){
-		
+
+
 //		snackId = 0;
 //		plan = ClientFactoryFactory.getClientFactory().getPlan();
 //		weeklyCycle = ClientFactoryFactory.getClientFactory().getWeeklyCycle();
@@ -144,46 +187,46 @@ public class MealsWidget extends AbstractTabBarWidget {
 	}
 	
 
-	public void nextMeal(){
-		snacksWidgets.get(currentSnackWidget).setState(SnackWidget.State.EATEN);
-		currentSnackWidget = (currentSnackWidget + 1) % snacksWidgets.size();
-		snacksWidgets.get(currentSnackWidget).setState(SnackWidget.State.CURRENT);
-		if(currentSnackWidget == 0){ // one day is over
-			weeklyCycle.advanceBySingleUnit();
-		}
-	}
-	
-	private void updatePanel(final long timeOffsetInMillies) {
-		SnackProxy snack = plan.getSnackMenu().getSnacks().get(snackId);
-		
-		String nextMeal = "";
-		
-		for(FoodItemProxy foodItem : snack.getFoodItems()){
-			nextMeal += foodItem.getFoodType() + " ";
-		}
-		
-		snackId = (snackId + 1) % plan.getSnackMenu().getSnacks().size();
-
-		mealContentHTML.setHTML("<span style=\"text-align: center\">" + nextMeal +
-	    		"</span>");
-		countdown.setText(getTimeString((int) timeOffsetInMillies / 1000));
-		
-		timer = new Timer() {
-			private int time = (int) timeOffsetInMillies / 1000;
-			@Override
-			public void run() {
-				time-=1;
-				if(time < 1){
-					Window.alert(constants.itsTimeToTakeYourMeal());
-					cancel();
-				}
-				
-				String timeString = getTimeString(time);
-				countdown.setText(timeString);
-			}
-		};
-		timer.scheduleRepeating(1000);
-	}
+//	public void nextMeal(){
+//		snacksWidgets.get(currentSnackWidget).setState(SnackWidget.State.EATEN);
+//		currentSnackWidget = (currentSnackWidget + 1) % snacksWidgets.size();
+//		snacksWidgets.get(currentSnackWidget).setState(SnackWidget.State.CURRENT);
+//		if(currentSnackWidget == 0){ // one day is over
+//			weeklyCycle.advanceBySingleUnit();
+//		}
+//	}
+//	
+//	private void updatePanel(final long timeOffsetInMillies) {
+//		SnackProxy snack = plan.getSnackMenu().getSnacks().get(snackId);
+//		
+//		String nextMeal = "";
+//		
+//		for(FoodItemProxy foodItem : snack.getFoodItems()){
+//			nextMeal += foodItem.getFoodType() + " ";
+//		}
+//		
+//		snackId = (snackId + 1) % plan.getSnackMenu().getSnacks().size();
+//
+//		mealContentHTML.setHTML("<span style=\"text-align: center\">" + nextMeal +
+//	    		"</span>");
+//		countdown.setText(getTimeString((int) timeOffsetInMillies / 1000));
+//		
+//		timer = new Timer() {
+//			private int time = (int) timeOffsetInMillies / 1000;
+//			@Override
+//			public void run() {
+//				time-=1;
+//				if(time < 1){
+//					Window.alert(constants.itsTimeToTakeYourMeal());
+//					cancel();
+//				}
+//				
+//				String timeString = getTimeString(time);
+//				countdown.setText(timeString);
+//			}
+//		};
+//		timer.scheduleRepeating(1000);
+//	}
 
 	private String getTimeString(int time) {
 
