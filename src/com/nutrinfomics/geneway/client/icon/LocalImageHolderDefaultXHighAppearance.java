@@ -100,6 +100,33 @@ public class LocalImageHolderDefaultXHighAppearance implements
 		@Source("resources/ic_action_persimmon_xhdpi.png")
 		ImageResource persimmon();
 
+		@Source("resources/ic_action_orange_xhdpi.png")
+		ImageResource orange();
+		
+		@Source("resources/ic_action_lettuce_xhdpi.png")
+		ImageResource lettuce();
+
+		@Source("resources/ic_action_zucchini_xhdpi.png")
+		ImageResource zucchini();
+		
+		@Source("resources/ic_action_salmon_xhdpi.png")
+		ImageResource salmon();
+		
+		@Source("resources/ic_action_brazilnut_xhdpi.png")
+		ImageResource brazilnut();
+		
+		@Source("resources/ic_action_cucumber_xhdpi.png")
+		ImageResource cucumber();
+
+		@Source("resources/ic_action_lamb_xhdpi.png")
+		ImageResource lamb();
+		
+		@Source("resources/ic_action_olive_oil_xhdpi.png")
+		ImageResource olive_oil();
+		
+		@Source("resources/ic_action_tangerine_xhdpi.png")
+		ImageResource tangerine();
+
 		
 		@Source("resources/ic_action_leaf_xhdpi.png")
 		ImageResource leaf();

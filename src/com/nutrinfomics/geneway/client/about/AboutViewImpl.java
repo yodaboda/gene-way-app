@@ -29,7 +29,7 @@ public class AboutViewImpl extends DetailsViewImpl implements AboutView {
     flexPanel.add(new HTML("Gene-Way™"));
     flexPanel.add(new HTML("Your way to well-being"));
     
-    flexPanel.add(new HTML("<div>Icons made by Freepik, Icons8 from <a href=\"http://www.flaticon.com\" title=\"Flaticon\">www.flaticon.com</a> is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\">CC BY 3.0</a></div>"));
+    flexPanel.add(new HTML("<div>Icons made by Freepik, Icons8, Agata Kuczminska from <a href=\"http://www.flaticon.com\" title=\"Flaticon\">www.flaticon.com</a>         is licensed by <a href=\"http://creativecommons.org/licenses/by/3.0/\" title=\"Creative Commons BY 3.0\">CC BY 3.0</a></div>"));
 
 //    if (MGWT.getFormFactor().isPhone()) {
 //      button = new Button("back");

@@ -28,24 +28,6 @@ public class HomeActivity extends MGWTAbstractActivity {
 		super.start(panel, eventBus);
 		homeView = ClientFactoryFactory.getClientFactory().getHomeView();
 		panel.setWidget(homeView);	
-//		homeView.start();
-		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
-		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);
-		Date date = new Date();
-		SnackProxy snackProxy = planRequest.create(SnackProxy.class);
-		@SuppressWarnings("deprecation")
-		int timezoneOffset = date.getTimezoneOffset();
-		
-		
-		planRequest.getNextSnack(snackProxy, SnackStatus.UNKNOWN, sessionProxy, date, timezoneOffset).fire(new GeneWayReceiver<SnackProxy>() {
-			@Override
-			public void onFailure(ServerFailure error) {
-				Window.alert(error.getMessage());
-			}
-			@Override
-			public void onSuccess(SnackProxy snackProxy) {
-				homeView.setSnack(snackProxy);
-			}
-		});
+		homeView.start();
 	}
 }

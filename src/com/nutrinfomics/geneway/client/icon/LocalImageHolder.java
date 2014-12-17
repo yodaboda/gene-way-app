@@ -46,6 +46,18 @@ public class LocalImageHolder {
 			
 			ImageResource persimmon();
 			
+			ImageResource orange();
+			ImageResource lettuce();
+
+			ImageResource zucchini();
+			ImageResource salmon();
+			ImageResource brazilnut();
+			ImageResource cucumber();
+			ImageResource lamb();
+			ImageResource olive_oil();
+			ImageResource tangerine();
+
+			
 			ImageResource leaf();
 			ImageResource meals();
 			ImageResource ingredients();
@@ -75,7 +87,6 @@ public class LocalImageHolder {
 			case LEMON_JUICE: return images.lemon();
 			case GRAPE: return images.grape();
 			case BEAN_SNAP_YELLOW: return images.fish();
-			case SALMON: return images.fish();
 			case PARSLEY: return images.parsley();
 			case ARUGULA: return images.arugula();
 			case SPEARMINT: return images.spearmint();
@@ -89,6 +100,16 @@ public class LocalImageHolder {
 			case SHRIMP: return images.shrimp();
 			case SQUID: return images.squid();
 			case PERSIMMON_JAPANESE: return images.persimmon();
+			case ORANGE: return images.orange();
+			case LETTUCE: return images.lettuce();
+			case ZUCCHINI: return images.zucchini();
+			case SALMON: return images.salmon();
+			case BRAZILNUT: return images.brazilnut();
+			case CUCUMBER_PEELED: return images.cucumber();
+			case LAMB: return images.lamb();
+			case OLIVE_OIL: return images.olive_oil();
+			case TANGERINES: return images.tangerine();
+
 			default: return images.leaf();
 		}
 	}

@@ -98,6 +98,33 @@ public class LocalImageHolderDefaultAppearance implements
 		@Source("resources/ic_action_persimmon_mdpi.png")
 		ImageResource persimmon();
 		
+		@Source("resources/ic_action_orange_mdpi.png")
+		ImageResource orange();
+		
+		@Source("resources/ic_action_lettuce_mdpi.png")
+		ImageResource lettuce();
+
+		@Source("resources/ic_action_zucchini_mdpi.png")
+		ImageResource zucchini();
+		
+		@Source("resources/ic_action_salmon_mdpi.png")
+		ImageResource salmon();
+		
+		@Source("resources/ic_action_brazilnut_mdpi.png")
+		ImageResource brazilnut();
+		
+		@Source("resources/ic_action_cucumber_mdpi.png")
+		ImageResource cucumber();
+
+		@Source("resources/ic_action_lamb_mdpi.png")
+		ImageResource lamb();
+		
+		@Source("resources/ic_action_olive_oil_mdpi.png")
+		ImageResource olive_oil();
+		
+		@Source("resources/ic_action_tangerine_mdpi.png")
+		ImageResource tangerine();
+
 		
 		@Source("resources/ic_action_leaf_mdpi.png")
 		ImageResource leaf();

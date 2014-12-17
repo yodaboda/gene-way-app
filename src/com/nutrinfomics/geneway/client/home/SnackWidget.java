@@ -46,6 +46,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.server.domain.plan.FoodItem;
 import com.nutrinfomics.geneway.server.domain.plan.Snack;
+import com.nutrinfomics.geneway.shared.SnackStatus;
 
 public class SnackWidget extends HorizontalPanel{
 
@@ -54,6 +55,7 @@ public class SnackWidget extends HorizontalPanel{
 	}
 	protected SnackProxy snack;
 	protected State state;
+	private SnackStatus snackStatus = SnackStatus.UNKNOWN;
 	private GeneWayConstants constants;
 	private MealsWidget mealsWidget;
 	protected ArrayList<FoodItemWidget> foodItemWidgets;
@@ -112,6 +114,7 @@ public class SnackWidget extends HorizontalPanel{
 		acceptButton.addTapHandler(new TapHandler() {
 			@Override
 			public void onTap(TapEvent event) {
+				setSnackStatus(SnackStatus.CONSUMED);
 				timer.cancel();
 				mealsWidget.getNextSnack();
 			}
@@ -193,6 +196,14 @@ public class SnackWidget extends HorizontalPanel{
 	public void setState(State state) {
 		this.state = state;
 		updateContent();
+	}
+
+	public SnackStatus getSnackStatus() {
+		return snackStatus;
+	}
+
+	public void setSnackStatus(SnackStatus snackStatus) {
+		this.snackStatus = snackStatus;
 	}
 	
 }
