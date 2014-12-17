@@ -96,6 +96,7 @@ public class SnackWidget extends HorizontalPanel{
 	
 	public void setHoursInterval(double hoursInterval){
 		this.hoursInterval = hoursInterval;
+		updateContent();
 	}
 	
 	private void initOperationsPanel() {
@@ -151,6 +152,9 @@ public class SnackWidget extends HorizontalPanel{
 			final int timeOffsetInMillies = (int) (hoursInterval * 60 * 60 * 1000);
 			countdown.setText(getTimeString((int) timeOffsetInMillies / 1000));
 			
+			if(timer != null && timer.isRunning()){
+				timer.cancel();
+			}
 			timer = new Timer() {
 				private int time = (int) timeOffsetInMillies / 1000;
 				@Override

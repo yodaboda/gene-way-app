@@ -5,6 +5,7 @@ import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -12,12 +13,14 @@ import com.googlecode.mgwt.dom.client.recognizer.longtap.LongTapEvent;
 import com.googlecode.mgwt.dom.client.recognizer.longtap.LongTapHandler;
 import com.googlecode.mgwt.ui.client.util.IconHandler;
 import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.nutrinfomics.geneway.client.AbstractImageButton;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.FoodItemProxy;
 import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.server.domain.plan.FoodItem;
+import com.sun.java.swing.plaf.windows.WindowsBorders;
 
 public class FoodItemWidget extends AbstractImageButton {
 
@@ -45,19 +48,18 @@ public class FoodItemWidget extends AbstractImageButton {
 		super(new SnackImageButtonAppearance(), LocalImageHolder.get(foodItem.getFoodType()),"", INACTIVE_COLOR, ACTIVE_COLOR, Styles.WHITE);
 		this.foodItem = foodItem;
 		
-		
 //		getElement().getStyle().setBackgroundColor("transparent");
 //		getElement().getStyle().setBorderColor("transparent");
 //		getElement().getStyle().setBorderStyle(BorderStyle.NONE);
 //		imageButton = new ImageButton(new SnackImageButtonAppearance(), LocalImageHolder.get(this.foodItem.getFoodType()),"");
 //		add(imageButton);
-//		imageButton.addLongTapHandler(new LongTapHandler() {
-//			
-//			@Override
-//			public void onLongTap(LongTapEvent event) {
-//				
-//			}
-//		});
+
+		addLongTapHandler(new LongTapHandler() {
+			@Override
+			public void onLongTap(LongTapEvent event) {
+				Dialogs.alert("Food item", ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(FoodItemWidget.this.foodItem.getFoodType().toString()), null);
+			}
+		});
 		setActive(active);
 	}
 	public void setActive(boolean active){

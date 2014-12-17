@@ -88,7 +88,7 @@ public class MealsWidget extends AbstractTabBarWidget {
 			}
 			@Override
 			public void onSuccess(SnackProxy snackProxy) {
-				if(snackProxy == null){
+				if(snackProxy.getSnackProperty() == null){
 					requestNextSnack(1);
 				}
 				else{
