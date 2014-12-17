@@ -66,6 +66,7 @@ public class SnackWidget extends HorizontalPanel{
 
 	protected VerticalPanel foodItemPanel = new VerticalPanel();
 	private VerticalPanel operationsPanel = new VerticalPanel();
+	private double hoursInterval = 1.5;
 	
 	public SnackWidget(SnackProxy snack, State state, MealsWidget mealsWidget){
 		this.setSnack(snack);
@@ -89,6 +90,14 @@ public class SnackWidget extends HorizontalPanel{
 		
 	}
 
+	public double getHoursInterval(){
+		return hoursInterval;
+	}
+	
+	public void setHoursInterval(double hoursInterval){
+		this.hoursInterval = hoursInterval;
+	}
+	
 	private void initOperationsPanel() {
 		ImageButton acceptButton = new AbstractImageButton(new SnackImageButtonAppearance(), ImageHolder.get().accept(), "", Styles.BACKGROUND_COLOR_VALUE,
 														Styles.BACKGROUND_COLOR_VALUE, Styles.WHITE) {
@@ -139,7 +148,7 @@ public class SnackWidget extends HorizontalPanel{
 		if(state == State.CURRENT){
 			operationsPanel.setVisible(true);
 			
-			final int timeOffsetInMillies = (int) (1.5 * 60 * 60 * 1000);
+			final int timeOffsetInMillies = (int) (hoursInterval * 60 * 60 * 1000);
 			countdown.setText(getTimeString((int) timeOffsetInMillies / 1000));
 			
 			timer = new Timer() {

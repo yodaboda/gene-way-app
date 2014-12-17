@@ -78,6 +78,6 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 
 	@Override
 	public void setSnack(SnackProxy snackProxy) {
-		mealsWidget.setSnack(snackProxy);
+		mealsWidget.setSnack(snackProxy, false);
 	}
 }
