@@ -22,7 +22,4 @@ public interface FoodItemProxy extends EntityProxy{
 
 	public void setFoodType(FoodItemType foodType);
 
-	public int getWeeklyDays();
-
-	public void setWeeklyDays(int weeklyDays);
 }

@@ -12,10 +12,10 @@ import com.nutrinfomics.geneway.shared.SnackStatus;
 @ProxyFor(value = SnackHistory.class, locator = EntityBaseLocator.class)
 public interface SnackHistoryProxy extends EntityBaseProxy{
 
-	public SnackProxy getSnack();
+	public void setEatenSnack(SnackProxy snack);
 
-	public void setSnack(SnackProxy snack);
-
+	public SnackProxy getEatenSnack();
+	
 	public String getDayString() ;
 
 	public void setDayString(String dayString);

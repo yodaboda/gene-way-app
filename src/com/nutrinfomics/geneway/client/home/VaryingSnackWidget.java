@@ -9,18 +9,15 @@ import com.google.gwt.user.client.Random;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.FoodItemProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
-import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.WeeklyBehaving;
-import com.nutrinfomics.geneway.server.domain.plan.FoodItem;
-import com.nutrinfomics.geneway.server.domain.plan.Snack;
 import com.nutrinfomics.geneway.shared.FoodCategory;
 import com.nutrinfomics.geneway.shared.FoodItemType;
 
-public class VaryingSnackWidget extends SnackWidget implements WeeklyBehaving {
+public class VaryingSnackWidget extends SnackWidget  {
 
 	private ArrayList<FoodItemProxy> animalFoodItems = new ArrayList<>();
 	private ArrayList<FoodItemProxy> salad = new ArrayList<>();
 	private ArrayList<FoodItemProxy> otherFoodItems = new ArrayList<>();
-	private Map<FoodItemProxy, ArbitraryCycle> cycleMap = new HashMap<>();
+//	private Map<FoodItemProxy, ArbitraryCycle> cycleMap = new HashMap<>();
 	
 	private FoodItemWidget animalFoodItemWidget;
 	private ArrayList<FoodItemWidget> otherFoodItemWidgets = new ArrayList<>();
@@ -33,7 +30,7 @@ public class VaryingSnackWidget extends SnackWidget implements WeeklyBehaving {
 		
 		setState(state);
 		
-		ClientFactoryFactory.getClientFactory().getWeeklyCycle().addWeeklyBehaving(this);
+//		ClientFactoryFactory.getClientFactory().getWeeklyCycle().addWeeklyBehaving(this);
 	}
 
 	private void initVaryingSnackWidgetPanels() {
@@ -54,17 +51,17 @@ public class VaryingSnackWidget extends SnackWidget implements WeeklyBehaving {
 
 
 	private void initOtherFoodItemWidgets() {
-		for(FoodItemProxy foodItem : otherFoodItems){
-			ArbitraryCycle arbitraryCycle = cycleMap.get(foodItem);
-			if(arbitraryCycle.getCycleLength() >= 1 && 
-					(arbitraryCycle.getRemainingLength() == ClientFactoryFactory.getClientFactory().getWeeklyCycle().getRemainingLength() ||
-					Random.nextBoolean() )){
-				FoodItemWidget foodItemWidget = new FoodItemWidget(foodItem);
-				otherFoodItemWidgets.add(foodItemWidget);
-				foodItemWidgets.add(foodItemWidget);
-				foodItemPanel.add(foodItemWidget);
-			}
-		}
+//		for(FoodItemProxy foodItem : otherFoodItems){
+//			ArbitraryCycle arbitraryCycle = cycleMap.get(foodItem);
+//			if(arbitraryCycle.getCycleLength() >= 1 && 
+//					(arbitraryCycle.getRemainingLength() == ClientFactoryFactory.getClientFactory().getWeeklyCycle().getRemainingLength() ||
+//					Random.nextBoolean() )){
+//				FoodItemWidget foodItemWidget = new FoodItemWidget(foodItem);
+//				otherFoodItemWidgets.add(foodItemWidget);
+//				foodItemWidgets.add(foodItemWidget);
+//				foodItemPanel.add(foodItemWidget);
+//			}
+//		}
 		
 	}
 
@@ -78,19 +75,19 @@ public class VaryingSnackWidget extends SnackWidget implements WeeklyBehaving {
 	}
 
 	private void initAnimalFoodItemWidget() {
-		for(FoodItemProxy foodItem : animalFoodItems){
-			if(cycleMap.get(foodItem).getRemainingLength() >= 1){
-				animalFoodItemWidget = new FoodItemWidget(foodItem);
-				foodItemWidgets.add(animalFoodItemWidget);
-				foodItemPanel.add(animalFoodItemWidget);
-				break;
-			}
-		}
+//		for(FoodItemProxy foodItem : animalFoodItems){
+//			if(cycleMap.get(foodItem).getRemainingLength() >= 1){
+//				animalFoodItemWidget = new FoodItemWidget(foodItem);
+//				foodItemWidgets.add(animalFoodItemWidget);
+//				foodItemPanel.add(animalFoodItemWidget);
+//				break;
+//			}
+//		}
 	}
 
 	private void initFoodItemClassification() {
 		for(FoodItemProxy foodItem : snack.getFoodItems()){
-			cycleMap.put(foodItem, new ArbitraryCycle(foodItem.getWeeklyDays()));
+//			cycleMap.put(foodItem, new ArbitraryCycle(foodItem.getWeeklyDays()));
 			
 			FoodItemType foodType = foodItem.getFoodType();
 			FoodCategory foodCategory = foodType.getFoodCategory();
@@ -129,7 +126,7 @@ public class VaryingSnackWidget extends SnackWidget implements WeeklyBehaving {
 	/* (non-Javadoc)
 	 * @see com.nutrinfomics.geneway.client.home.WeeklyBehaving#nextDay()
 	 */
-	@Override
+//	@Override
 	public void nextDay(){
 		otherFoodItemWidgets.clear();
 		foodItemWidgets.clear();
@@ -145,14 +142,14 @@ public class VaryingSnackWidget extends SnackWidget implements WeeklyBehaving {
 	/* (non-Javadoc)
 	 * @see com.nutrinfomics.geneway.client.home.WeeklyBehaving#weeklyReset()
 	 */
-	@Override
+//	@Override
 	public void weeklyReset(){
 		
-		for(FoodItemProxy foodItem : animalFoodItems)
-			cycleMap.get(foodItem).reset();
-		
-		for(FoodItemProxy otherFoodItem : otherFoodItems)
-			cycleMap.get(otherFoodItem).reset();
+//		for(FoodItemProxy foodItem : animalFoodItems)
+//			cycleMap.get(foodItem).reset();
+//		
+//		for(FoodItemProxy otherFoodItem : otherFoodItems)
+//			cycleMap.get(otherFoodItem).reset();
 				
 		nextDay();
 		
@@ -161,10 +158,10 @@ public class VaryingSnackWidget extends SnackWidget implements WeeklyBehaving {
 	@Override
 	public void setState(State state){
 		if(this.state == State.CURRENT && state != State.CURRENT){
-			cycleMap.get(animalFoodItemWidget.getFoodItem()).advanceBySingleUnit();;
+//			cycleMap.get(animalFoodItemWidget.getFoodItem()).advanceBySingleUnit();;
 
 			for(FoodItemWidget foodItemWidget : otherFoodItemWidgets){
-				cycleMap.get(foodItemWidget.getFoodItem()).advanceBySingleUnit();;
+//				cycleMap.get(foodItemWidget.getFoodItem()).advanceBySingleUnit();;
 			}
 		}
 		super.setState(state);

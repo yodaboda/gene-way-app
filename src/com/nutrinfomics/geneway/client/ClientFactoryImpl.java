@@ -26,7 +26,6 @@ import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.home.HomeViewImpl;
-import com.nutrinfomics.geneway.client.home.WeeklyCycle;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.login.LoginViewImpl;
@@ -41,6 +40,7 @@ import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequ
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.client.waiting.WaitingViewImpl;
+import com.nutrinfomics.geneway.server.domain.plan.WeeklyCycle;
 
 public class ClientFactoryImpl implements ClientFactory {
 
@@ -55,7 +55,6 @@ public class ClientFactoryImpl implements ClientFactory {
 	private FoodItemTypeConstants foodItemTypeConstants;
 	static private AboutView aboutView;
 	static private GeneWayRequestFactory requestFactory;
-	static private WeeklyCycle weeklyCycle;
 	static private FirstScreenView firstScreenView;
 	
 	@Override
@@ -209,12 +208,6 @@ public class ClientFactoryImpl implements ClientFactory {
 			waitingView = new WaitingViewImpl();
 		}
 		return waitingView;
-	}
-
-	@Override
-	public WeeklyCycle getWeeklyCycle() {
-		if(weeklyCycle == null) weeklyCycle = new WeeklyCycle();
-		return weeklyCycle;
 	}
 
 	@Override

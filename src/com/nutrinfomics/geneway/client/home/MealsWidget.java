@@ -107,7 +107,7 @@ public class MealsWidget extends AbstractTabBarWidget {
 		EntityBaseRequest snackHistoryRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
 		Date timestamp = new Date();
 		SnackHistoryProxy snackHistoryProxy = snackHistoryRequest.create(SnackHistoryProxy.class);
-		snackHistoryProxy.setSnack(snackProxy);	
+		snackHistoryProxy.setEatenSnack(snackProxy);	
 		snackHistoryProxy.setDayString(getDate(0));
 		snackHistoryProxy.setStatus(snackWidget.getSnackStatus());
 		snackHistoryProxy.setTimestamp(timestamp);

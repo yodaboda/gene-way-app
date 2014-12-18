@@ -9,7 +9,6 @@ import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.home.HomeView;
-import com.nutrinfomics.geneway.client.home.WeeklyCycle;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.register.RegisterView;
@@ -21,6 +20,7 @@ import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequ
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.server.domain.plan.Plan;
+import com.nutrinfomics.geneway.server.domain.plan.WeeklyCycle;
 
 public interface ClientFactory {
 	
@@ -53,8 +53,6 @@ public interface ClientFactory {
 	public WaitingView getWaitingView();
 
 	public GeneWayRequestFactory getRequestFactory();
-
-	public WeeklyCycle getWeeklyCycle();
 
 	public FirstScreenView getFirstScreenView();
 
