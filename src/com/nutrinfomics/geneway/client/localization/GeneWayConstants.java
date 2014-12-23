@@ -49,12 +49,20 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 	@DefaultStringValue("Male")	
 	String male();
 
-	@DefaultStringValue("Invalid login credentials")
+	@DefaultStringValue("You have entered wrong credentials")
 	String invalidLogin();
 
+	@DefaultStringValue("Invalid login")
+	String invalidLoginTitle();
+
+	
 	@DefaultStringValue("User is not authorized to login from this device")	
 	String unauthorizedDevice();
 
+	@DefaultStringValue("Unauthorized Device")	
+	String unauthorizedDeviceTitle();
+
+	
 	@DefaultStringValue("Username taken. Please choose a different username")
 	String usernameExists();
 

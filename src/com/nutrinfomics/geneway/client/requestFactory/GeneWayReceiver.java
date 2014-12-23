@@ -19,17 +19,17 @@ abstract public class GeneWayReceiver<T> extends Receiver<T> {
 	@Override
 	public void onConstraintViolation(Set<ConstraintViolation<?>> violations){
 		
-//		if(! violations.isEmpty() ){
-//			Iterator<ConstraintViolation<?>> iterator = violations.iterator();
-//			String message = "";
-//			
-//			while(iterator.hasNext()){
-//				ConstraintViolation<?> next = iterator.next();
-//				message += next.getMessageTemplate() + " " + next.getMessage();
-//			}
-//			
-//			Window.alert(message);
-//		}
+		if(! violations.isEmpty() ){
+			Iterator<ConstraintViolation<?>> iterator = violations.iterator();
+			String message = "";
+			
+			while(iterator.hasNext()){
+				ConstraintViolation<?> next = iterator.next();
+				message += next.getMessageTemplate() + " " + next.getMessage();
+			}
+			
+			Window.alert(message);
+		}
 		
 		super.onConstraintViolation(violations);
 	}

@@ -58,6 +58,8 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private AboutView aboutView;
 	static private GeneWayRequestFactory requestFactory;
 	static private FirstScreenView firstScreenView;
+	static private String username;
+	static private String password;
 	
 	@Override
 	public EventBus getEventBus() {
@@ -222,5 +224,26 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public String getUUID() {
 		return getPhoneGap().getDevice().getUuid();
+	}
+
+	@Override
+	public void setUsername(String username) {
+		ClientFactoryImpl.username = username;
+		
+	}
+
+	@Override
+	public void setPassword(String password) {
+		ClientFactoryImpl.password = password;
+	}
+
+	@Override
+	public String getUsername() {
+		return username;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
 	}
 }

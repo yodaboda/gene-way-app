@@ -61,4 +61,12 @@ public interface ClientFactory {
 	public SessionProxy getNewSession(RequestContext requestContext);
 
 	public String getUUID();
+
+	public void setUsername(String username);
+
+	public void setPassword(String password);
+	
+	public String getUsername();
+	
+	public String getPassword();
 }
