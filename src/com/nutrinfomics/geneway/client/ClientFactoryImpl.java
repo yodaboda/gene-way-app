@@ -32,6 +32,7 @@ import com.nutrinfomics.geneway.client.login.LoginViewImpl;
 import com.nutrinfomics.geneway.client.register.RegisterView;
 import com.nutrinfomics.geneway.client.register.RegisterViewImpl;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayRequestFactory;
+import com.nutrinfomics.geneway.client.requestFactory.GeneWayRequestTransport;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.DeviceProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
@@ -41,6 +42,7 @@ import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.client.waiting.WaitingViewImpl;
 import com.nutrinfomics.geneway.server.domain.plan.WeeklyCycle;
+import com.nutrinfomics.geneway.shared.AccessConstants;
 
 public class ClientFactoryImpl implements ClientFactory {
 
@@ -132,7 +134,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		requestFactory = GWT.create(GeneWayRequestFactory.class);
 //		DefaultRequestTransport requestTransport = new DefaultRequestTransport();
 //		requestTransport.setRequestUrl("http://127.0.0.1:8080/gene-way/gene_way/");
-		requestFactory.initialize(eventBus);
+		requestFactory.initialize(eventBus, new GeneWayRequestTransport());
 		
 		placeController = new PlaceController(eventBus);
 	    
@@ -164,7 +166,7 @@ public class ClientFactoryImpl implements ClientFactory {
 		CustomerProxy customerProxy = requestContext.create(CustomerProxy.class);
 		DeviceProxy deviceProxy = requestContext.create(DeviceProxy.class);
 			
-		deviceProxy.setUuid(getPhoneGap().getDevice().getUuid());
+		deviceProxy.setUuid(getUUID());
 		deviceProxy.setCustomer(customerProxy);
 		customerProxy.setDevice(deviceProxy);
 			
@@ -176,14 +178,13 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public String getSID() {
-		return Cookies.getCookie(CookieConstants.SID.toString());
+		return Cookies.getCookie(AccessConstants.SID.toString());
 	}
 
 	@Override
 	public void setSID(String sid) {
 		Date expires = new Date(System.currentTimeMillis() + Long.MAX_VALUE); //Indefinite duration
-		Cookies.setCookie(CookieConstants.SID.toString(), sid, expires, null, "/", false);
-
+		Cookies.setCookie(AccessConstants.SID.toString(), sid, expires, null, "/", false);
 	}
 
 	@Override
@@ -213,8 +214,13 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public SessionProxy getNewSession(RequestContext requestContext) {
 		SessionProxy sessionProxy = requestContext.create(SessionProxy.class);
-		String sid = Cookies.getCookie(CookieConstants.SID.toString());
+		String sid = getSID();
 		if(sid != null) sessionProxy.setSid(sid);
 		return sessionProxy;
+	}
+
+	@Override
+	public String getUUID() {
+		return getPhoneGap().getDevice().getUuid();
 	}
 }

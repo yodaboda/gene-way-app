@@ -9,13 +9,13 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.CookieConstants;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.login.AuthenticationException.LoginExceptionType;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingPlace;
+import com.nutrinfomics.geneway.shared.AccessConstants;
 
 public class LoginActivity extends MGWTAbstractActivity {
 
@@ -66,7 +66,7 @@ public class LoginActivity extends MGWTAbstractActivity {
 			}
 			@Override
 			public void onFailure(ServerFailure error) {
-				Cookies.removeCookie(CookieConstants.SID.toString());
+				Cookies.removeCookie(AccessConstants.SID.toString());
 				showLoginView(panel);
 			}
 		});

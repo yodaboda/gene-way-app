@@ -59,4 +59,6 @@ public interface ClientFactory {
 	public SessionProxy buildSession(RequestContext requestContext);
 
 	public SessionProxy getNewSession(RequestContext requestContext);
+
+	public String getUUID();
 }
