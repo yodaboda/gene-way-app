@@ -1,48 +1,33 @@
 package com.nutrinfomics.geneway.client.home;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.NumberFormat;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
-import com.googlecode.mgwt.ui.client.widget.list.celllist.CellList;
-import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
-import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.home.SnackWidget.State;
-import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
-import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.FoodItemProxy;
-import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
-import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
-import com.nutrinfomics.geneway.client.style.Styles;
-import com.nutrinfomics.geneway.shared.SnackProperty;
-import com.nutrinfomics.geneway.shared.SnackStatus;
+import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 
 public class MealsWidget extends AbstractTabBarWidget {
-	private HTML mealContentHTML;
-	private Label countdown;
-
-	private Timer timer;
-	
-	private NumberFormat format = NumberFormat.getFormat("00");
-	private GeneWayConstants constants;
-	private CellList<SnackTracker> cellList;
-
-	private ArrayList<SnackWidget> snacksWidgets = new ArrayList<>();
-	private int currentSnackWidget = 0;
+//	private HTML mealContentHTML;
+//	private Label countdown;
+//
+//	private Timer timer;
+//	
+//	private NumberFormat format = NumberFormat.getFormat("00");
+//	private GeneWayConstants constants;
+//	private CellList<SnackTracker> cellList;
+//
+//	private ArrayList<SnackWidget> snacksWidgets = new ArrayList<>();
+//	private int currentSnackWidget = 0;
 	
 	private SnackProxy snackProxy = null;
 	
@@ -276,13 +261,13 @@ public class MealsWidget extends AbstractTabBarWidget {
 //		timer.scheduleRepeating(1000);
 //	}
 
-	private String getTimeString(int time) {
-
-		int secs = time % 60;
-		int minutes = (time / 60) % 60;
-		int hour = time / 3600;
-
-		return format.format(hour) + ":" + format.format(minutes) + ":" + format.format(secs);
-	}
+//	private String getTimeString(int time) {
+//
+//		int secs = time % 60;
+//		int minutes = (time / 60) % 60;
+//		int hour = time / 3600;
+//
+//		return format.format(hour) + ":" + format.format(minutes) + ":" + format.format(secs);
+//	}
 
 }

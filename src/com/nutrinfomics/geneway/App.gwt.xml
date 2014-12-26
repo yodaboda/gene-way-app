@@ -47,17 +47,23 @@
   <!-- Specify the app entry point class.                         -->
   <entry-point class='com.nutrinfomics.geneway.client.GeneWayEntryPoint'/>
 
+  <extend-property name="locale" values="en"/>
   <extend-property name="locale" values="ar"/>
 
-<!--   <set-property name="locale" value="en" /> -->
+  <set-property-fallback name="locale" value="en"/>
 
+    <!--   get locale from cache -->
+  <set-configuration-property name="locale.cookie" value="gwtLocale"/>
+  <!--   use browser's locale -->
+  <set-configuration-property name="locale.useragent" value="Y"/>
+  
+  
   <set-property name="user.agent" value="safari" />
 
   <set-property name="mgwt.formfactor" value="phone" />
   <set-property name="mgwt.density" value="xhigh" />
 
-
-
+  
   <!-- Specify the paths for translatable code                    -->
   <source path='client'/>
 

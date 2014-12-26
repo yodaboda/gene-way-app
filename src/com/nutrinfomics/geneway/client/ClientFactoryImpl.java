@@ -28,6 +28,7 @@ import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.home.HomeViewImpl;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
+import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.login.LoginViewImpl;
 import com.nutrinfomics.geneway.client.register.RegisterView;
@@ -53,6 +54,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private LoginView loginView;
 	static private RegisterView registerView;
 	static private GeneWayConstants constants;
+	static private GeneWayMessages messages;
 	static private HomeView homeView;
 	static private WaitingView waitingView;
 	static private FoodItemTypeConstants foodItemTypeConstants;
@@ -110,6 +112,14 @@ public class ClientFactoryImpl implements ClientFactory {
 		return constants;
 	}
 
+	@Override
+	public GeneWayMessages getMessages(){
+		if( messages == null){
+			messages = GWT.create(GeneWayMessages.class);
+		}
+		return messages;
+	}
+	
 	@Override
 	public String getModuleURL() {
 //		return "http://127.0.0.1:8080/gene-way/gene_way/";

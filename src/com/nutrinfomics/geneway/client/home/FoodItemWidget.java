@@ -3,6 +3,7 @@ package com.nutrinfomics.geneway.client.home;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.BorderStyle;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -10,6 +11,8 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.dom.client.recognizer.longtap.LongTapEvent;
 import com.googlecode.mgwt.dom.client.recognizer.longtap.LongTapHandler;
 import com.googlecode.mgwt.ui.client.util.IconHandler;
@@ -51,18 +54,29 @@ public class FoodItemWidget extends AbstractImageButton {
 		super(new SnackImageButtonAppearance(), LocalImageHolder.get(foodItem.getFoodType()),"", INACTIVE_COLOR, ACTIVE_COLOR, Styles.WHITE);
 		this.foodItem = foodItem;
 		
+		double paddingVal = 3;
+		this.text.getStyle().setPaddingLeft(paddingVal, Unit.PX);
+		this.text.getStyle().setPaddingRight(paddingVal, Unit.PT);
+		
 //		getElement().getStyle().setBackgroundColor("transparent");
 //		getElement().getStyle().setBorderColor("transparent");
 //		getElement().getStyle().setBorderStyle(BorderStyle.NONE);
 //		imageButton = new ImageButton(new SnackImageButtonAppearance(), LocalImageHolder.get(this.foodItem.getFoodType()),"");
 //		add(imageButton);
 
-		addLongTapHandler(new LongTapHandler() {
+		addTapHandler(new TapHandler() {
+			
 			@Override
-			public void onLongTap(LongTapEvent event) {
+			public void onTap(TapEvent event) {
 				Dialogs.alert(ClientFactoryFactory.getClientFactory().getConstants().foodItem(), ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(FoodItemWidget.this.foodItem.getFoodType().toString()), null);
 			}
 		});
+//		addLongTapHandler(new LongTapHandler() {
+//			@Override
+//			public void onLongTap(LongTapEvent event) {
+//				Dialogs.alert(ClientFactoryFactory.getClientFactory().getConstants().foodItem(), ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(FoodItemWidget.this.foodItem.getFoodType().toString()), null);
+//			}
+//		});
 		setActive(active);
 	}
 	public void setActive(boolean active){
@@ -91,7 +105,9 @@ public class FoodItemWidget extends AbstractImageButton {
 			//ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(this.foodItem.getFoodType().toString())
 			getElement().getStyle().setColor(ACTIVE_COLOR);
 			setIconColor(ACTIVE_COLOR);
-			setText(" " + fmt.format(this.foodItem.getAmount()) + " " + ClientFactoryFactory.getClientFactory().getMeasurementsConstants().getString(this.foodItem.getMeasurementUnit().toString()));
+			setText(ClientFactoryFactory.getClientFactory().getMessages().foodAmount(this.foodItem.getAmount(), 
+																					ClientFactoryFactory.getClientFactory().getMeasurementsConstants().getString(this.foodItem.getMeasurementUnit().toString())));
+//			setText(" " + fmt.format(this.foodItem.getAmount()) + " " + ClientFactoryFactory.getClientFactory().getMeasurementsConstants().getString(this.foodItem.getMeasurementUnit().toString()));
 			setTitle(ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(this.foodItem.getFoodType().toString()));
 		}
 	}

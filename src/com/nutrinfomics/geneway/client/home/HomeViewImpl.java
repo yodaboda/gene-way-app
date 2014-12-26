@@ -32,6 +32,8 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 		tabPanel.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
 		tabPanel.setWidth("100%");
 		
+		tabPanel.getElement().setDir("ltr");
+		
 //	    tabPanel.add(new ContactsTabBarButton(), new Label("Contacts"));
 //	    tabPanel.add(new HistoryTabBarButton(), new Label("History"));
 //	    tabPanel.add(new MostViewedTabBarButton(), new Label("Most Viewed"));

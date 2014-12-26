@@ -11,6 +11,7 @@ import com.nutrinfomics.geneway.client.constants.MeasurementsConstants;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
+import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.register.RegisterView;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayRequestFactory;
@@ -38,6 +39,8 @@ public interface ClientFactory {
 	public RegisterView getRegisterView();
 	
 	public GeneWayConstants getConstants();
+	
+	public GeneWayMessages getMessages();
 	
 	public String getModuleURL();
 
