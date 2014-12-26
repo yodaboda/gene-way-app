@@ -3,6 +3,7 @@ package com.nutrinfomics.geneway.client.home;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.Style.BorderStyle;
+import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -33,6 +34,8 @@ public class FoodItemWidget extends AbstractImageButton {
 //	private ImageButton imageButton;
 	private FoodItemProxy foodItem;
 
+	private NumberFormat fmt = NumberFormat.getDecimalFormat();
+	
 	private static final String ACTIVE_COLOR = Styles.GREEN;
 	private static final String INACTIVE_COLOR = Styles.GRAY;
 	
@@ -57,7 +60,7 @@ public class FoodItemWidget extends AbstractImageButton {
 		addLongTapHandler(new LongTapHandler() {
 			@Override
 			public void onLongTap(LongTapEvent event) {
-				Dialogs.alert("Food item", ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(FoodItemWidget.this.foodItem.getFoodType().toString()), null);
+				Dialogs.alert(ClientFactoryFactory.getClientFactory().getConstants().foodItem(), ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(FoodItemWidget.this.foodItem.getFoodType().toString()), null);
 			}
 		});
 		setActive(active);
@@ -66,7 +69,6 @@ public class FoodItemWidget extends AbstractImageButton {
 		String state = active ? ACTIVE_COLOR : INACTIVE_COLOR;
 
 //		IconHandler.setIcons(icon, LocalImageHolder.get(this.foodItem.getFoodType()), state);
-
 		
 		if(!active){
 //			amount.setInnerText("");
@@ -89,7 +91,7 @@ public class FoodItemWidget extends AbstractImageButton {
 			//ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(this.foodItem.getFoodType().toString())
 			getElement().getStyle().setColor(ACTIVE_COLOR);
 			setIconColor(ACTIVE_COLOR);
-			setText("x " + this.foodItem.getAmount() + " " + this.foodItem.getMeasurementUnit());
+			setText(" " + fmt.format(this.foodItem.getAmount()) + " " + ClientFactoryFactory.getClientFactory().getMeasurementsConstants().getString(this.foodItem.getMeasurementUnit().toString()));
 			setTitle(ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(this.foodItem.getFoodType().toString()));
 		}
 	}

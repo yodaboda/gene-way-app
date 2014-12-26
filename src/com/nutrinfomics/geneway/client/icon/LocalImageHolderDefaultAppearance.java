@@ -138,6 +138,13 @@ public class LocalImageHolderDefaultAppearance implements
 		@Source("resources/logo1WhiteThick_mdpi.png")
 		ImageResource geneWay();
 
+		@Source("resources/reemBefore_mdpi.png")
+		ImageResource reemBefore();
+		
+		@Source("resources/reemAfter_mdpi.png")
+		ImageResource reemAfter();
+
+		
 	}
 
 	@Override

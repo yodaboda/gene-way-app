@@ -7,6 +7,7 @@ import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
+import com.nutrinfomics.geneway.client.constants.MeasurementsConstants;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
@@ -48,6 +49,8 @@ public interface ClientFactory {
 
 	public FoodItemTypeConstants getFoodItemTypeConstants();
 
+	public MeasurementsConstants getMeasurementsConstants();
+	
 	public AboutView getAboutView();
 
 	public WaitingView getWaitingView();

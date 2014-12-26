@@ -4,7 +4,7 @@ package com.nutrinfomics.geneway.client.constants;
  * Interface to represent the constants contained in resource bundle:
  * 	'/home/firas/Documents/webapp/gene-way/src/com/nutrinfomics/geneway/client/plan/MeasurementsConstants.properties'.
  */
-public interface MeasurementsConstants extends com.google.gwt.i18n.client.Constants {
+public interface MeasurementsConstants extends com.google.gwt.i18n.client.ConstantsWithLookup {
   
   /**
    * Translated "cup".
@@ -99,9 +99,9 @@ public interface MeasurementsConstants extends com.google.gwt.i18n.client.Consta
   /**
    * Translated "".
    * 
-   * @return translated ""
+   * @return translated "units"
    */
-  @DefaultStringValue("")
+  @DefaultStringValue("units")
   @Key("UNITS")
   String UNITS();
 }

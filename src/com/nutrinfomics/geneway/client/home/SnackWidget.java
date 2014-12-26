@@ -27,6 +27,8 @@ import com.googlecode.mgwt.ui.client.util.IconHandler;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
 import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
+import com.googlecode.mgwt.ui.client.widget.dialog.ConfirmDialog.ConfirmCallback;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.panel.Panel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
@@ -103,11 +105,21 @@ public class SnackWidget extends HorizontalPanel{
 		ImageButton acceptButton = new AbstractImageButton(new SnackImageButtonAppearance(), ImageHolder.get().accept(), "", Styles.BACKGROUND_COLOR_VALUE,
 														Styles.BACKGROUND_COLOR_VALUE, Styles.WHITE) {
 		};
+		
+		ImageButton skipButton = new AbstractImageButton(new SnackImageButtonAppearance(), ImageHolder.get().cancel(), "", Styles.BACKGROUND_COLOR_VALUE,
+				Styles.BACKGROUND_COLOR_VALUE, Styles.WHITE) {
+		};
+	
+//		ImageButton likeButton = new AbstractImageButton(new SnackImageButtonAppearance(), ImageHolder.get().good(), "", Styles.WHITE,
+//				Styles.BACKGROUND_COLOR_VALUE, Styles.WHITE) {
+//		};
+
+		
 //				new ImageButton(new SnackImageButtonAppearance(), ImageHolder.get().accept(), "");
 //		acceptButton.image.getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
 		
-		acceptButton.setIconActiveColor(Styles.BACKGROUND_COLOR_VALUE);
-		acceptButton.setIconColor(Styles.BACKGROUND_COLOR_VALUE);
+//		acceptButton.setIconActiveColor(Styles.BACKGROUND_COLOR_VALUE);
+//		acceptButton.setIconColor(Styles.BACKGROUND_COLOR_VALUE);
 		
 	    countdown = new Label();
 	    countdown.setStylePrimaryName("timer");
@@ -118,15 +130,27 @@ public class SnackWidget extends HorizontalPanel{
 //		acceptButton.getElement().getStyle().setColor(Styles.BACKGROUND_COLOR_VALUE);
 		
 	    operationsPanel.setHorizontalAlignment(ALIGN_CENTER);
-	    operationsPanel.add(acceptButton);
-		operationsPanel.add(countdown);
+	    operationsPanel.setVerticalAlignment(ALIGN_MIDDLE);
+	    
+	    HorizontalPanel buttonsPanel = new HorizontalPanel();
+	    buttonsPanel.add(acceptButton);
+	    buttonsPanel.add(skipButton);
+//	    buttonsPanel.add(likeButton);
+	    operationsPanel.add(buttonsPanel);
+
+	    operationsPanel.add(countdown);
 		
 		acceptButton.addTapHandler(new TapHandler() {
 			@Override
 			public void onTap(TapEvent event) {
-				setSnackStatus(SnackStatus.CONSUMED);
-				timer.cancel();
-				mealsWidget.getNextSnack();
+				nextSnack(SnackStatus.CONSUMED);
+			}
+		});
+		
+		skipButton.addTapHandler(new TapHandler() {
+			@Override
+			public void onTap(TapEvent event) {
+				nextSnack(SnackStatus.SKIPPED);
 			}
 		});
 	}
@@ -161,8 +185,17 @@ public class SnackWidget extends HorizontalPanel{
 				public void run() {
 					time-=1;
 					if(time < 1){
-						Window.alert(constants.itsTimeToTakeYourMeal());
-						cancel();
+						Dialogs.confirm(constants.itsTimeToTakeYourMealTitle(), constants.itsTimeToTakeYourMeal(), new ConfirmCallback() {
+							@Override
+							public void onOk() {
+								nextSnack(SnackStatus.CONSUMED);
+							}
+							@Override
+							public void onCancel() {
+								nextSnack(SnackStatus.SKIPPED);
+							}
+						});
+//						cancel();
 					}
 					
 					String timeString = getTimeString(time);
@@ -185,14 +218,14 @@ public class SnackWidget extends HorizontalPanel{
 	}
 
 	
-	private String getDisplayString() {
-		String string = "";
-		for(FoodItemProxy foodItem : getSnack().getFoodItems()){
-			string += ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(foodItem.getFoodType().toString()) + " + ";
-		}
-		if(!string.isEmpty()) string = string.substring(0, string.length() - 3);
-		return string;
-	}
+//	private String getDisplayString() {
+//		String string = "";
+//		for(FoodItemProxy foodItem : getSnack().getFoodItems()){
+//			string += ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(foodItem.getFoodType().toString()) + " + ";
+//		}
+//		if(!string.isEmpty()) string = string.substring(0, string.length() - 3);
+//		return string;
+//	}
 
 	public SnackProxy getSnack() {
 		return snack;
@@ -217,6 +250,12 @@ public class SnackWidget extends HorizontalPanel{
 
 	public void setSnackStatus(SnackStatus snackStatus) {
 		this.snackStatus = snackStatus;
+	}
+
+	public void nextSnack(SnackStatus snackStatus) {
+		setSnackStatus(snackStatus);
+		timer.cancel();
+		mealsWidget.getNextSnack();
 	}
 	
 }

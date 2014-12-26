@@ -66,7 +66,7 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 	@DefaultStringValue("Username taken. Please choose a different username")
 	String usernameExists();
 
-	@DefaultStringValue("Error:")		
+	@DefaultStringValue("Error")		
 	String error();
 
 	@DefaultStringValue("Registration was succesful. You will be redirected next to login page")			
@@ -87,12 +87,19 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 	@DefaultStringValue("Ingredients")	
 	String ingredients();
 
-	@DefaultStringValue("Meal time :)")	
+	@DefaultStringValue("Please take your snack - it is about time")	
 	String itsTimeToTakeYourMeal();
 
+	@DefaultStringValue("Snack time")	
+	String itsTimeToTakeYourMealTitle();
+	
+	
 	@DefaultStringValue("Existing Account")
 	String existingAccount();
 
 	@DefaultStringValue("New Account")
 	String newAccount();
+	
+	@DefaultStringValue("Food Item")
+	String foodItem();
 }

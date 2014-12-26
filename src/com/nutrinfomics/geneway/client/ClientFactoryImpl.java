@@ -22,6 +22,7 @@ import com.googlecode.mgwt.ui.client.MGWTSettings;
 import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.about.AboutViewImpl;
 import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
+import com.nutrinfomics.geneway.client.constants.MeasurementsConstants;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
@@ -54,7 +55,8 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private GeneWayConstants constants;
 	static private HomeView homeView;
 	static private WaitingView waitingView;
-	private FoodItemTypeConstants foodItemTypeConstants;
+	static private FoodItemTypeConstants foodItemTypeConstants;
+	static private MeasurementsConstants measurementsConstants;
 	static private AboutView aboutView;
 	static private GeneWayRequestFactory requestFactory;
 	static private FirstScreenView firstScreenView;
@@ -197,6 +199,14 @@ public class ClientFactoryImpl implements ClientFactory {
 		return foodItemTypeConstants;
 	}
 
+	@Override
+	public MeasurementsConstants getMeasurementsConstants(){
+		if(measurementsConstants == null){
+			measurementsConstants = GWT.create(MeasurementsConstants.class);
+		}
+		return measurementsConstants;
+	}
+	
 	@Override
 	public AboutView getAboutView() {
 		if(aboutView == null){

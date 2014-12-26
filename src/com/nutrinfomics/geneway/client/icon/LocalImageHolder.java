@@ -63,6 +63,11 @@ public class LocalImageHolder {
 			ImageResource ingredients();
 			
 			ImageResource geneWay();
+			
+			ImageResource reemBefore();
+			
+			ImageResource reemAfter();
+			
 		}
 		Images get();
 	}
