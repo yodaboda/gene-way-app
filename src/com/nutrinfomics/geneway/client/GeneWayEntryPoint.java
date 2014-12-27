@@ -3,6 +3,7 @@ package com.nutrinfomics.geneway.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.mvp.client.history.MGWTPlaceHistoryHandler;
@@ -27,7 +28,7 @@ public class GeneWayEntryPoint implements EntryPoint {
 	}
 
 	protected void start(){
-	    GeneWayPlaceHistoryMapper historyMapper = GWT.create(GeneWayPlaceHistoryMapper.class);
+	    PlaceHistoryMapper historyMapper = ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper();
 
 	    AnimationWidget display = new AnimationWidget();
 	    GeneWayActivityMapper appActivityMapper = new GeneWayActivityMapper();

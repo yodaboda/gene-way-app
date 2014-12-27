@@ -1,5 +1,7 @@
 package com.nutrinfomics.geneway.client.firstScreen;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -32,6 +34,13 @@ public class FirstScreenActivity extends MGWTAbstractActivity {
 			}
 		}));
 
+		addHandlerRegistration(firstScreenView.getNewAccountAnchor().addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new RegisterPlace());
+			    event.preventDefault();
+			}
+		}));
 		
 		panel.setWidget(firstScreenView);
 

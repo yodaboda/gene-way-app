@@ -3,21 +3,30 @@ package com.nutrinfomics.geneway.client.firstScreen;
 
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.http.client.UrlBuilder;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.resources.client.ImageResource;
 import com.google.gwt.user.client.Cookies;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.Window.Location;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.impl.HyperlinkImpl;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
@@ -41,6 +50,7 @@ import com.nutrinfomics.geneway.client.GeneWayImageButton;
 import com.nutrinfomics.geneway.client.GeneWayImageButtonAppearance;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
+import com.nutrinfomics.geneway.client.register.RegisterPlace;
 import com.nutrinfomics.geneway.client.style.Styles;
 
 public class FirstScreenViewImpl extends DetailsViewImpl implements
@@ -48,6 +58,7 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 
 	private Button existingAccountButton;
 	private Button newAccountButton;
+	private Anchor registerAnchor;
 	
 	public FirstScreenViewImpl(){
 		GeneWayConstants constants = ClientFactoryFactory.getClientFactory().getConstants();
@@ -70,7 +81,7 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    
 		Style style = geneWayImage.getElement().getStyle();
 //		style.setMarginBottom(80, Unit.PX);
-		style.setProperty("margin", "0 auto 40px auto");
+		style.setProperty("margin", "0 auto 20px auto");
 //		style.setProperty("margin-right", "auto");
 		
 	    if(MGWT.getOsDetection().isAndroid()){
@@ -97,10 +108,14 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 		
 	    existingAccountButton = new Button(constants.existingAccount());
 	    newAccountButton = new Button(constants.newAccount());
-
+	    
 	    setButtonStyle(existingAccountButton);
 	    setButtonStyle(newAccountButton);
 
+	    registerAnchor = new Anchor(constants.newAccount(), "#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()));
+	    registerAnchor.setStylePrimaryName("sp-circle-link");
+	    
+	    
 	    final Panel imagePanel = new Panel();
 	    imagePanel.add(beforeImage);
 	    
@@ -139,8 +154,29 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 		
 //	    panel.getElement().getStyle().setBackgroundImage(beforeImage.getUrl());
 	    panel.add(geneWayImage);
+	    
+	    HTML animatedText = new HTML("<div class=\"sp-container\" dir=\"ltr\">"+
+	    								"<div class=\"sp-content\">" +
+//	    									"<div class=\"sp-globe\"></div>" +
+	    										"<h2 class=\"frame-1\">Suffering from overweight?</h2>" +
+
+        										"<h2 class=\"frame-2\">Diagnosed with diabetes?</h2>" +
+
+        										"<h2 class=\"frame-3\">Low energy?</h2>" +
+
+        										"<h2 class=\"frame-4\">Or high cholesterol?</h2>" +
+
+        										"<h2 class=\"frame-5\"><span>Your way</span> <span>to health</span> <span>and fitness</span></h2>"+
+//	    										"<a class=\"sp-circle-link\" href=\"#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()) + "\">Join Now!</a>" +
+        								"</div>" +
+	    							"</div>");
+		animatedText.setWidth("100%");
+	    panel.add(animatedText);
+	    panel.add(registerAnchor);
 	    panel.add(new FlexSpacer());
 	    panel.add(new FixedSpacer());
+	    imagePanel.getElement().getStyle().setMarginTop(70, Unit.PX);
+	    imagePanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
 	    panel.add(imagePanel);
 	    
 	    panel.add(new FixedSpacer());
@@ -155,7 +191,7 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 		    languageBox.getElement().getStyle().setPaddingRight(48, Unit.PX);
 	    }
 	    else{
-		    languageBox.getElement().getStyle().setPaddingLeft(35, Unit.PX);
+		    languageBox.getElement().getStyle().setPaddingLeft(45, Unit.PX);
 	    }
 	    languageBox.getElement().getStyle().setTextAlign(Style.TextAlign.CENTER);
 //	    languageBox.getElement().getStyle().setProperty("margin", "auto");
@@ -227,6 +263,11 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	@Override
 	public HasTapHandlers getExistingAccountButton() {
 		return existingAccountButton;
+	}
+	
+	@Override
+	public HasClickHandlers getNewAccountAnchor(){
+		return registerAnchor;
 	}
 
 }

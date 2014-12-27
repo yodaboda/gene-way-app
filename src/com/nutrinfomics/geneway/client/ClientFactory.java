@@ -1,6 +1,7 @@
 package com.nutrinfomics.geneway.client;
 
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
@@ -75,4 +76,6 @@ public interface ClientFactory {
 	public String getUsername();
 	
 	public String getPassword();
+
+	public PlaceHistoryMapper getPlaceHistoryMapper();
 }

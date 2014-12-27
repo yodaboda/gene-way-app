@@ -4,6 +4,7 @@ import java.util.Date;
 
 import com.google.gwt.core.shared.GWT;
 import com.google.gwt.place.shared.PlaceController;
+import com.google.gwt.place.shared.PlaceHistoryMapper;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
@@ -64,6 +65,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private FirstScreenView firstScreenView;
 	static private String username;
 	static private String password;
+	static private PlaceHistoryMapper placeHistoryMapper;
 	
 	@Override
 	public EventBus getEventBus() {
@@ -265,5 +267,13 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public String getPassword() {
 		return password;
+	}
+
+	@Override
+	public PlaceHistoryMapper getPlaceHistoryMapper() {
+		if(placeHistoryMapper == null){
+			placeHistoryMapper = GWT.create(GeneWayPlaceHistoryMapper.class);
+		}
+		return placeHistoryMapper;
 	}
 }
