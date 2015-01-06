@@ -142,10 +142,10 @@ public class LocalImageHolderDefaultXHighAppearance implements
 		@Source("resources/logo1WhiteThick_xhdpi.png")
 		ImageResource geneWay();
 
-		@Source("resources/reemBefore_xhdpi.png")
+		@Source("resources/reemBefore_hdpi.png")
 		ImageResource reemBefore();
 		
-		@Source("resources/reemAfter_xhdpi.png")
+		@Source("resources/reemAfter_hdpi.png")
 		ImageResource reemAfter();
 
 

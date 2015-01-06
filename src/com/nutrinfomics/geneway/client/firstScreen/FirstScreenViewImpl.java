@@ -35,6 +35,7 @@ import com.googlecode.mgwt.ui.client.widget.animation.Animations;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
 import com.googlecode.mgwt.ui.client.widget.carousel.Carousel;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.input.MPasswordTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
@@ -73,7 +74,7 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 		
 	    GeneWayImageButton geneWayImage = new GeneWayImageButton();
 	    Style iconStyle = geneWayImage.image.getStyle();
-	    double factor = 1.5;
+	    double factor = 1.3;
 		String width = iconStyle.getWidth();
 		iconStyle.setWidth(Double.parseDouble(width.substring(0, width.length() - 2)) * factor, Style.Unit.PX);
 	    String height = iconStyle.getHeight();
@@ -90,21 +91,15 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    	//set background-size to contain
 	    }
 	    
-	    
-//	    ImageButton before = new AbstractImageButton(new GeneWayImageButtonAppearance(), LocalImageHolder.get().reemBefore(), "", 
-//				Styles.WHITE, Styles.WHITE, Styles.GREEN) {
-//		};
-
-//	    final ImageButton after = new AbstractImageButton(new GeneWayImageButtonAppearance(), LocalImageHolder.get().reemAfter(), "", 
-//				Styles.WHITE, Styles.WHITE, Styles.GREEN) {
-//		};
-		
 		final Image beforeImage = new Image(LocalImageHolder.get().reemBefore());
-		beforeImage.setPixelSize(beforeImage.getWidth() / 2, beforeImage.getHeight() / 2);
+
+	    int imageHeight = beforeImage.getHeight() / 2;
+	    int imageWidth = beforeImage.getWidth() / 2;
+
+		beforeImage.setPixelSize(imageWidth, imageHeight);
 		
 		final Image afterImage = new Image(LocalImageHolder.get().reemAfter());
-		afterImage.setPixelSize(afterImage.getWidth() / 2, afterImage.getHeight() / 2);
-		
+		afterImage.setPixelSize(imageWidth, imageHeight);
 		
 	    existingAccountButton = new Button(constants.existingAccount());
 	    newAccountButton = new Button(constants.newAccount());
@@ -115,69 +110,53 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    registerAnchor = new Anchor(constants.newAccount(), "#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()));
 	    registerAnchor.setStylePrimaryName("sp-circle-link");
 	    
-	    
-	    final Panel imagePanel = new Panel();
-	    imagePanel.add(beforeImage);
-	    
-	    
-	    Timer timer = new Timer() {
-	    	private double opacity = 1.;
-	    	private boolean fading = true;
-			@Override
-			public void run() {
-				if(fading){
-					opacity -= .01;
-					if(opacity < 0){
-						imagePanel.remove(beforeImage);
-						opacity = 0;
-						fading = false;
-						afterImage.getElement().getStyle().setOpacity(opacity);
-						imagePanel.add(afterImage);
-					}
-					else{
-						beforeImage.getElement().getStyle().setOpacity(opacity);
-					}
-				}
-				else{
-					opacity += .01;
-					if(opacity > 1){
-						cancel();
-					}
-					else{
-						afterImage.getElement().getStyle().setOpacity(opacity);
-					}
-				}
-			}
-		};
-
-		timer.scheduleRepeating(100);
-		
-//	    panel.getElement().getStyle().setBackgroundImage(beforeImage.getUrl());
 	    panel.add(geneWayImage);
 	    
 	    HTML animatedText = new HTML("<div class=\"sp-container\" dir=\"ltr\">"+
 	    								"<div class=\"sp-content\">" +
 //	    									"<div class=\"sp-globe\"></div>" +
-	    										"<h2 class=\"frame-1\">Suffering from overweight?</h2>" +
+	    										"<h2 class=\"frame-1\">" + constants.reem() + "</h2>" +
 
-        										"<h2 class=\"frame-2\">Diagnosed with diabetes?</h2>" +
+        										"<h2 class=\"frame-2\">" + constants.lost35kg() + "</h2>" +
 
-        										"<h2 class=\"frame-3\">Low energy?</h2>" +
+        										"<h2 class=\"frame-3\">" + constants.in7Months() + "</h2>" +
 
-        										"<h2 class=\"frame-4\">Or high cholesterol?</h2>" +
+        										"<h2 class=\"frame-4\">" + constants.youQM() + "</h2>" +
 
-        										"<h2 class=\"frame-5\"><span>Your way</span> <span>to health</span> <span>and fitness</span></h2>"+
+        										"<h2 class=\"frame-5\"><span>" + constants.timeInTimeForChange() + "</span> <span>" + constants.forInTimeForChange() + "</span> <span>" +  constants.changeInTimeForChange() + "</span></h2>"+
 //	    										"<a class=\"sp-circle-link\" href=\"#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()) + "\">Join Now!</a>" +
         								"</div>" +
 	    							"</div>");
 		animatedText.setWidth("100%");
-	    panel.add(animatedText);
+
+		
+		HTML animatedImages = new HTML("<div id=\"cf\">" +
+		  "<img class=\"bottom\" src=\" "+ afterImage.getUrl() + "\" style = \"width:82px; height:210px; \" />" +
+		  "<img class=\"top\" src=\" " + beforeImage.getUrl() + "\" style = \"width:82px; height:210px; \" />" +
+		"</div>");
+		animatedImages.setPixelSize(imageWidth, imageHeight);
+		animatedImages.getElement().getStyle().setProperty("margin", "auto");
+		animatedImages.getElement().getStyle().setMarginTop(50, Unit.PX);
+		
+//		Panel animatedPanel = new Panel();
+////		animatedPanel.setStylePrimaryName("crossfade");
+//		animatedPanel.setStylePrimaryName("cf");
+//		animatedPanel.setPixelSize(imageWidth, imageHeight);
+//		afterImage.setStylePrimaryName("bottom");
+//		animatedPanel.add(afterImage);
+//		beforeImage.setStylePrimaryName("top");
+//		animatedPanel.add(beforeImage);
+//		animatedPanel.getElement().getStyle().setMarginTop(50, Unit.PX);
+		
+		panel.add(animatedText);
 	    panel.add(registerAnchor);
 	    panel.add(new FlexSpacer());
 	    panel.add(new FixedSpacer());
-	    imagePanel.getElement().getStyle().setMarginTop(70, Unit.PX);
-	    imagePanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
-	    panel.add(imagePanel);
+	    
+//	    panel.add(animationWidget);
+//	    panel.add(imagePanel);
+	    panel.add(animatedImages);
+//	    panel.add(animatedPanel);
 	    
 	    panel.add(new FixedSpacer());
 	    panel.add(existingAccountButton);
@@ -187,17 +166,29 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    final MListBox languageBox = new MListBox();
 	    languageBox.getElement().getStyle().setColor(Styles.BLACK);
 	    
-	    if(LocaleInfo.getCurrentLocale().isRTL()){
-		    languageBox.getElement().getStyle().setPaddingRight(48, Unit.PX);
-	    }
-	    else{
-		    languageBox.getElement().getStyle().setPaddingLeft(45, Unit.PX);
-	    }
+	    	    
+//	    if(LocaleInfo.getCurrentLocale().isRTL()){
+//		    languageBox.getElement().getStyle().setPaddingRight(padding, Unit.PX);
+//	    }
+//	    else{
+//		    languageBox.getElement().getStyle().setPaddingLeft(padding, Unit.PX);
+//	    }
 	    languageBox.getElement().getStyle().setTextAlign(Style.TextAlign.CENTER);
 //	    languageBox.getElement().getStyle().setProperty("margin", "auto");
-	    panel.add(languageBox);
 	    initializeLanguageBox(languageBox);
+
+//	    Panel languagePanel = new Panel();
+//	    languagePanel.getElement().getStyle().setTextAlign(Style.TextAlign.CENTER);
+//	    languagePanel.getElement().getStyle().setPadding(0, Unit.PX);
+//	    languagePanel.getElement().getStyle().setBorderWidth(0, Unit.PX);
+//	    languagePanel.getElement().getStyle().setBackgroundColor("transparent");
+////	    languagePanel.getElement().getStyle().setBorderWidth(value, unit);
+//	    languagePanel.add(languageBox);
 	    
+//	    panel.add(languageBox);
+	    
+	    showFooter();
+	    addToFooter(languageBox);
 	    bodyCenterAlign();
 	    
 	}

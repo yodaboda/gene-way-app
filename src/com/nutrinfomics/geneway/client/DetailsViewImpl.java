@@ -1,5 +1,6 @@
 package com.nutrinfomics.geneway.client;
 
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
@@ -10,6 +11,7 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
 import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
+import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
@@ -30,6 +32,7 @@ public class DetailsViewImpl implements DetailsView{
 	private AboutImageButton aboutButton;
 	private HeaderPanel headerPanel;
 	protected FlowPanel bodyPanel;
+	private ButtonBar buttonBar;
 
 	public DetailsViewImpl(){
 		headerPanel = new HeaderPanel();
@@ -94,8 +97,20 @@ public class DetailsViewImpl implements DetailsView{
 
 		main.add(bodyPanel);
 		
+		buttonBar = new ButtonBar();
+		buttonBar.getElement().getStyle().setBorderWidth(0, Unit.PX);
+		main.add(buttonBar);
+		buttonBar.setVisible(false);
 	}
 
+	public void addToFooter(IsWidget w){
+		buttonBar.add(w);
+	}
+	
+	public void showFooter(){
+		buttonBar.setVisible(true);
+	}
+	
 	public void bodyCenterAlign(){
 		bodyPanel.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN);
 	}

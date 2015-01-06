@@ -102,4 +102,28 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 	
 	@DefaultStringValue("Food Item")
 	String foodItem();
+
+	@DefaultStringValue("Reem")
+	String reem();
+
+	@DefaultStringValue("Lost 35 KG")
+	String lost35kg();
+
+	@DefaultStringValue("In 7 months")
+	String in7Months();
+
+	@DefaultStringValue("You?")
+	String youQM();
+
+	@DefaultStringValue("Time")
+	String timeInTimeForChange();
+
+	@DefaultStringValue("for")
+	String forInTimeForChange();
+
+	@DefaultStringValue("change")
+	String changeInTimeForChange();
+
+	@DefaultStringValue("Settings")
+	String settings();
 }

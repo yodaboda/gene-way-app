@@ -11,6 +11,8 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 	private TabPanel tabPanel;
 	private MealsWidget mealsWidget;
 	private IngredientsWidget ingredientsWidget;
+	private SettingsWidget settingsWidget;
+	
 	
 	public HomeViewImpl(){
 		super();
@@ -58,6 +60,10 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 
 //	    tabPanel.add(new MyFavoritesTabBarButton(), new FavoritesWidget());
 
+		settingsWidget = new SettingsWidget();
+		tabPanel.add(new SettingsTabBarButton(), settingsWidget);
+		
+		
 		tabPanel.tabBar.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
 		tabPanel.tabContainer.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
 //

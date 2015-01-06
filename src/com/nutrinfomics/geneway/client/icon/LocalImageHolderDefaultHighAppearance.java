@@ -143,10 +143,10 @@ public class LocalImageHolderDefaultHighAppearance implements
 		ImageResource geneWay();
 
 
-		@Source("resources/reemBefore_hdpi.png")
+		@Source("resources/reemBefore_mdpi.png")
 		ImageResource reemBefore();
 		
-		@Source("resources/reemAfter_hdpi.png")
+		@Source("resources/reemAfter_mdpi.png")
 		ImageResource reemAfter();
 
 	}
