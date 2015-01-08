@@ -1,10 +1,9 @@
 package com.nutrinfomics.geneway.client.home;
 
-import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
-import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import com.nutrinfomics.geneway.client.DetailsViewImpl;
-import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
+import com.nutrinfomics.geneway.client.home.settingsPanel.SettingsTabBarButton;
+import com.nutrinfomics.geneway.client.home.settingsPanel.SettingsWidget;
 import com.nutrinfomics.geneway.client.style.Styles;
 
 public class HomeViewImpl extends DetailsViewImpl implements HomeView {
@@ -12,7 +11,6 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 	private MealsWidget mealsWidget;
 	private IngredientsWidget ingredientsWidget;
 	private SettingsWidget settingsWidget;
-	
 	
 	public HomeViewImpl(){
 		super();
@@ -24,10 +22,6 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 		
 //		ScrollPanel scrollPanel = new ScrollPanel();
 //		main.add(scrollPanel);
-		
-		
-		
-		
 //		bodyCenterAlign();
 		
 		tabPanel = new TabPanel();
@@ -40,7 +34,6 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 //	    tabPanel.add(new HistoryTabBarButton(), new Label("History"));
 //	    tabPanel.add(new MostViewedTabBarButton(), new Label("Most Viewed"));
 //	    tabPanel.add(new SearchTabBarButton(), new Label("Search"));
-		
 		
 		mealsWidget = new MealsWidget();
 //		scrollPanel.setWidget(mealsWidget);
@@ -63,7 +56,6 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 		settingsWidget = new SettingsWidget();
 		tabPanel.add(new SettingsTabBarButton(), settingsWidget);
 		
-		
 		tabPanel.tabBar.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
 		tabPanel.tabContainer.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
 //
@@ -74,18 +66,8 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 ////		flexPanel.add(tabPanel, 1);
 //////		flexPanel.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN);
 ////		main.add(flexPanel);
-//		
+
 		main.add(tabPanel, 1);
 ////		main.getElement().setAttribute("style", Styles.HORIZONTAL_CENTER_ALIGN + Styles.VERTICAL_CENTER_ALIGN);
-	}
-	
-	@Override
-	public void start(){
-		mealsWidget.getNextSnack();
-	}
-
-	@Override
-	public void setSnack(SnackProxy snackProxy) {
-		mealsWidget.setSnack(snackProxy, false);
 	}
 }

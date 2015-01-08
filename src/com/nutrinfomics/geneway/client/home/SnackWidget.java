@@ -255,7 +255,7 @@ public class SnackWidget extends HorizontalPanel{
 	public void nextSnack(SnackStatus snackStatus) {
 		setSnackStatus(snackStatus);
 		timer.cancel();
-		mealsWidget.getNextSnack();
+		mealsWidget.switchToNextSnack();
 	}
 	
 }

@@ -126,4 +126,10 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 
 	@DefaultStringValue("Settings")
 	String settings();
+
+	@DefaultStringValue("Hours btw snacks")
+	String timeBetweenMeals();
+
+	@DefaultStringValue("Send me SMS alerts")
+	String smsSnackAlerts();
 }

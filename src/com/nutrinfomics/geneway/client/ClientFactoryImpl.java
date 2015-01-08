@@ -66,6 +66,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private String username;
 	static private String password;
 	static private PlaceHistoryMapper placeHistoryMapper;
+	static private ClientData clientData = new ClientData();
 	
 	@Override
 	public EventBus getEventBus() {
@@ -275,5 +276,10 @@ public class ClientFactoryImpl implements ClientFactory {
 			placeHistoryMapper = GWT.create(GeneWayPlaceHistoryMapper.class);
 		}
 		return placeHistoryMapper;
+	}
+
+	@Override
+	public ClientData getClientData() {
+		return clientData;
 	}
 }

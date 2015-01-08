@@ -78,4 +78,6 @@ public interface ClientFactory {
 	public String getPassword();
 
 	public PlaceHistoryMapper getPlaceHistoryMapper();
+
+	public ClientData getClientData();
 }

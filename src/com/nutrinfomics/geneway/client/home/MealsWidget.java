@@ -7,6 +7,9 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
+import com.nutrinfomics.geneway.client.ClientData;
+import com.nutrinfomics.geneway.client.ClientData.NextSnackListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.home.SnackWidget.State;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
@@ -15,8 +18,9 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryPro
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
+import com.nutrinfomics.geneway.client.util.DateUtils;
 
-public class MealsWidget extends AbstractTabBarWidget {
+public class MealsWidget extends AbstractTabBarWidget implements NextSnackListener{
 //	private HTML mealContentHTML;
 //	private Label countdown;
 //
@@ -32,88 +36,35 @@ public class MealsWidget extends AbstractTabBarWidget {
 	private SnackProxy snackProxy = null;
 	
 	private SnackWidget snackWidget;
-	private DateTimeFormat formater = DateTimeFormat.getFormat("yyyy.MM.dd");
 	
-	public void setSnack(SnackProxy snackProxy, final boolean snackForTomorrow){
+	@Override
+	public void nextSnack(SnackProxy snackProxy, boolean snackForTomorrow) {
 		this.snackProxy = snackProxy;
 		if(snackWidget != null) this.remove(snackWidget);
-		Request<SnackProxy> findRequest = (Request<SnackProxy>) ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest().find(snackProxy.stableId());
-		findRequest.with("foodItems", "snackProperty", "time","foodItems.measurementUnit", "foodItems.foodType");
-		findRequest.fire(new GeneWayReceiver<SnackProxy>() {
-			@Override
-			public void onSuccess(SnackProxy snackProxy) {
-				snackWidget = new SnackWidget(snackProxy, State.CURRENT, MealsWidget.this);
-				if(snackForTomorrow){
-					Date currentTime = new Date();
-					Date startingTime = CalendarUtil.copyDate(currentTime);
-					CalendarUtil.addDaysToDate(startingTime, 1);
-					startingTime.setHours(8);
-					startingTime.setMinutes(0);
-					startingTime.setSeconds(0);
-					
-					snackWidget.setHoursInterval( (startingTime.getTime() - currentTime.getTime()) * 1.0 / (1000 * 60 * 60) );
-				}
-				MealsWidget.this.snackProxy = snackProxy;
-				add(snackWidget);
-			}
-		});
-	}
-	
-	void getNextSnack(){
-		persistCurrentSnack();
-	}
-
-	private void requestNextSnack(final int daysOffset) {
-		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
-		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);
-		planRequest.getNextSnack(sessionProxy, getDate(daysOffset)).fire(new GeneWayReceiver<SnackProxy>() {
-			@Override
-			public void onFailure(ServerFailure error) {
-				Window.alert(error.getMessage());
-			}
-			@Override
-			public void onSuccess(SnackProxy snackProxy) {
-				if(snackProxy.getSnackProperty() == null){
-					requestNextSnack(1);
-				}
-				else{
-					setSnack(snackProxy, daysOffset == 1);
-				}
-			}
-		});
-	}
-
-	private void persistCurrentSnack() {
-		if(snackProxy == null){
-			requestNextSnack(0);
-			return;
+		snackWidget = new SnackWidget(snackProxy, State.CURRENT, MealsWidget.this);
+		if(snackForTomorrow){
+			Date currentTime = new Date();
+			Date startingTime = CalendarUtil.copyDate(currentTime);
+			CalendarUtil.addDaysToDate(startingTime, 1);
+			startingTime.setHours(8);
+			startingTime.setMinutes(0);
+			startingTime.setSeconds(0);
+			
+			snackWidget.setHoursInterval( (startingTime.getTime() - currentTime.getTime()) * 1.0 / (1000 * 60 * 60) );
 		}
+		MealsWidget.this.snackProxy = snackProxy;
+		add(snackWidget);
 		
-		EntityBaseRequest snackHistoryRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
-		Date timestamp = new Date();
-		SnackHistoryProxy snackHistoryProxy = snackHistoryRequest.create(SnackHistoryProxy.class);
-		snackHistoryProxy.setEatenSnack(snackProxy);	
-		snackHistoryProxy.setDayString(getDate(0));
-		snackHistoryProxy.setStatus(snackWidget.getSnackStatus());
-		snackHistoryProxy.setTimestamp(timestamp);
-		snackHistoryProxy.setTimeZoneDiff(timestamp.getTimezoneOffset());
-		snackHistoryRequest.persist().using(snackHistoryProxy).fire(new GeneWayReceiver<Void>() {
-			@Override
-			public void onSuccess(Void response) {
-				requestNextSnack(0);
-			}
-		});
 	}
+
 	
-	private String getDate(int daysOffset){
-		Date timestamp = new Date();
-		CalendarUtil.addDaysToDate(timestamp, daysOffset);
-		return formater.format(timestamp);
+	void switchToNextSnack() {
+		ClientFactoryFactory.getClientFactory().getClientData().persistCurrentSnack(snackProxy, snackWidget.getSnackStatus(), this);
 	}
 	
 	public MealsWidget(){
-
-
+		ClientData clientData = ClientFactoryFactory.getClientFactory().getClientData();
+		nextSnack(clientData.getNextSnack(), clientData.isSnackForTomorrow());
 //		snackId = 0;
 //		plan = ClientFactoryFactory.getClientFactory().getPlan();
 //		weeklyCycle = ClientFactoryFactory.getClientFactory().getWeeklyCycle();
