@@ -132,4 +132,7 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 
 	@DefaultStringValue("Send me SMS alerts")
 	String smsSnackAlerts();
+
+	@DefaultStringValue("Snack order")
+	SafeHtml snackOrder();
 }

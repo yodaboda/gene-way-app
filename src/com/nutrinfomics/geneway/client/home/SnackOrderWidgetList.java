@@ -14,6 +14,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
@@ -34,6 +35,7 @@ public class SnackOrderWidgetList extends WidgetList {
 	
 	
 	public SnackOrderWidgetList(){
+		setHeader(new HTML(ClientFactoryFactory.getClientFactory().getConstants().snackOrder()));
 		snackSummary = ClientFactoryFactory.getClientFactory().getClientData().getSnackSummary();
 		initSnackSummary();
 	}
