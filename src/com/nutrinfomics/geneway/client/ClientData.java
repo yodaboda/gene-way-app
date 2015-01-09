@@ -22,6 +22,9 @@ public class ClientData {
 	private Set<FoodItemType> ingredients;
 	private SnackProxy nextSnack;
 	private boolean snackForTomorrow;
+	private double timeBetweenSnacks;
+	private boolean smsAlerts;
+	private List<String> snackOrder;
 	
 	public interface NextSnackListener{
 		public void nextSnack(SnackProxy snackProxy, boolean snackForTommorow);
@@ -47,6 +50,7 @@ public class ClientData {
 	private void setIngredients(Set<FoodItemType> ingredients){
 		this.ingredients = ingredients;
 	}
+	
 	public void requestIngredients(final IngredientsListener ingredientsListener){
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
 		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);

@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+.mgwt-WidgetList{
+	border-top: 0px solid #65cc00;
+	padding: 2px;
+	height: 100%;
+	background-color: #ffffff;
+}
+
+.mgwt-WidgetList-Entry{
+	border: 0px solid #65cc00;
+	padding: 2px;
+}
+
+.mgwt-WidgetList-Entry-selectable{
+	border: 1px solid #65cc00;
+	padding: 2px;
+}
+
+.mgwt-WidgetList-Entry-first{
+	border: 1px solid #65cc00;
+	padding: 2px;
+}
+
+.mgwt-WidgetList-Entry-last{
+	border: 1px solid #65cc00;
+	padding: 2px;
+}

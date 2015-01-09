@@ -134,5 +134,11 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 	String smsSnackAlerts();
 
 	@DefaultStringValue("Snack order")
-	SafeHtml snackOrder();
+	String snackOrder();
+
+	@DefaultStringValue("Language")
+	String language();
+
+	@DefaultStringValue("automatic")
+	String auto();
 }

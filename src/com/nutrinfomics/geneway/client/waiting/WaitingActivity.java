@@ -22,7 +22,7 @@ import com.nutrinfomics.geneway.client.ClientData.MenuSummaryListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.ClientFactoryImpl;
 import com.nutrinfomics.geneway.client.home.HomePlace;
-import com.nutrinfomics.geneway.client.home.SnackOrderWidgetList;
+import com.nutrinfomics.geneway.client.home.settingsPanel.SnackOrderWidgetList;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.login.AuthenticationException;
 import com.nutrinfomics.geneway.client.login.LoginPlace;

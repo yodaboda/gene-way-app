@@ -1,54 +1,58 @@
 package com.nutrinfomics.geneway.client.home.settingsPanel;
 
-import com.google.gwt.user.client.ui.ValueBoxBase.TextAlignment;
+import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.ui.client.widget.input.MNumberTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.checkbox.MCheckBox;
+import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
-import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Orientation;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.home.SnackOrderWidgetList;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.style.Styles;
+import com.nutrinfomics.geneway.client.util.LanguageUtils;
 
-public class SettingsWidget extends WidgetList {
-
+public class SettingsWidgetList extends WidgetList {
 	
 	private SnackOrderWidgetList snackOrder;
-	public SettingsWidget(){
+	public SettingsWidgetList(){
+		
+		super(new SettingsWidgetListAppearance());
 		
 		getElement().getStyle().setBackgroundColor(Styles.WHITE);
-		setHeight("100%");
 		GeneWayConstants constants = ClientFactoryFactory.getClientFactory().getConstants();
 		
 		MNumberTextBox hoursBetweenMeals = new SettingsPanelNumberTextBox();
 		hoursBetweenMeals.setValue("1.5");
-		FlexPanel panel = new SettingsTabPanel();
 		MTextBox textBox = new SettingTabTextBox();
 		textBox.setText(constants.timeBetweenMeals());
-		panel.add(textBox);
+		FlexPanel hoursPanel = new SettingsTabPanel(textBox, hoursBetweenMeals);
 		
-		panel.add(hoursBetweenMeals);
-		
-		
-		add(panel);
-		
-		
-		FlexPanel panel2 = new SettingsTabPanel();
-		MCheckBox mCheckBox = new MCheckBox();
-		
+		add(hoursPanel);
+
+		MCheckBox smsCheckBox = new SettingsPanelCheckBox();
 		MTextBox textBox2 = new SettingTabTextBox();
 		textBox2.setText(constants.smsSnackAlerts());
-		
-		panel2.add(textBox2);
-		panel2.add(mCheckBox);
-		
-		
-		add(panel2);
+		FlexPanel smsPanel = new SettingsTabPanel(textBox2, smsCheckBox);
+		add(smsPanel);
 		
 		snackOrder = new SnackOrderWidgetList();
-		
 		add(snackOrder);
+		
+		MListBox languageBox = new MListBox();
+		LanguageUtils.initializeLanguageBox(languageBox);
+		languageBox.setWidth("50%");
+		MTextBox languageTextBox = new SettingTabTextBox();
+		languageTextBox.setText(constants.language());
+		FlexPanel languagePanel = new SettingsTabPanel(languageTextBox, languageBox);
+		add(languagePanel);
 	}
+	
+	@Override
+	public void add(Widget w) {
+		super.add(w);
+		//hacking WidgetListEntry to force it take customized CSS into consideration.
+		setSelectAble(getWidgetCount() - 1, true);
+	}
+
 }

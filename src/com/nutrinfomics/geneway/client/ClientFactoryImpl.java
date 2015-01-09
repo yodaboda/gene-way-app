@@ -24,6 +24,7 @@ import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.about.AboutViewImpl;
 import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
 import com.nutrinfomics.geneway.client.constants.MeasurementsConstants;
+import com.nutrinfomics.geneway.client.constants.MiscConstants;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
@@ -60,6 +61,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private WaitingView waitingView;
 	static private FoodItemTypeConstants foodItemTypeConstants;
 	static private MeasurementsConstants measurementsConstants;
+	static private MiscConstants miscConstants;
 	static private AboutView aboutView;
 	static private GeneWayRequestFactory requestFactory;
 	static private FirstScreenView firstScreenView;
@@ -281,5 +283,13 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public ClientData getClientData() {
 		return clientData;
+	}
+
+	@Override
+	public MiscConstants getMiscConstants() {
+		if(miscConstants == null){
+			miscConstants = GWT.create(MiscConstants.class);
+		}
+		return miscConstants;
 	}
 }

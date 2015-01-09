@@ -20,8 +20,5 @@ public interface SnackProxy extends EntityProxy{
 
 	public void setSnackProperty(SnackProperty snackProperty);
 
-	public Date getTime();
-
-	public void setTime(Date time);
 
 }

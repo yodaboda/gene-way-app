@@ -3,14 +3,14 @@ package com.nutrinfomics.geneway.client.home;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import com.nutrinfomics.geneway.client.DetailsViewImpl;
 import com.nutrinfomics.geneway.client.home.settingsPanel.SettingsTabBarButton;
-import com.nutrinfomics.geneway.client.home.settingsPanel.SettingsWidget;
+import com.nutrinfomics.geneway.client.home.settingsPanel.SettingsWidgetList;
 import com.nutrinfomics.geneway.client.style.Styles;
 
 public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 	private TabPanel tabPanel;
 	private MealsWidget mealsWidget;
 	private IngredientsWidget ingredientsWidget;
-	private SettingsWidget settingsWidget;
+	private SettingsWidgetList settingsWidget;
 	
 	public HomeViewImpl(){
 		super();
@@ -53,8 +53,10 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 
 //	    tabPanel.add(new MyFavoritesTabBarButton(), new FavoritesWidget());
 
-		settingsWidget = new SettingsWidget();
+		settingsWidget = new SettingsWidgetList();
 		tabPanel.add(new SettingsTabBarButton(), settingsWidget);
+		
+		settingsWidget.getParent().setHeight("100%");
 		
 		tabPanel.tabBar.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-top-color:" + Styles.BACKGROUND_COLOR_VALUE + ";");
 		tabPanel.tabContainer.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);

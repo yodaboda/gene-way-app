@@ -1,4 +1,4 @@
-package com.nutrinfomics.geneway.client.home;
+package com.nutrinfomics.geneway.client.home.settingsPanel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +15,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.dom.client.TouchStartHandler;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
@@ -35,6 +36,7 @@ public class SnackOrderWidgetList extends WidgetList {
 	
 	
 	public SnackOrderWidgetList(){
+		super(new SettingsWidgetListAppearance());
 		setHeader(new HTML(ClientFactoryFactory.getClientFactory().getConstants().snackOrder()));
 		snackSummary = ClientFactoryFactory.getClientFactory().getClientData().getSnackSummary();
 		initSnackSummary();
@@ -56,13 +58,15 @@ public class SnackOrderWidgetList extends WidgetList {
 
 			snackSummaryBox.getElement().setDraggable(Element.DRAGGABLE_TRUE);
 			
+			snackSummaryBox.addItem(ClientFactoryFactory.getClientFactory().getConstants().auto(), "auto");
+			
 			for(int j = 0; j < snackSummary.size(); ++j){
 				String label;
 				try{
 					label = ClientFactoryFactory.getClientFactory().getFoodItemTypeConstants().getString(snackSummary.get(j));
 				}
 				catch(MissingResourceException ex){
-					label = "rest snack";
+					label = ClientFactoryFactory.getClientFactory().getMiscConstants().REST();
 				}
 				snackSummaryBox.addItem(label, snackSummary.get(j));
 			}
@@ -80,4 +84,11 @@ public class SnackOrderWidgetList extends WidgetList {
 			add(snackSummaryBox);
 		}
 	}
+	@Override
+	public void add(Widget w) {
+		super.add(w);
+		//hacking WidgetListEntry to force it take customized CSS into consideration.
+		setSelectAble(getWidgetCount() - 1, true);
+	}
+
 }

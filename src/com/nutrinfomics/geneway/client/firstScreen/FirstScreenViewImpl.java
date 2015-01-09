@@ -53,6 +53,7 @@ import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
 import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.register.RegisterPlace;
 import com.nutrinfomics.geneway.client.style.Styles;
+import com.nutrinfomics.geneway.client.util.LanguageUtils;
 
 public class FirstScreenViewImpl extends DetailsViewImpl implements
 		FirstScreenView {
@@ -175,7 +176,7 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 //	    }
 	    languageBox.getElement().getStyle().setTextAlign(Style.TextAlign.CENTER);
 //	    languageBox.getElement().getStyle().setProperty("margin", "auto");
-	    initializeLanguageBox(languageBox);
+	    LanguageUtils.initializeLanguageBox(languageBox);
 
 //	    Panel languagePanel = new Panel();
 //	    languagePanel.getElement().getStyle().setTextAlign(Style.TextAlign.CENTER);
@@ -193,47 +194,6 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    
 	}
 
-	private void initializeLanguageBox(final MListBox languageBox) {
-		final String cookieName=LocaleInfo.getLocaleCookieName();
-	    final String queryParam=LocaleInfo.getLocaleQueryParam();
-	    if (cookieName == null && queryParam == null) {
-//	      localeSelectionCell.getStyle().setDisplay(Display.NONE);
-	      return;
-	    }
-	    String currentLocale=LocaleInfo.getCurrentLocale().getLocaleName();
-	    if (currentLocale.equals("default")) {
-	    	currentLocale="en";
-	    }
-	    String[] localeNames=LocaleInfo.getAvailableLocaleNames();
-	    for (  String localeName : localeNames) {
-	    	if(!localeName.equals("default")){
-	    		String nativeName=LocaleInfo.getLocaleNativeDisplayName(localeName);
-	    		languageBox.addItem(nativeName,localeName);
-	    		if (localeName.equals(currentLocale)) {
-	    			languageBox.setSelectedIndex(languageBox.getItemCount() - 1);
-	    		}
-	    	}
-	    }
-	    languageBox.addChangeHandler(new ChangeHandler() {
-
-	    	@Override
-	    	public void onChange(ChangeEvent event) {
-	    		String localeName=languageBox.getValue(languageBox.getSelectedIndex());
-	    		if (cookieName != null) {
-	    			Date expires=new Date();
-	    			expires.setYear(expires.getYear() + 1);
-	    			Cookies.setCookie(cookieName,localeName,expires);
-	    		}
-//	    		if (queryParam != null) {
-//	    			UrlBuilder builder=Location.createUrlBuilder().setParameter(queryParam,localeName);
-//	    			Window.Location.replace(builder.buildString());
-//	    		}
-//	    		else {
-	    			Window.Location.reload();
-//	    		}
-	    	}			
-	    });
-	}
 
 
 	private void setButtonStyle(Button button) {
