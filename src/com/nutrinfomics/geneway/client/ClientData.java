@@ -4,13 +4,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.google.gwt.user.client.Window;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
+import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.util.DateUtils;
@@ -22,8 +26,7 @@ public class ClientData {
 	private Set<FoodItemType> ingredients;
 	private SnackProxy nextSnack;
 	private boolean snackForTomorrow;
-	private double timeBetweenSnacks;
-	private boolean smsAlerts;
+	private PlanPreferencesProxy planPreferences;
 	private List<String> snackOrder;
 	
 	public interface NextSnackListener{
@@ -38,6 +41,10 @@ public class ClientData {
 		public void menuSummary(List<String> menuSummary);
 	}
 	
+	public interface PlanPreferencesListener{
+		public void planPreferences(PlanPreferencesProxy planPreferences);
+	}
+	
 	public List<String> getSnackSummary() {
 		return menuSummary;
 	}
@@ -49,6 +56,38 @@ public class ClientData {
 	}
 	private void setIngredients(Set<FoodItemType> ingredients){
 		this.ingredients = ingredients;
+	}
+
+	public void findPlanPreferences(PlanPreferencesProxy planPreferences2,
+			final PlanPreferencesListener planPreferencesListener) {
+		Request<PlanPreferencesProxy> findRequest = (Request<PlanPreferencesProxy>) ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest().find(planPreferences.stableId());
+		findRequest.with("snackTimes");
+		findRequest.fire(new GeneWayReceiver<PlanPreferencesProxy>() {
+			@Override
+			public void onSuccess(PlanPreferencesProxy planPreferencesProxy) {
+				setPlanPreferences(planPreferencesProxy);
+				planPreferencesListener.planPreferences(planPreferencesProxy);
+			}
+		});
+	}
+
+	
+	public void requestPlanPreferences(final PlanPreferencesListener planPreferencesListener){
+		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);
+		Request<PlanPreferencesProxy> planPreferencesRequest = planRequest.getPlanPreferences(sessionProxy);
+		planPreferencesRequest.with("snackTimes");
+		planPreferencesRequest.fire(new GeneWayReceiver<PlanPreferencesProxy>() {
+			@Override
+			public void onFailure(ServerFailure error) {
+				Dialogs.alert(ClientFactoryFactory.getClientFactory().getConstants().error(),error.getMessage(), null);
+			}
+			@Override
+			public void onSuccess(PlanPreferencesProxy planPreferences) {
+				setPlanPreferences(planPreferences);
+				planPreferencesListener.planPreferences(planPreferences);
+			}
+		});
 	}
 	
 	public void requestIngredients(final IngredientsListener ingredientsListener){
@@ -122,7 +161,7 @@ public class ClientData {
 		snackHistoryProxy.setStatus(snackStatus);
 		snackHistoryProxy.setTimestamp(timestamp);
 		snackHistoryProxy.setTimeZoneDiff(timestamp.getTimezoneOffset());
-		snackHistoryRequest.persist().using(snackHistoryProxy).fire(new GeneWayReceiver<Void>() {
+		snackHistoryRequest.persist(snackHistoryProxy).fire(new GeneWayReceiver<Void>() {
 			@Override
 			public void onSuccess(Void response) {
 				requestNextSnack(0, nextSnackListener);
@@ -141,5 +180,16 @@ public class ClientData {
 	private void setSnackForTomorrow(boolean snackForTomorrow) {
 		this.snackForTomorrow = snackForTomorrow;
 	}
-
+	public PlanPreferencesProxy getPlanPreferences() {
+		return planPreferences;
+	}
+	public void setPlanPreferences(PlanPreferencesProxy planPreferences) {
+		this.planPreferences = planPreferences;
+	}
+	public List<String> getSnackOrder() {
+		return snackOrder;
+	}
+	public void setSnackOrder(List<String> snackOrder) {
+		this.snackOrder = snackOrder;
+	}
 }

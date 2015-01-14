@@ -18,7 +18,7 @@ abstract public class GeneWayReceiver<T> extends Receiver<T> {
 
 	@Override
 	public void onConstraintViolation(Set<ConstraintViolation<?>> violations){
-		
+		Window.alert("constraint violation");
 		if(! violations.isEmpty() ){
 			Iterator<ConstraintViolation<?>> iterator = violations.iterator();
 			String message = "";

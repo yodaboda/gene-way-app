@@ -19,6 +19,7 @@ import com.nutrinfomics.geneway.client.ClientData;
 import com.nutrinfomics.geneway.client.ClientData.IngredientsListener;
 import com.nutrinfomics.geneway.client.ClientData.NextSnackListener;
 import com.nutrinfomics.geneway.client.ClientData.MenuSummaryListener;
+import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.ClientFactoryImpl;
 import com.nutrinfomics.geneway.client.home.HomePlace;
@@ -29,8 +30,10 @@ import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.login.AuthenticationException.LoginExceptionType;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackTimesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.util.DateUtils;
@@ -134,6 +137,7 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		getIngredients();
 		getMenuSummary();
 		getNextSnack();
+		getSnackTimes();
 		
 		Timer timer = new Timer(){
 			  @Override
@@ -144,6 +148,17 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		
 		timer.schedule(2000);
 	}
+	
+	private void getSnackTimes(){
+		ClientFactoryFactory.getClientFactory().getClientData().requestPlanPreferences(new PlanPreferencesListener() {
+			@Override
+			public void planPreferences(PlanPreferencesProxy planPreferencesProxy) {
+				increaseCount();
+			}
+		});
+		
+	}
+	
 	private void getNextSnack() {
 		ClientData clientData = ClientFactoryFactory.getClientFactory().getClientData();
 		
@@ -175,7 +190,7 @@ public class WaitingActivity extends MGWTAbstractActivity {
 
 	private synchronized void increaseCount(){
 		count++;
-		if(count == 4){
+		if(count == 5){
 			  ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new HomePlace());
 		}
 	}

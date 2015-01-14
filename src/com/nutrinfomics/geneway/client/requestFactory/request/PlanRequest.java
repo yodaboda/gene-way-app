@@ -1,6 +1,5 @@
 package com.nutrinfomics.geneway.client.requestFactory.request;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -9,14 +8,15 @@ import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.Service;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
-import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackTimesProxy;
-import com.nutrinfomics.geneway.server.domain.device.Session;
 import com.nutrinfomics.geneway.server.domain.plan.Plan;
+import com.nutrinfomics.geneway.server.requestfactory.GeneWayServiceLocator;
+import com.nutrinfomics.geneway.server.requestfactory.request.PlanService;
 import com.nutrinfomics.geneway.shared.FoodItemType;
 
-@Service(Plan.class)
+@Service(value = PlanService.class, locator = GeneWayServiceLocator.class)
 @ExtraTypes({PlanProxy.class, SnackProxy.class})
 public interface PlanRequest extends RequestContext{
 
@@ -28,5 +28,5 @@ public interface PlanRequest extends RequestContext{
 
 	Request<List<String>> getMenuSummary(SessionProxy sessionProxy, String dateString);
 	
-	Request<SnackTimesProxy> getSnackTimes(SessionProxy session);
+	Request<PlanPreferencesProxy> getPlanPreferences(SessionProxy session);
 }

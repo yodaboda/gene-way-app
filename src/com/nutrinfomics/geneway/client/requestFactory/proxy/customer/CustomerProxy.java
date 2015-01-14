@@ -2,6 +2,7 @@ package com.nutrinfomics.geneway.client.requestFactory.proxy.customer;
 
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
+import com.nutrinfomics.geneway.client.requestFactory.EntityBaseProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.DeviceProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.server.domain.EntityBaseLocator;
@@ -13,7 +14,7 @@ import com.nutrinfomics.geneway.server.domain.status.Status;
 import com.nutrinfomics.geneway.server.domain.subscription.Subscription;
 
 @ProxyFor(value = Customer.class, locator = EntityBaseLocator.class)
-public interface CustomerProxy extends EntityProxy{
+public interface CustomerProxy extends EntityBaseProxy{
 
 //	public Subscription getSubscription();
 //
