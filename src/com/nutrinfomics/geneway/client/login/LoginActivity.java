@@ -9,7 +9,6 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.home.HomePlace;
 import com.nutrinfomics.geneway.client.login.AuthenticationException.LoginExceptionType;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
@@ -17,6 +16,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingPlace;
 import com.nutrinfomics.geneway.shared.AccessConstants;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
 
 public class LoginActivity extends MGWTAbstractActivity {
 

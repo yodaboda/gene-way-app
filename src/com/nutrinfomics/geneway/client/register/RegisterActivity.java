@@ -15,7 +15,6 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.register.RegisterException.RegisterExceptionType;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
@@ -27,6 +26,7 @@ import com.nutrinfomics.geneway.server.domain.customer.Customer;
 import com.nutrinfomics.geneway.server.domain.customer.PersonalDetails;
 import com.nutrinfomics.geneway.server.domain.device.Device;
 import com.nutrinfomics.geneway.server.domain.device.Session;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
 
 public class RegisterActivity extends MGWTAbstractActivity {
 //	private RegisterServiceAsync registerService = GWT.create(RegisterService.class);

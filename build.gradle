@@ -20,6 +20,9 @@ dependencies{
         compile 'javax.validation:validation-api:1.0.0.GA'
         compile project(':shared') 
 		compile project(':domain')
+		
+		compile name: 'langdetect'
+		compile name: 'jsonic-1.2.0'
 }
 
 sourceSets {
@@ -34,7 +37,7 @@ war{
         webAppDirName = file('webapp') 
 }
 
-task constantsJar(type: Jar, dependsOn: compileJava) {
+task constantsJar(type: Jar) {
 	from sourceSets.main.output.classesDir
 	include 'src/com/nutrinfomics/geneway/client/constants/*.properties'
 	baseName = 'constants'

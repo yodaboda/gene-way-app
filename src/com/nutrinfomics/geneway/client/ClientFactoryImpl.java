@@ -22,10 +22,6 @@ import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.MGWTSettings;
 import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.about.AboutViewImpl;
-import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
-import com.nutrinfomics.geneway.client.constants.MeasurementsConstants;
-import com.nutrinfomics.geneway.client.constants.MiscConstants;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
@@ -47,6 +43,10 @@ import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.client.waiting.WaitingViewImpl;
 import com.nutrinfomics.geneway.server.domain.plan.WeeklyCycle;
 import com.nutrinfomics.geneway.shared.AccessConstants;
+import com.nutrinfomics.geneway.shared.constants.FoodItemTypeConstants;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
+import com.nutrinfomics.geneway.shared.constants.MeasurementsConstants;
+import com.nutrinfomics.geneway.shared.constants.MiscConstants;
 
 public class ClientFactoryImpl implements ClientFactory {
 

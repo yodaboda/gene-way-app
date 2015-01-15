@@ -4,7 +4,7 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabBarButton;
 import com.googlecode.mgwt.ui.client.widget.tabbar.TabPanel;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
 
 abstract public class AbstractTabBarButton extends TabBarButton {
 	

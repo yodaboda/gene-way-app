@@ -13,7 +13,6 @@ import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.requestFactory.EntityBaseProxy;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
@@ -21,6 +20,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackTimesProxy
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
 import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.client.util.LanguageUtils;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
 
 public class SettingsWidgetList extends WidgetList {
 	

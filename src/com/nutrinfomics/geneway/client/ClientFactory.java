@@ -7,10 +7,6 @@ import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.nutrinfomics.geneway.client.about.AboutView;
-import com.nutrinfomics.geneway.client.constants.FoodItemTypeConstants;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
-import com.nutrinfomics.geneway.client.constants.MeasurementsConstants;
-import com.nutrinfomics.geneway.client.constants.MiscConstants;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
@@ -25,6 +21,10 @@ import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.server.domain.plan.Plan;
 import com.nutrinfomics.geneway.server.domain.plan.WeeklyCycle;
+import com.nutrinfomics.geneway.shared.constants.FoodItemTypeConstants;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
+import com.nutrinfomics.geneway.shared.constants.MeasurementsConstants;
+import com.nutrinfomics.geneway.shared.constants.MiscConstants;
 
 public interface ClientFactory {
 	

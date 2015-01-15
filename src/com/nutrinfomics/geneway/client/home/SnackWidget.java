@@ -39,7 +39,6 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.nutrinfomics.geneway.client.AbstractImageButton;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.ClientFactoryImpl;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.home.SnackTracker.State;
 import com.nutrinfomics.geneway.client.home.SnackTrackerCell.Template;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
@@ -49,6 +48,7 @@ import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.server.domain.plan.FoodItem;
 import com.nutrinfomics.geneway.server.domain.plan.Snack;
 import com.nutrinfomics.geneway.shared.SnackStatus;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
 
 public class SnackWidget extends HorizontalPanel{
 

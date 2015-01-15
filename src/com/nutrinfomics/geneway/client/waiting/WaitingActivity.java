@@ -22,7 +22,6 @@ import com.nutrinfomics.geneway.client.ClientData.MenuSummaryListener;
 import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.ClientFactoryImpl;
-import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.home.HomePlace;
 import com.nutrinfomics.geneway.client.home.settingsPanel.SnackOrderWidgetList;
 import com.nutrinfomics.geneway.client.login.AuthenticationException;
@@ -40,6 +39,7 @@ import com.nutrinfomics.geneway.client.util.DateUtils;
 import com.nutrinfomics.geneway.shared.AccessConstants;
 import com.nutrinfomics.geneway.shared.FoodItemType;
 import com.nutrinfomics.geneway.shared.SnackStatus;
+import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
 import com.sun.java.swing.plaf.windows.WindowsBorders;
 
 public class WaitingActivity extends MGWTAbstractActivity {
