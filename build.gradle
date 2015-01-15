@@ -37,20 +37,20 @@ war{
         webAppDirName = file('webapp') 
 }
 
-task constantsJar(type: Jar) {
-	from sourceSets.main.output.classesDir
-	include 'src/com/nutrinfomics/geneway/client/constants/*.properties'
-	baseName = 'constants'
-	jar.includeEmptyDirs = false
-}
+//task constantsJar(type: Jar) {
+//	from sourceSets.main.output.classesDir
+//	include 'src/com/nutrinfomics/geneway/client/constants/*.properties'
+//	baseName = 'constants'
+//	jar.includeEmptyDirs = false
+//}
 
-configurations {
-    constants
-}
+//configurations {
+//    constants
+//}
 
-artifacts {
-    constants constantsJar
-}
+//artifacts {
+//    constants constantsJar
+//}
 
 gwt {
 	gwtVersion='2.7.0'
