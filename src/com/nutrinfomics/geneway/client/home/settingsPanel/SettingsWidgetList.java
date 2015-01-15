@@ -13,7 +13,7 @@ import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
+import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.requestFactory.EntityBaseProxy;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
@@ -37,41 +37,7 @@ public class SettingsWidgetList extends WidgetList {
 		hoursBetweenMeals.addValueChangeHandler(new ValueChangeHandler<String>() {
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				PlanPreferencesProxy planPreferences = ClientFactoryFactory.getClientFactory().getClientData().getPlanPreferences();
-				EntityBaseRequest entityBaseRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
-				
-				final PlanPreferencesProxy planPreferencesEdit = entityBaseRequest.edit(planPreferences);
-				double newValue = Double.parseDouble(event.getValue());
-				planPreferencesEdit.getSnackTimes().setTimeBetweenSnacks(newValue);
-
-				Window.alert("edit: new time between snacks value: " + planPreferencesEdit.getSnackTimes().getTimeBetweenSnacks());
-				
-				entityBaseRequest.merge(planPreferencesEdit).fire(new GeneWayReceiver<Void>() {
-					@Override
-					public void onSuccess(Void response) {
-						//update client copy
-						ClientFactoryFactory.getClientFactory().getClientData().findPlanPreferences(planPreferencesEdit, new PlanPreferencesListener(){
-							public void planPreferences(PlanPreferencesProxy newPlanPreferences) {
-								Window.alert("find: new time between snacks value: " + newPlanPreferences.getSnackTimes().getTimeBetweenSnacks());
-							}
-						});
-//						Request<PlanPreferencesProxy> findRequest = (Request<PlanPreferencesProxy>) ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest().find(planPreferences.stableId());
-//						findRequest.with("snackTimes");
-//						findRequest.fire(new GeneWayReceiver<PlanPreferencesProxy>() {
-//							@Override
-//							public void onSuccess(PlanPreferencesProxy planPreferencesProxy) {
-//								Window.alert("find: new time between snacks value: " + planPreferencesProxy.getSnackTimes().getTimeBetweenSnacks());
-//								
-//							}
-//						});
-//						ClientFactoryFactory.getClientFactory().getClientData().requestPlanPreferences(new PlanPreferencesListener() {
-//							@Override
-//							public void planPreferences(PlanPreferencesProxy newPlanPreferences) {
-//								Window.alert("request: new time between snacks value: " + newPlanPreferences.getSnackTimes().getTimeBetweenSnacks());
-//							}
-//						});						
-					}
-				});
+				hoursBetweenSnacksChanged(event);
 			}
 		});
 
@@ -82,10 +48,35 @@ public class SettingsWidgetList extends WidgetList {
 		add(hoursPanel);
 
 		MCheckBox smsCheckBox = new SettingsPanelCheckBox();
+		smsCheckBox.setValue(ClientFactoryFactory.getClientFactory().getClientData().getPlanPreferences().isSmsAlerts());
+		smsCheckBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				smsAlertChanged(event);
+			}
+		});
 		MTextBox textBox2 = new SettingTabTextBox();
 		textBox2.setText(constants.smsSnackAlerts());
 		FlexPanel smsPanel = new SettingsTabPanel(textBox2, smsCheckBox);
 		add(smsPanel);
+		
+
+		MCheckBox emailCheckBox = new SettingsPanelCheckBox();
+		emailCheckBox.setValue(ClientFactoryFactory.getClientFactory().getClientData().getPlanPreferences().isEmailAlerts());
+		emailCheckBox.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				emailAlertChanged(event);
+			}
+		});
+		MTextBox emailBox = new SettingTabTextBox();
+		emailBox.setText(constants.emailSnackAlerts());
+		FlexPanel emailPanel = new SettingsTabPanel(emailBox, emailCheckBox);
+		add(emailPanel);
+
+		
 		
 		snackOrder = new SnackOrderWidgetList();
 		add(snackOrder);
@@ -99,11 +90,70 @@ public class SettingsWidgetList extends WidgetList {
 		add(languagePanel);
 	}
 	
+	protected void emailAlertChanged(ValueChangeEvent<Boolean> event) {
+		PlanPreferencesProxy planPreferences = ClientFactoryFactory.getClientFactory().getClientData().getPlanPreferences();
+		EntityBaseRequest entityBaseRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
+		
+		final PlanPreferencesProxy planPreferencesEdit = entityBaseRequest.edit(planPreferences);
+		planPreferencesEdit.setEmailAlerts(event.getValue());
+
+		entityBaseRequest.merge(planPreferencesEdit).fire(new GeneWayReceiver<Void>() {
+			@Override
+			public void onSuccess(Void response) {
+				//update client copy
+				ClientFactoryFactory.getClientFactory().getClientData().findPlanPreferences(planPreferencesEdit, new PlanPreferencesListener(){
+					public void planPreferences(PlanPreferencesProxy newPlanPreferences) {
+					}
+				});
+			}
+		});
+	}
+
+	protected void smsAlertChanged(ValueChangeEvent<Boolean> event) {
+		PlanPreferencesProxy planPreferences = ClientFactoryFactory.getClientFactory().getClientData().getPlanPreferences();
+		EntityBaseRequest entityBaseRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
+		
+		final PlanPreferencesProxy planPreferencesEdit = entityBaseRequest.edit(planPreferences);
+		planPreferencesEdit.setSmsAlerts(event.getValue());
+
+		entityBaseRequest.merge(planPreferencesEdit).fire(new GeneWayReceiver<Void>() {
+			@Override
+			public void onSuccess(Void response) {
+				//update client copy
+				ClientFactoryFactory.getClientFactory().getClientData().findPlanPreferences(planPreferencesEdit, new PlanPreferencesListener(){
+					public void planPreferences(PlanPreferencesProxy newPlanPreferences) {
+					}
+				});
+			}
+		});
+		
+	}
+
 	@Override
 	public void add(Widget w) {
 		super.add(w);
 		//hacking WidgetListEntry to force it take customized CSS into consideration.
 		setSelectAble(getWidgetCount() - 1, true);
+	}
+
+	private void hoursBetweenSnacksChanged(ValueChangeEvent<String> event) {
+		PlanPreferencesProxy planPreferences = ClientFactoryFactory.getClientFactory().getClientData().getPlanPreferences();
+		EntityBaseRequest entityBaseRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
+		
+		final PlanPreferencesProxy planPreferencesEdit = entityBaseRequest.edit(planPreferences);
+		double newValue = Double.parseDouble(event.getValue());
+		planPreferencesEdit.getSnackTimes().setTimeBetweenSnacks(newValue);
+
+		entityBaseRequest.merge(planPreferencesEdit).fire(new GeneWayReceiver<Void>() {
+			@Override
+			public void onSuccess(Void response) {
+				//update client copy
+				ClientFactoryFactory.getClientFactory().getClientData().findPlanPreferences(planPreferencesEdit, new PlanPreferencesListener(){
+					public void planPreferences(PlanPreferencesProxy newPlanPreferences) {
+					}
+				});
+			}
+		});
 	}
 
 }

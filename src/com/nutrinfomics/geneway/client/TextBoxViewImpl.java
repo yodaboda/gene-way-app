@@ -4,7 +4,7 @@ import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Display;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
-import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
+import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.style.Styles;
 
 public class TextBoxViewImpl extends DetailsViewImpl {

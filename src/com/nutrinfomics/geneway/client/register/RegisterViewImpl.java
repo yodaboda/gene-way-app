@@ -22,7 +22,7 @@ import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.DetailsViewImpl;
 import com.nutrinfomics.geneway.client.GeneWayWidgetList;
 import com.nutrinfomics.geneway.client.TextBoxViewImpl;
-import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
+import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 
 public class RegisterViewImpl extends TextBoxViewImpl implements RegisterView {
 	private MTextBox firstNameField;

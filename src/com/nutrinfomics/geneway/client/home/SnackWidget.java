@@ -39,10 +39,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.nutrinfomics.geneway.client.AbstractImageButton;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.ClientFactoryImpl;
+import com.nutrinfomics.geneway.client.constants.GeneWayConstants;
 import com.nutrinfomics.geneway.client.home.SnackTracker.State;
 import com.nutrinfomics.geneway.client.home.SnackTrackerCell.Template;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
-import com.nutrinfomics.geneway.client.localization.GeneWayConstants;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.FoodItemProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.style.Styles;
@@ -68,7 +68,7 @@ public class SnackWidget extends HorizontalPanel{
 
 	protected VerticalPanel foodItemPanel = new VerticalPanel();
 	private VerticalPanel operationsPanel = new VerticalPanel();
-	private double hoursInterval = 1.5;
+	private double hoursInterval = ClientFactoryFactory.getClientFactory().getClientData().getPlanPreferences().getSnackTimes().getTimeBetweenSnacks();
 	
 	public SnackWidget(SnackProxy snack, State state, MealsWidget mealsWidget){
 		this.setSnack(snack);

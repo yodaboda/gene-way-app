@@ -1,4 +1,4 @@
-package com.nutrinfomics.geneway.client.localization;
+package com.nutrinfomics.geneway.client.constants;
 
 import com.google.gwt.i18n.client.ConstantsWithLookup;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -130,7 +130,7 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 	@DefaultStringValue("Hours btw snacks")
 	String timeBetweenMeals();
 
-	@DefaultStringValue("Send me SMS alerts")
+	@DefaultStringValue("Send SMS alerts")
 	String smsSnackAlerts();
 
 	@DefaultStringValue("Snack order")
@@ -141,4 +141,7 @@ public interface GeneWayConstants extends ConstantsWithLookup {
 
 	@DefaultStringValue("automatic")
 	String auto();
+
+	@DefaultStringValue("Send email alerts")
+	String emailSnackAlerts();
 }
