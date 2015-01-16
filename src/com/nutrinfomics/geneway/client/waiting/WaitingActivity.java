@@ -1,16 +1,13 @@
 package com.nutrinfomics.geneway.client.waiting;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
@@ -21,26 +18,18 @@ import com.nutrinfomics.geneway.client.ClientData.NextSnackListener;
 import com.nutrinfomics.geneway.client.ClientData.MenuSummaryListener;
 import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
-import com.nutrinfomics.geneway.client.ClientFactoryImpl;
 import com.nutrinfomics.geneway.client.home.HomePlace;
-import com.nutrinfomics.geneway.client.home.settingsPanel.SnackOrderWidgetList;
 import com.nutrinfomics.geneway.client.login.AuthenticationException;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.login.AuthenticationException.LoginExceptionType;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
-import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
-import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackTimesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
-import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
-import com.nutrinfomics.geneway.client.util.DateUtils;
 import com.nutrinfomics.geneway.shared.AccessConstants;
 import com.nutrinfomics.geneway.shared.FoodItemType;
-import com.nutrinfomics.geneway.shared.SnackStatus;
 import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
-import com.sun.java.swing.plaf.windows.WindowsBorders;
 
 public class WaitingActivity extends MGWTAbstractActivity {
 
@@ -70,7 +59,9 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		final String password = ClientFactoryFactory.getClientFactory().getPassword();
 		sessionProxy.getCustomer().setPassword(password);
 
-		authenticationRequest.authenticateCustomer(sessionProxy.getCustomer()).fire(new GeneWayReceiver<SessionProxy>() {
+		Request<SessionProxy> authenticateCustomer = authenticationRequest.authenticateCustomer(sessionProxy.getCustomer());
+		authenticateCustomer.with("customer");
+		authenticateCustomer.fire(new GeneWayReceiver<SessionProxy>() {
 			@Override
 			public void onSuccess(SessionProxy session){
 				ClientFactoryFactory.getClientFactory().setPassword(null);
@@ -117,7 +108,9 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		AuthenticationRequest authenticationRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().authenticationRequest();
 		
 		final SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().buildSession(authenticationRequest);
-		authenticationRequest.authenticateSession(sessionProxy).fire(new GeneWayReceiver<SessionProxy>() {
+		Request<SessionProxy> authenticateSession = authenticationRequest.authenticateSession(sessionProxy);
+		authenticateSession.with("customer");
+		authenticateSession.fire(new GeneWayReceiver<SessionProxy>() {
 			@Override
 			public void onSuccess(SessionProxy session){
 				success(session);
@@ -133,7 +126,8 @@ public class WaitingActivity extends MGWTAbstractActivity {
 	public void success(SessionProxy session) {
 
 		ClientFactoryFactory.getClientFactory().setSID(session.getSid());
-
+		ClientFactoryFactory.getClientFactory().setSession(session);
+		
 		getIngredients();
 		getMenuSummary();
 		getNextSnack();

@@ -69,6 +69,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private String password;
 	static private PlaceHistoryMapper placeHistoryMapper;
 	static private ClientData clientData = new ClientData();
+	static private SessionProxy session;
 	
 	@Override
 	public EventBus getEventBus() {
@@ -180,7 +181,7 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public SessionProxy buildSession(RequestContext requestContext) {
-		SessionProxy sessionProxy = getNewSession(requestContext);
+		SessionProxy sessionProxy = createNewSession(requestContext);
 		
 		CustomerProxy customerProxy = requestContext.create(CustomerProxy.class);
 		DeviceProxy deviceProxy = requestContext.create(DeviceProxy.class);
@@ -239,7 +240,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	}
 
 	@Override
-	public SessionProxy getNewSession(RequestContext requestContext) {
+	public SessionProxy createNewSession(RequestContext requestContext) {
 		SessionProxy sessionProxy = requestContext.create(SessionProxy.class);
 		String sid = getSID();
 		if(sid != null) sessionProxy.setSid(sid);
@@ -291,5 +292,14 @@ public class ClientFactoryImpl implements ClientFactory {
 			miscConstants = GWT.create(MiscConstants.class);
 		}
 		return miscConstants;
+	}
+
+	@Override
+	public SessionProxy getSession() {
+		return session;
+	}
+	@Override
+	public void setSession(SessionProxy session){
+		ClientFactoryImpl.session = session;
 	}
 }

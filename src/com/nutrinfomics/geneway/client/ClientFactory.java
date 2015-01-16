@@ -68,7 +68,7 @@ public interface ClientFactory {
 
 	public SessionProxy buildSession(RequestContext requestContext);
 
-	public SessionProxy getNewSession(RequestContext requestContext);
+	public SessionProxy createNewSession(RequestContext requestContext);
 
 	public String getUUID();
 
@@ -83,4 +83,8 @@ public interface ClientFactory {
 	public PlaceHistoryMapper getPlaceHistoryMapper();
 
 	public ClientData getClientData();
+
+	public SessionProxy getSession();
+
+	public void setSession(SessionProxy session);
 }

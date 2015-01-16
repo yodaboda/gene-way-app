@@ -5,6 +5,7 @@ import java.util.Date;
 import com.google.web.bindery.requestfactory.shared.EntityProxy;
 import com.google.web.bindery.requestfactory.shared.ProxyFor;
 import com.nutrinfomics.geneway.client.requestFactory.EntityBaseProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
 import com.nutrinfomics.geneway.server.domain.EntityBaseLocator;
 import com.nutrinfomics.geneway.server.domain.plan.SnackHistory;
 import com.nutrinfomics.geneway.shared.SnackStatus;
@@ -15,6 +16,14 @@ public interface SnackHistoryProxy extends EntityBaseProxy{
 	public void setEatenSnack(SnackProxy snack);
 
 	public SnackProxy getEatenSnack();
+
+	public void setPlannedSnack(SnackProxy snack);
+	
+	public SnackProxy getPlannedSnack();
+	
+	public CustomerProxy getCustomer();
+	
+	public void setCustomer(CustomerProxy customer);
 	
 	public String getDayString() ;
 

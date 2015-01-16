@@ -74,7 +74,7 @@ public class ClientData {
 	
 	public void requestPlanPreferences(final PlanPreferencesListener planPreferencesListener){
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
-		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().createNewSession(planRequest);
 		Request<PlanPreferencesProxy> planPreferencesRequest = planRequest.getPlanPreferences(sessionProxy);
 		planPreferencesRequest.with("snackTimes");
 		planPreferencesRequest.fire(new GeneWayReceiver<PlanPreferencesProxy>() {
@@ -92,7 +92,7 @@ public class ClientData {
 	
 	public void requestIngredients(final IngredientsListener ingredientsListener){
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
-		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().createNewSession(planRequest);
 		planRequest.getIngredients(sessionProxy, DateUtils.getDate(0)).fire(new GeneWayReceiver<Set<FoodItemType>>() {
 			@Override
 			public void onFailure(ServerFailure error) {
@@ -109,7 +109,7 @@ public class ClientData {
 	
 	public void requestMenuSummary(final MenuSummaryListener menuSummaryListener){
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
-		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().createNewSession(planRequest);
 		planRequest.getMenuSummary(sessionProxy, DateUtils.getDate(0)).fire(new GeneWayReceiver<List<String>>() {
 			@Override
 			public void onFailure(ServerFailure error) {
@@ -125,7 +125,7 @@ public class ClientData {
 	
 	private void requestNextSnack(final int daysOffset, final NextSnackListener nextSnackListener) {
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
-		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getNewSession(planRequest);
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().createNewSession(planRequest);
 		Request<SnackProxy> nextSnackRequest = planRequest.getNextSnack(sessionProxy, DateUtils.getDate(daysOffset));
 		nextSnackRequest.with("foodItems", "snackProperty", "time","foodItems.measurementUnit", "foodItems.foodType");
 		nextSnackRequest.fire(new GeneWayReceiver<SnackProxy>() {
@@ -157,10 +157,12 @@ public class ClientData {
 		Date timestamp = new Date();
 		SnackHistoryProxy snackHistoryProxy = snackHistoryRequest.create(SnackHistoryProxy.class);
 		snackHistoryProxy.setEatenSnack(snackProxy);	
+		snackHistoryProxy.setPlannedSnack(snackProxy);
 		snackHistoryProxy.setDayString(DateUtils.getDate(0));
 		snackHistoryProxy.setStatus(snackStatus);
 		snackHistoryProxy.setTimestamp(timestamp);
 		snackHistoryProxy.setTimeZoneDiff(timestamp.getTimezoneOffset());
+		snackHistoryProxy.setCustomer(ClientFactoryFactory.getClientFactory().getSession().getCustomer());
 		snackHistoryRequest.persist(snackHistoryProxy).fire(new GeneWayReceiver<Void>() {
 			@Override
 			public void onSuccess(Void response) {
