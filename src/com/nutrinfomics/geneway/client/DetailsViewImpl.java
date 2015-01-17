@@ -14,6 +14,7 @@ import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
+import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
@@ -21,8 +22,10 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.nutrinfomics.geneway.client.about.AboutPlace;
 import com.nutrinfomics.geneway.client.event.ActionEvent;
+import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
 import com.nutrinfomics.geneway.client.home.SnackImageButtonAppearance;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
+import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.style.Styles;
 
 public class DetailsViewImpl implements DetailsView{
@@ -59,6 +62,17 @@ public class DetailsViewImpl implements DetailsView{
 
 		}
 
+		ImageButton logout = new ImageButton(ImageHolder.get().stop());
+		logout.addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				ClientFactoryFactory.getClientFactory().setSID(null);
+				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new FirstScreenPlace());
+			}
+		});
+		headerPanel.add(logout);
+		
 
 
 		GeneWayImageButton title = new GeneWayImageButton();
@@ -88,6 +102,7 @@ public class DetailsViewImpl implements DetailsView{
 			}
 		});
 
+		
 		main = new RootFlexPanel();
 		main.setAlignment(Alignment.CENTER);
 		main.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);

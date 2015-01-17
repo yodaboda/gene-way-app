@@ -10,6 +10,7 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryProxy;
@@ -152,7 +153,6 @@ public class ClientData {
 			requestNextSnack(0, nextSnackListener);
 			return;
 		}
-		
 		EntityBaseRequest snackHistoryRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
 		Date timestamp = new Date();
 		SnackHistoryProxy snackHistoryProxy = snackHistoryRequest.create(SnackHistoryProxy.class);
@@ -162,7 +162,9 @@ public class ClientData {
 		snackHistoryProxy.setStatus(snackStatus);
 		snackHistoryProxy.setTimestamp(timestamp);
 		snackHistoryProxy.setTimeZoneDiff(timestamp.getTimezoneOffset());
-		snackHistoryProxy.setCustomer(ClientFactoryFactory.getClientFactory().getSession().getCustomer());
+		CustomerProxy customer = ClientFactoryFactory.getClientFactory().getSession().getCustomer();
+		CustomerProxy sameRequestCustomer = snackHistoryRequest.edit(customer);
+		snackHistoryProxy.setCustomer(sameRequestCustomer);
 		snackHistoryRequest.persist(snackHistoryProxy).fire(new GeneWayReceiver<Void>() {
 			@Override
 			public void onSuccess(Void response) {

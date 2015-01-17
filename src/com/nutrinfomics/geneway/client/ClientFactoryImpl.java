@@ -203,8 +203,14 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public void setSID(String sid) {
-		Date expires = new Date(System.currentTimeMillis() + Long.MAX_VALUE); //Indefinite duration
-		Cookies.setCookie(AccessConstants.SID.toString(), sid, expires, null, "/", false);
+		if(sid == null){
+			Cookies.removeCookie(AccessConstants.SID.toString());
+			setSession(null);
+		}
+		else{
+			Date expires = new Date(System.currentTimeMillis() + Long.MAX_VALUE); //Indefinite duration
+			Cookies.setCookie(AccessConstants.SID.toString(), sid, expires, null, "/", false);
+		}
 	}
 
 	@Override

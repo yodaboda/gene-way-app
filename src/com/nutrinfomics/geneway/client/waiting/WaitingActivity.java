@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
@@ -117,7 +118,8 @@ public class WaitingActivity extends MGWTAbstractActivity {
 			}
 			@Override
 			public void onFailure(ServerFailure error) {
-				Cookies.removeCookie(AccessConstants.SID.toString());
+				ClientFactoryFactory.getClientFactory().setSID(null);
+//				Cookies.removeCookie(AccessConstants.SID.toString());
 				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new LoginPlace());
 			}
 		});
