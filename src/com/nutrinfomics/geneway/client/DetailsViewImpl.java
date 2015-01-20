@@ -4,7 +4,6 @@ import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.web.bindery.event.shared.Event;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
@@ -13,19 +12,14 @@ import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
-import com.googlecode.mgwt.ui.client.widget.header.HeaderTitle;
-import com.googlecode.mgwt.ui.client.widget.image.ImageHolder;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
-import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.nutrinfomics.geneway.client.about.AboutPlace;
 import com.nutrinfomics.geneway.client.event.ActionEvent;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
-import com.nutrinfomics.geneway.client.home.SnackImageButtonAppearance;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
-import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.style.Styles;
 
 public class DetailsViewImpl implements DetailsView{
@@ -62,16 +56,6 @@ public class DetailsViewImpl implements DetailsView{
 
 		}
 
-		ImageButton logout = new ImageButton(ImageHolder.get().stop());
-		logout.addTapHandler(new TapHandler() {
-			
-			@Override
-			public void onTap(TapEvent event) {
-				ClientFactoryFactory.getClientFactory().setSID(null);
-				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new FirstScreenPlace());
-			}
-		});
-		headerPanel.add(logout);
 		
 
 
@@ -85,7 +69,21 @@ public class DetailsViewImpl implements DetailsView{
 		}
 
 
-		
+
+		ImageButton logoutButton = new ImageButton(LocalImageHolder.get().logout());
+		logoutButton.setIconActiveColor(Styles.WHITE);
+		logoutButton.setIconColor(Styles.WHITE);
+
+		logoutButton.addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				ClientFactoryFactory.getClientFactory().setSID(null);
+				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new FirstScreenPlace());
+			}
+		});
+		headerPanel.add(logoutButton);
+
 		aboutButton = new AboutImageButton();
 		aboutButton.setIconActiveColor(Styles.WHITE);
 		aboutButton.setIconColor(Styles.WHITE);
