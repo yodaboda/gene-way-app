@@ -74,6 +74,8 @@ public class SnackWidget extends HorizontalPanel{
 		this.setSnack(snack);
 		this.mealsWidget = mealsWidget;
 		
+		constants = ClientFactoryFactory.getClientFactory().getConstants();
+		
 		getElement().getStyle().setBackgroundColor(Styles.WHITE);
 		
 		
@@ -121,9 +123,9 @@ public class SnackWidget extends HorizontalPanel{
 //		acceptButton.setIconActiveColor(Styles.BACKGROUND_COLOR_VALUE);
 //		acceptButton.setIconColor(Styles.BACKGROUND_COLOR_VALUE);
 		
-	    countdown = new Label();
-	    countdown.setStylePrimaryName("timer");
-	    countdown.getElement().getStyle().setBackgroundColor(Styles.WHITE);
+//	    countdown = new Label();
+//	    countdown.setStylePrimaryName("timer");
+//	    countdown.getElement().getStyle().setBackgroundColor(Styles.WHITE);
 		
 //		acceptButton.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
 ////		acceptButton.getElement().getStyle().setBorderColor("white");
@@ -138,7 +140,7 @@ public class SnackWidget extends HorizontalPanel{
 //	    buttonsPanel.add(likeButton);
 	    operationsPanel.add(buttonsPanel);
 
-	    operationsPanel.add(countdown);
+//	    operationsPanel.add(countdown);
 		
 		acceptButton.addTapHandler(new TapHandler() {
 			@Override
@@ -173,36 +175,36 @@ public class SnackWidget extends HorizontalPanel{
 		if(state == State.CURRENT){
 			operationsPanel.setVisible(true);
 			
-			final int timeOffsetInMillies = (int) (hoursInterval * 60 * 60 * 1000);
-			countdown.setText(getTimeString((int) timeOffsetInMillies / 1000));
+//			final int timeOffsetInMillies = (int) (hoursInterval * 60 * 60 * 1000);
+//			countdown.setText(getTimeString((int) timeOffsetInMillies / 1000));
 			
-			if(timer != null && timer.isRunning()){
-				timer.cancel();
-			}
-			timer = new Timer() {
-				private int time = (int) timeOffsetInMillies / 1000;
-				@Override
-				public void run() {
-					time-=1;
-					if(time < 1){
-						Dialogs.confirm(constants.itsTimeToTakeYourMealTitle(), constants.itsTimeToTakeYourMeal(), new ConfirmCallback() {
-							@Override
-							public void onOk() {
-								nextSnack(SnackStatus.CONSUMED);
-							}
-							@Override
-							public void onCancel() {
-								nextSnack(SnackStatus.SKIPPED);
-							}
-						});
+//			if(timer != null && timer.isRunning()){
+//				timer.cancel();
+//			}
+//			timer = new Timer() {
+//				private int time = (int) timeOffsetInMillies / 1000;
+//				@Override
+//				public void run() {
+//					time-=1;
+//					if(time < 1){
 //						cancel();
-					}
-					
-					String timeString = getTimeString(time);
-					countdown.setText(timeString);
-				}
-			};
-			timer.scheduleRepeating(1000);
+//						Dialogs.confirm(constants.itsTimeToTakeYourMealTitle(), constants.itsTimeToTakeYourMeal(), new ConfirmCallback() {
+//							@Override
+//							public void onOk() {
+//								nextSnack(SnackStatus.CONSUMED);
+//							}
+//							@Override
+//							public void onCancel() {
+//								nextSnack(SnackStatus.SKIPPED);
+//							}
+//						});
+//					}
+//					
+//					String timeString = getTimeString(time);
+//					countdown.setText(timeString);
+//				}
+//			};
+//			timer.scheduleRepeating(1000);
 
 		}
 		else operationsPanel.setVisible(false);
@@ -254,7 +256,7 @@ public class SnackWidget extends HorizontalPanel{
 
 	public void nextSnack(SnackStatus snackStatus) {
 		setSnackStatus(snackStatus);
-		timer.cancel();
+//		timer.cancel();
 		mealsWidget.switchToNextSnack();
 	}
 	

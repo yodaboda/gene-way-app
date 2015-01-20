@@ -148,6 +148,9 @@ public class LocalImageHolderDefaultXHighAppearance implements
 		@Source("resources/reemAfter_hdpi.png")
 		ImageResource reemAfter();
 
+		@Source("resources/ic_action_logout_xhdpi.png")
+		ImageResource logout();
+
 
 	}
 

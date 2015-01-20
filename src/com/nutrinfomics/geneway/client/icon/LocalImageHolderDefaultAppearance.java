@@ -144,6 +144,8 @@ public class LocalImageHolderDefaultAppearance implements
 		@Source("resources/reemAfter_mdpi.png")
 		ImageResource reemAfter();
 
+		@Source("resources/ic_action_logout_mdpi.png")
+		ImageResource logout();
 		
 	}
 

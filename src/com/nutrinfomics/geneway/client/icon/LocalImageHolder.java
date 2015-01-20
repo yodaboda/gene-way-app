@@ -68,6 +68,7 @@ public class LocalImageHolder {
 			
 			ImageResource reemAfter();
 			
+			ImageResource logout();
 		}
 		Images get();
 	}

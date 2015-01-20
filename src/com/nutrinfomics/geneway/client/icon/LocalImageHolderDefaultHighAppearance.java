@@ -149,6 +149,9 @@ public class LocalImageHolderDefaultHighAppearance implements
 		@Source("resources/reemAfter_mdpi.png")
 		ImageResource reemAfter();
 
+		@Source("resources/ic_action_logout_hdpi.png")
+		ImageResource logout();
+
 	}
 
 	@Override
