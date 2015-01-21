@@ -16,9 +16,10 @@ import com.nutrinfomics.geneway.server.domain.plan.Plan;
 import com.nutrinfomics.geneway.server.requestfactory.GeneWayServiceLocator;
 import com.nutrinfomics.geneway.server.requestfactory.request.PlanService;
 import com.nutrinfomics.geneway.shared.FoodItemType;
+import com.nutrinfomics.geneway.shared.SnackStatus;
 
 @Service(value = PlanService.class, locator = GeneWayServiceLocator.class)
-@ExtraTypes({PlanProxy.class, SnackProxy.class})
+@ExtraTypes({PlanProxy.class, SnackProxy.class, SnackHistoryProxy.class})
 public interface PlanRequest extends RequestContext{
 
 //	Request<PlanProxy> findPlanForSession(SessionProxy sessionProxy);

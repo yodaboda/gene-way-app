@@ -153,9 +153,9 @@ public class ClientData {
 			requestNextSnack(0, nextSnackListener);
 			return;
 		}
-		EntityBaseRequest snackHistoryRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
+		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
 		Date timestamp = new Date();
-		SnackHistoryProxy snackHistoryProxy = snackHistoryRequest.create(SnackHistoryProxy.class);
+		SnackHistoryProxy snackHistoryProxy = planRequest.create(SnackHistoryProxy.class);
 		snackHistoryProxy.setEatenSnack(snackProxy);	
 		snackHistoryProxy.setPlannedSnack(snackProxy);
 		snackHistoryProxy.setDayString(DateUtils.getDate(0));
@@ -163,9 +163,9 @@ public class ClientData {
 		snackHistoryProxy.setTimestamp(timestamp);
 		snackHistoryProxy.setTimeZoneDiff(timestamp.getTimezoneOffset());
 		CustomerProxy customer = ClientFactoryFactory.getClientFactory().getSession().getCustomer();
-		CustomerProxy sameRequestCustomer = snackHistoryRequest.edit(customer);
+		CustomerProxy sameRequestCustomer = planRequest.edit(customer);
 		snackHistoryProxy.setCustomer(sameRequestCustomer);
-		snackHistoryRequest.persist(snackHistoryProxy).fire(new GeneWayReceiver<Void>() {
+		planRequest.markCurrentSnack(ClientFactoryFactory.getClientFactory().getSession(), snackProxy, snackHistoryProxy).fire(new GeneWayReceiver<Void>() {
 			@Override
 			public void onSuccess(Void response) {
 				requestNextSnack(0, nextSnackListener);
