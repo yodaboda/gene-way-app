@@ -18,6 +18,7 @@ import com.nutrinfomics.geneway.client.ClientData.IngredientsListener;
 import com.nutrinfomics.geneway.client.ClientData.NextSnackListener;
 import com.nutrinfomics.geneway.client.ClientData.MenuSummaryListener;
 import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
+import com.nutrinfomics.geneway.client.ClientData.SnackOrderSpecificationListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.home.HomePlace;
 import com.nutrinfomics.geneway.client.login.AuthenticationException;
@@ -27,6 +28,8 @@ import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AbstractFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.SnackOrderSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.shared.AccessConstants;
 import com.nutrinfomics.geneway.shared.FoodItemType;
@@ -134,6 +137,7 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		getMenuSummary();
 		getNextSnack();
 		getSnackTimes();
+		getSnackOrderSpecification();
 		
 		Timer timer = new Timer(){
 			  @Override
@@ -142,7 +146,7 @@ public class WaitingActivity extends MGWTAbstractActivity {
 			  }
 		};
 		
-		timer.schedule(2000);
+		timer.schedule(1500);
 	}
 	
 	private void getSnackTimes(){
@@ -184,9 +188,18 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		});
 	}
 
+	private void getSnackOrderSpecification(){
+		ClientFactoryFactory.getClientFactory().getClientData().requestSnackOrderSpecification(new SnackOrderSpecificationListener() {
+			@Override
+			public void snackOrderSpecification(SnackOrderSpecificationProxy foodSpecification) {
+				increaseCount();
+			}
+		});
+	}
+	
 	private synchronized void increaseCount(){
 		count++;
-		if(count == 5){
+		if(count == 6){
 			  ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new HomePlace());
 		}
 	}

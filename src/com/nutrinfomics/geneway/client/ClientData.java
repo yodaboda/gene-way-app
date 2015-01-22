@@ -16,9 +16,12 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferences
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AbstractFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.SnackOrderSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.util.DateUtils;
+import com.nutrinfomics.geneway.server.domain.specification.SnackOrderSpecification;
 import com.nutrinfomics.geneway.shared.FoodItemType;
 import com.nutrinfomics.geneway.shared.SnackStatus;
 
@@ -29,6 +32,7 @@ public class ClientData {
 	private boolean snackForTomorrow;
 	private PlanPreferencesProxy planPreferences;
 	private List<String> snackOrder;
+	private SnackOrderSpecificationProxy snackOrderSpecification;
 	
 	public interface NextSnackListener{
 		public void nextSnack(SnackProxy snackProxy, boolean snackForTommorow);
@@ -44,6 +48,10 @@ public class ClientData {
 	
 	public interface PlanPreferencesListener{
 		public void planPreferences(PlanPreferencesProxy planPreferences);
+	}
+	
+	public interface SnackOrderSpecificationListener{
+		public void snackOrderSpecification(SnackOrderSpecificationProxy foodSpecification);
 	}
 	
 	public List<String> getSnackSummary() {
@@ -124,6 +132,19 @@ public class ClientData {
 		});
 	}
 	
+	public void requestSnackOrderSpecification(final SnackOrderSpecificationListener snackOrderSpecificationListener){
+		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getSession();
+		planRequest.getSnackOrderSpecification(sessionProxy).fire(new GeneWayReceiver<SnackOrderSpecificationProxy>() {
+
+			@Override
+			public void onSuccess(SnackOrderSpecificationProxy foodSpecification) {
+				setSnackOrderSpecification(foodSpecification);
+				snackOrderSpecificationListener.snackOrderSpecification(foodSpecification);
+			}
+		});
+	}
+	
 	private void requestNextSnack(final int daysOffset, final NextSnackListener nextSnackListener) {
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
 		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().createNewSession(planRequest);
@@ -147,7 +168,7 @@ public class ClientData {
 			}
 		});
 	}
-
+	
 	public void persistCurrentSnack(SnackProxy snackProxy, SnackStatus snackStatus, final NextSnackListener nextSnackListener) {
 		if(snackProxy == null){
 			requestNextSnack(0, nextSnackListener);
@@ -195,5 +216,11 @@ public class ClientData {
 	}
 	public void setSnackOrder(List<String> snackOrder) {
 		this.snackOrder = snackOrder;
+	}
+	public SnackOrderSpecificationProxy getSnackOrderSpecification() {
+		return snackOrderSpecification;
+	}
+	public void setSnackOrderSpecification(SnackOrderSpecificationProxy snackOrderSpecification) {
+		this.snackOrderSpecification = snackOrderSpecification;
 	}
 }
