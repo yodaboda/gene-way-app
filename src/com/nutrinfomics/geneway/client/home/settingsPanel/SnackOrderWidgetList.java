@@ -7,24 +7,30 @@ import java.util.MissingResourceException;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.web.bindery.requestfactory.shared.ServerFailure;
+import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.nutrinfomics.geneway.client.ClientData.SnackOrderSpecificationListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AbstractFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AcceptAllSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AnimalFoodSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.FoodItemTypeFoodSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.SnackOrderSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
+import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.shared.FoodItemType;
 import com.nutrinfomics.geneway.shared.SnackProperty;
 
 public class SnackOrderWidgetList extends WidgetList {
 
+	private static final String AUTO = "auto";
 	private List<String> snackSummary;
 	private List<Boolean> selectedSnackSummary;
 	private SnackOrderSpecificationProxy snackOrderSpecification;
@@ -52,8 +58,9 @@ public class SnackOrderWidgetList extends WidgetList {
 
 			snackSummaryBox.getElement().setDraggable(Element.DRAGGABLE_TRUE);
 			
-			snackSummaryBox.addItem(ClientFactoryFactory.getClientFactory().getConstants().auto(), "auto");
+			snackSummaryBox.addItem(ClientFactoryFactory.getClientFactory().getConstants().auto(), AUTO);
 
+			//first added boxes show up at the bottom
 			AbstractFoodSpecificationProxy foodSpecification = snackOrderSpecification.getFoodOrderSpecification().get(i);
 			
 			for(int j = 0; j < snackSummary.size(); ++j){
@@ -82,8 +89,10 @@ public class SnackOrderWidgetList extends WidgetList {
 				@Override
 				public void onChange(ChangeEvent event) {
 		    		String snackSelected = snackSummaryBox.getValue(snackSummaryBox.getSelectedIndex());
-					int indexSelected = snackSummary.indexOf(snackSelected);
-					selectedSnackSummary.set(indexSelected, true);
+		    		if(snackSelected != AUTO){
+						int indexSelected = snackSummary.indexOf(snackSelected);
+						selectedSnackSummary.set(indexSelected, true);
+		    		}
 					updateSnackSpecification(snackSummaryBox.getIndex(), snackSelected);
 				}
 			});
@@ -93,25 +102,42 @@ public class SnackOrderWidgetList extends WidgetList {
 	}
 	
 	private void updateSnackSpecification(int snackIndex, String snackSelected){
-		EntityBaseRequest entityBaseRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().entityBaseRequest();
-		SnackOrderSpecificationProxy snackOrderSpecificationEdit = entityBaseRequest.edit(snackOrderSpecification);
+		Window.alert("snack index: " + snackIndex);
+		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
+		SnackOrderSpecificationProxy snackOrderSpecificationEdit = planRequest.edit(snackOrderSpecification);
+		AbstractFoodSpecificationProxy oldFoodSpecification = snackOrderSpecificationEdit.getFoodOrderSpecification().get(snackIndex);;
 		if(snackSelected.equals(SnackProperty.REST.toString())){
-			AnimalFoodSpecificationProxy animalFoodSpecificationProxy = entityBaseRequest.create(AnimalFoodSpecificationProxy.class);
+			AnimalFoodSpecificationProxy animalFoodSpecificationProxy = planRequest.create(AnimalFoodSpecificationProxy.class);
 			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, animalFoodSpecificationProxy);
 		}
+		else if(snackSelected == AUTO){
+			AcceptAllSpecificationProxy acceptAllSpecificationProxy = planRequest.create(AcceptAllSpecificationProxy.class);
+			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, acceptAllSpecificationProxy);
+		}
 		else{
-			FoodItemTypeFoodSpecificationProxy foodItemTypeSpecification = entityBaseRequest.create(FoodItemTypeFoodSpecificationProxy.class);
+			FoodItemTypeFoodSpecificationProxy foodItemTypeSpecification = planRequest.create(FoodItemTypeFoodSpecificationProxy.class);
 			FoodItemType foodItemType = FoodItemType.valueOf(snackSelected);
 			foodItemTypeSpecification.setFoodItemType(foodItemType);
 			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, foodItemTypeSpecification);			
 		}
-		
-		entityBaseRequest.merge(snackOrderSpecificationEdit).fire(new GeneWayReceiver<Void>() {
+
+		planRequest.updateSpecifications(snackOrderSpecificationEdit, oldFoodSpecification).fire(new GeneWayReceiver<Void>() {
+			@Override
+			public void onFailure(ServerFailure error) {
+				Dialogs.alert(ClientFactoryFactory.getClientFactory().getConstants().error(),error.getMessage(), null);
+			}
+			
 			@Override
 			public void onSuccess(Void response) {
 				ClientFactoryFactory.getClientFactory().getClientData().requestSnackOrderSpecification(new SnackOrderSpecificationListener() {
 					@Override
 					public void snackOrderSpecification(SnackOrderSpecificationProxy snackOrderSpecification) {
+						List<AbstractFoodSpecificationProxy> foodOrderSpecification = snackOrderSpecification.getFoodOrderSpecification();
+						String display = "";
+						for(AbstractFoodSpecificationProxy foodSpecification : foodOrderSpecification){
+							display += foodSpecification.getClass().getName() + " ";
+						}
+						Window.alert(display);
 						setSnackOrderSpecification(snackOrderSpecification);
 					}
 				});

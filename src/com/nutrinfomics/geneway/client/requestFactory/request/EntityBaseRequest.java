@@ -12,6 +12,10 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferences
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackTimesProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AbstractFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AnimalFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.FoodItemTypeFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.SnackOrderSpecificationProxy;
 import com.nutrinfomics.geneway.server.domain.EntityBase;
 import com.nutrinfomics.geneway.server.domain.plan.SnackHistory;
 import com.nutrinfomics.geneway.server.requestfactory.GeneWayServiceLocator;
@@ -19,7 +23,8 @@ import com.nutrinfomics.geneway.server.requestfactory.request.EntityBaseService;
 
 @Service(value = EntityBaseService.class, locator = GeneWayServiceLocator.class)
 @ExtraTypes({SnackHistoryProxy.class, SnackProxy.class, SessionProxy.class, CustomerProxy.class,
-			PlanPreferencesProxy.class, SnackTimesProxy.class})
+			PlanPreferencesProxy.class, SnackTimesProxy.class, SnackOrderSpecificationProxy.class,
+			FoodItemTypeFoodSpecificationProxy.class, AnimalFoodSpecificationProxy.class, AbstractFoodSpecificationProxy.class})
 public interface EntityBaseRequest extends RequestContext {
 
 	Request<Void> persist(EntityBaseProxy entityBase);

@@ -135,7 +135,9 @@ public class ClientData {
 	public void requestSnackOrderSpecification(final SnackOrderSpecificationListener snackOrderSpecificationListener){
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
 		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().getSession();
-		planRequest.getSnackOrderSpecification(sessionProxy).fire(new GeneWayReceiver<SnackOrderSpecificationProxy>() {
+		Request<SnackOrderSpecificationProxy> snackOrderSpecificationRequest = planRequest.getSnackOrderSpecification(sessionProxy);
+		snackOrderSpecificationRequest.with("foodOrderSpecification");
+		snackOrderSpecificationRequest.fire(new GeneWayReceiver<SnackOrderSpecificationProxy>() {
 
 			@Override
 			public void onSuccess(SnackOrderSpecificationProxy foodSpecification) {

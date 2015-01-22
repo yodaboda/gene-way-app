@@ -13,13 +13,18 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AbstractFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AcceptAllSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AnimalFoodSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.FoodItemTypeFoodSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.SnackOrderSpecificationProxy;
 import com.nutrinfomics.geneway.server.requestfactory.GeneWayServiceLocator;
 import com.nutrinfomics.geneway.server.requestfactory.request.PlanService;
 import com.nutrinfomics.geneway.shared.FoodItemType;
 
 @Service(value = PlanService.class, locator = GeneWayServiceLocator.class)
-@ExtraTypes({PlanProxy.class, SnackProxy.class, SnackHistoryProxy.class})
+@ExtraTypes({PlanProxy.class, SnackProxy.class, SnackHistoryProxy.class, SnackOrderSpecificationProxy.class,
+			FoodItemTypeFoodSpecificationProxy.class, AnimalFoodSpecificationProxy.class, AbstractFoodSpecificationProxy.class,
+			AcceptAllSpecificationProxy.class})
 public interface PlanRequest extends RequestContext{
 	
 	Request<SnackProxy> getNextSnack(SessionProxy session, String dateString);
@@ -33,4 +38,7 @@ public interface PlanRequest extends RequestContext{
 	Request<Void> markCurrentSnack(SessionProxy session, SnackProxy snack, SnackHistoryProxy snackHistory);
 	
 	Request<SnackOrderSpecificationProxy> getSnackOrderSpecification(SessionProxy session);
+
+	Request<Void> updateSpecifications(SnackOrderSpecificationProxy snackOrderSpecificationEdit,
+																AbstractFoodSpecificationProxy oldFoodSpecification);
 }
