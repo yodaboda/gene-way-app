@@ -10,8 +10,8 @@ import com.nutrinfomics.geneway.server.domain.specification.SnackOrderSpecificat
 @ProxyFor(value = SnackOrderSpecification.class, locator = EntityBaseLocator.class)
 public interface SnackOrderSpecificationProxy extends EntityBaseProxy{
 
-	public List<AbstractFoodSpecificationProxy> getSnackOrderSpecification();
+	public List<AbstractFoodSpecificationProxy> getFoodOrderSpecification();
 
-	public void setSnackOrderSpecification(List<AbstractFoodSpecificationProxy> snackOrderSpecification);
+	public void setFoodOrderSpecification(List<AbstractFoodSpecificationProxy> foodOrderSpecification);
 
 }

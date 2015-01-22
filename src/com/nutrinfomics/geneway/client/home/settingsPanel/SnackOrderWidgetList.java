@@ -54,7 +54,7 @@ public class SnackOrderWidgetList extends WidgetList {
 			
 			snackSummaryBox.addItem(ClientFactoryFactory.getClientFactory().getConstants().auto(), "auto");
 
-			AbstractFoodSpecificationProxy foodSpecification = snackOrderSpecification.getSnackOrderSpecification().get(i);
+			AbstractFoodSpecificationProxy foodSpecification = snackOrderSpecification.getFoodOrderSpecification().get(i);
 			
 			for(int j = 0; j < snackSummary.size(); ++j){
 				String label;
@@ -97,13 +97,13 @@ public class SnackOrderWidgetList extends WidgetList {
 		SnackOrderSpecificationProxy snackOrderSpecificationEdit = entityBaseRequest.edit(snackOrderSpecification);
 		if(snackSelected.equals(SnackProperty.REST.toString())){
 			AnimalFoodSpecificationProxy animalFoodSpecificationProxy = entityBaseRequest.create(AnimalFoodSpecificationProxy.class);
-			snackOrderSpecificationEdit.getSnackOrderSpecification().set(snackIndex, animalFoodSpecificationProxy);
+			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, animalFoodSpecificationProxy);
 		}
 		else{
 			FoodItemTypeFoodSpecificationProxy foodItemTypeSpecification = entityBaseRequest.create(FoodItemTypeFoodSpecificationProxy.class);
 			FoodItemType foodItemType = FoodItemType.valueOf(snackSelected);
 			foodItemTypeSpecification.setFoodItemType(foodItemType);
-			snackOrderSpecificationEdit.getSnackOrderSpecification().set(snackIndex, foodItemTypeSpecification);			
+			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, foodItemTypeSpecification);			
 		}
 		
 		entityBaseRequest.merge(snackOrderSpecificationEdit).fire(new GeneWayReceiver<Void>() {
