@@ -1,4 +1,5 @@
-@def ICON_BACKGROUND_COLOR #FFFFFF;
+@def DARK_GREEN #008000;
+@def ICON_BACKGROUND_COLOR DARK_GREEN;
 @def ICON_BACKGROUND_COLOR_ACTIVE #FFFFFF;
 
 .mgwt-ImageButton{
@@ -6,14 +7,17 @@
 	background-color: transparent;
 	border-radius:0px;
 	box-shadow: none;
-	background-color: #008000;
 }
 
 .mgwt-ImageButton-small{
-	background-color: #008000;
+	background-color: DARK_GREEN;
 }
 
 .mgwt-ImageButton-image{
-	background-color: #65CC00;
+	background-color: DARK_GREEN;
 	margin: 0 auto;
+}
+
+.mgwt-ImageButton-text{
+	color: DARK_GREEN;
 }

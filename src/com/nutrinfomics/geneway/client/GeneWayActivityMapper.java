@@ -9,6 +9,9 @@ import com.nutrinfomics.geneway.client.firstScreen.FirstScreenActivity;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
 import com.nutrinfomics.geneway.client.home.HomeActivity;
 import com.nutrinfomics.geneway.client.home.HomePlace;
+import com.nutrinfomics.geneway.client.home.IgnredientsTabBarButton;
+import com.nutrinfomics.geneway.client.ingredients.IngredientsActivity;
+import com.nutrinfomics.geneway.client.ingredients.IngredientsPlace;
 import com.nutrinfomics.geneway.client.login.LoginActivity;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.register.RegisterActivity;
@@ -37,6 +40,9 @@ public class GeneWayActivityMapper implements ActivityMapper {
 		}
 		else if(place instanceof FirstScreenPlace){
 			return new FirstScreenActivity();
+		}
+		else if(place instanceof IngredientsPlace){
+			return new IngredientsActivity();
 		}
 		return null;
 	}

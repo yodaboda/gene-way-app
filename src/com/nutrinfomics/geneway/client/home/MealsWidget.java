@@ -2,22 +2,35 @@ package com.nutrinfomics.geneway.client.home;
 
 import java.util.Date;
 
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButton;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButtonAppearance;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButton.TextPosition;
+import com.googlecode.mgwt.ui.client.widget.button.ImageButtonAppearance.ImageButtonCss;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
+import com.googlecode.mgwt.ui.client.widget.panel.Panel;
 import com.nutrinfomics.geneway.client.ClientData;
+import com.nutrinfomics.geneway.client.GeneWayImageButtonAppearance;
 import com.nutrinfomics.geneway.client.ClientData.NextSnackListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.home.SnackWidget.State;
+import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
+import com.nutrinfomics.geneway.client.ingredients.IngredientsPlace;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackHistoryProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
+import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.client.util.DateUtils;
 
 public class MealsWidget extends AbstractTabBarWidget implements NextSnackListener{
@@ -37,10 +50,15 @@ public class MealsWidget extends AbstractTabBarWidget implements NextSnackListen
 	
 	private SnackWidget snackWidget;
 	
+	private ImageButton ingredientsButton;
+	
+	private Panel snackPanel;
+	private Panel actionPanel;
+	
 	@Override
 	public void nextSnack(SnackProxy snackProxy, boolean snackForTomorrow) {
 		this.snackProxy = snackProxy;
-		if(snackWidget != null) this.remove(snackWidget);
+		if(snackWidget != null) snackPanel.remove(snackWidget);
 		snackWidget = new SnackWidget(snackProxy, State.CURRENT, MealsWidget.this);
 		if(snackForTomorrow){
 			Date currentTime = new Date();
@@ -53,7 +71,7 @@ public class MealsWidget extends AbstractTabBarWidget implements NextSnackListen
 			snackWidget.setHoursInterval( (startingTime.getTime() - currentTime.getTime()) * 1.0 / (1000 * 60 * 60) );
 		}
 		MealsWidget.this.snackProxy = snackProxy;
-		add(snackWidget);
+		snackPanel.add(snackWidget);
 		
 	}
 
@@ -63,8 +81,31 @@ public class MealsWidget extends AbstractTabBarWidget implements NextSnackListen
 	}
 	
 	public MealsWidget(){
+		
+		snackPanel = new Panel();
+		snackPanel.setRound(true);
+		actionPanel = new Panel();
+		actionPanel.setRound(true);
+		
+		add(snackPanel);
+		add(actionPanel);
+		
 		ClientData clientData = ClientFactoryFactory.getClientFactory().getClientData();
 		nextSnack(clientData.getNextSnack(), clientData.isSnackForTomorrow());
+		
+		
+		ingredientsButton = new ImageButton(new GeneWayImageButtonAppearance(), LocalImageHolder.get().ingredients(), "");
+		ingredientsButton.addTapHandler(new TapHandler() {		
+			@Override
+			public void onTap(TapEvent event) {
+				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new IngredientsPlace());
+			}
+		});
+		ingredientsButton.setText(ClientFactoryFactory.getClientFactory().getConstants().ingredients());
+
+//		ingredientsButton.getElement().getStyle().setBackgroundColor(Styles.WHITE);
+		//		ingredientsButton.setTextPosition(TextPosition.LEFT);
+		actionPanel.add(ingredientsButton);
 //		snackId = 0;
 //		plan = ClientFactoryFactory.getClientFactory().getPlan();
 //		weeklyCycle = ClientFactoryFactory.getClientFactory().getWeeklyCycle();

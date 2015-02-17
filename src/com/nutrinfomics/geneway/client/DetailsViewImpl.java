@@ -132,7 +132,10 @@ public class DetailsViewImpl implements DetailsView{
 	
 	@Override
 	public void showBackButton(){
-		if(headerBackButton != null) headerBackButton.setVisible(true);
+		if(headerBackButton != null &&
+				!MGWT.getOsDetection().isAndroid() && 
+				MGWT.getFormFactor().isPhone()) 
+			headerBackButton.setVisible(true);
 	}
 	
 	@Override
@@ -164,4 +167,8 @@ public class DetailsViewImpl implements DetailsView{
 		return main;
 	}
 
+	protected void addToRoot(Widget w){
+		main.remove(bodyPanel);
+		main.add(w);
+	}
 }

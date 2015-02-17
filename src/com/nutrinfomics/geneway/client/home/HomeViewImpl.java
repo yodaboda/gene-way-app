@@ -9,7 +9,7 @@ import com.nutrinfomics.geneway.client.style.Styles;
 public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 	private TabPanel tabPanel;
 	private MealsWidget mealsWidget;
-	private IngredientsWidget ingredientsWidget;
+//	private IngredientsWidget ingredientsWidget;
 	private SettingsWidgetList settingsWidget;
 	
 	public HomeViewImpl(){
@@ -47,8 +47,8 @@ public class HomeViewImpl extends DetailsViewImpl implements HomeView {
 		tabPanel.add(new MealsTabBarButton(), mealsWidget);
 //		tabPanel.add(new MealsTabBarButton(), new Label("meals widget"));
 
-	    ingredientsWidget = new IngredientsWidget();
-		tabPanel.add(new IgnredientsTabBarButton(), ingredientsWidget);
+//	    ingredientsWidget = new IngredientsWidget();
+//		tabPanel.add(new IgnredientsTabBarButton(), ingredientsWidget);
 //		tabPanel.add(new IgnredientsTabBarButton(), new Label("ingredient widget"));
 
 //	    tabPanel.add(new MyFavoritesTabBarButton(), new FavoritesWidget());

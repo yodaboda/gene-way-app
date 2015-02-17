@@ -9,6 +9,7 @@ import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.home.HomeView;
+import com.nutrinfomics.geneway.client.ingredients.IngredientsView;
 import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.register.RegisterView;
@@ -87,4 +88,6 @@ public interface ClientFactory {
 	public SessionProxy getSession();
 
 	public void setSession(SessionProxy session);
+
+	public IngredientsView getIngredientsView();
 }

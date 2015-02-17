@@ -26,6 +26,8 @@ import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.home.HomeViewImpl;
+import com.nutrinfomics.geneway.client.ingredients.IngredientsView;
+import com.nutrinfomics.geneway.client.ingredients.IngredientsViewImpl;
 import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.login.LoginViewImpl;
@@ -65,6 +67,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private AboutView aboutView;
 	static private GeneWayRequestFactory requestFactory;
 	static private FirstScreenView firstScreenView;
+	static private IngredientsView ingredientsView;
 	static private String username;
 	static private String password;
 	static private PlaceHistoryMapper placeHistoryMapper;
@@ -307,5 +310,13 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public void setSession(SessionProxy session){
 		ClientFactoryImpl.session = session;
+	}
+
+	@Override
+	public IngredientsView getIngredientsView() {
+		if(ingredientsView == null){
+			ingredientsView = new IngredientsViewImpl();
+		}
+		return ingredientsView;
 	}
 }
