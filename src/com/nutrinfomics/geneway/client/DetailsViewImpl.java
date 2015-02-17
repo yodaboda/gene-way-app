@@ -33,9 +33,10 @@ public class DetailsViewImpl implements DetailsView{
 
 	public DetailsViewImpl(){
 		headerPanel = new HeaderPanel();
-		headerPanel.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-bottom: initial; "
-				//taken from element native style attribute
-				+ "-webkit-box-orient: horizontal; flex-direction: row; -webkit-box-align: center; align-items: center;");
+		headerPanel.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
+//		headerPanel.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-bottom: initial; "
+//				//taken from element native style attribute
+//				+ "-webkit-box-orient: horizontal; flex-direction: row; -webkit-box-align: center; align-items: center;");
 		
 		if(!MGWT.getOsDetection().isAndroid() && MGWT.getFormFactor().isPhone()) {
 			headerBackButton = new PreviousitemImageButton();
@@ -50,23 +51,18 @@ public class DetailsViewImpl implements DetailsView{
 					ActionEvent.fire(ClientFactoryFactory.getClientFactory().getEventBus(), ActionEvent.ActionNames.BACK.toString());
 				}
 			});
-			hideBackButton();
-			
-			headerPanel.add(new FlexSpacer());
-
+			hideBackButton();			
 		}
-
-		
-
+		headerPanel.add(new FlexSpacer());
 
 		GeneWayImageButton title = new GeneWayImageButton();
 		headerPanel.add(title);
 		
 		headerPanel.add(new FlexSpacer());
 
-		if(!MGWT.getOsDetection().isAndroid() && MGWT.getFormFactor().isPhone()) {
-			headerPanel.add(new FixedSpacer());
-		}
+//		if(!MGWT.getOsDetection().isAndroid() && MGWT.getFormFactor().isPhone()) {
+//			headerPanel.add(new FixedSpacer());
+//		}
 
 
 
@@ -103,7 +99,8 @@ public class DetailsViewImpl implements DetailsView{
 		
 		main = new RootFlexPanel();
 		main.setAlignment(Alignment.CENTER);
-		main.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
+		main.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
+//		main.getElement().setAttribute("style", Styles.BACKGROUND_COLOR);
 		main.add(headerPanel);
 		
 		bodyPanel = new FlowPanel();

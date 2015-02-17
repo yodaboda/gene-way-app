@@ -62,7 +62,6 @@ public class SnackOrderWidgetList extends WidgetList {
 
 			//first added boxes show up at the bottom
 			AbstractFoodSpecificationProxy foodSpecification = snackOrderSpecification.getFoodOrderSpecification().get(i);
-			
 			for(int j = 0; j < snackSummary.size(); ++j){
 				String label;
 				try{
@@ -102,25 +101,34 @@ public class SnackOrderWidgetList extends WidgetList {
 	}
 	
 	private void updateSnackSpecification(int snackIndex, String snackSelected){
-		Window.alert("snack index: " + snackIndex);
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();
 		SnackOrderSpecificationProxy snackOrderSpecificationEdit = planRequest.edit(snackOrderSpecification);
 		AbstractFoodSpecificationProxy oldFoodSpecification = snackOrderSpecificationEdit.getFoodOrderSpecification().get(snackIndex);;
+		AbstractFoodSpecificationProxy newFoodSpecification;
 		if(snackSelected.equals(SnackProperty.REST.toString())){
 			AnimalFoodSpecificationProxy animalFoodSpecificationProxy = planRequest.create(AnimalFoodSpecificationProxy.class);
-			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, animalFoodSpecificationProxy);
+			newFoodSpecification = animalFoodSpecificationProxy;
 		}
 		else if(snackSelected == AUTO){
 			AcceptAllSpecificationProxy acceptAllSpecificationProxy = planRequest.create(AcceptAllSpecificationProxy.class);
-			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, acceptAllSpecificationProxy);
+			newFoodSpecification = acceptAllSpecificationProxy;
 		}
 		else{
 			FoodItemTypeFoodSpecificationProxy foodItemTypeSpecification = planRequest.create(FoodItemTypeFoodSpecificationProxy.class);
 			FoodItemType foodItemType = FoodItemType.valueOf(snackSelected);
 			foodItemTypeSpecification.setFoodItemType(foodItemType);
-			snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, foodItemTypeSpecification);			
+			newFoodSpecification = foodItemTypeSpecification;
 		}
+		snackOrderSpecificationEdit.getFoodOrderSpecification().set(snackIndex, newFoodSpecification);			
 
+//		List<AbstractFoodSpecificationProxy> foodOrderSpecification = snackOrderSpecificationEdit.getFoodOrderSpecification();
+//		String display = "";
+//		for(AbstractFoodSpecificationProxy foodSpecification : foodOrderSpecification){
+//			display += foodSpecification.getClass().getName() + " ";
+//		}
+//		Window.alert(display);
+
+		
 		planRequest.updateSpecifications(snackOrderSpecificationEdit, oldFoodSpecification).fire(new GeneWayReceiver<Void>() {
 			@Override
 			public void onFailure(ServerFailure error) {
@@ -132,12 +140,12 @@ public class SnackOrderWidgetList extends WidgetList {
 				ClientFactoryFactory.getClientFactory().getClientData().requestSnackOrderSpecification(new SnackOrderSpecificationListener() {
 					@Override
 					public void snackOrderSpecification(SnackOrderSpecificationProxy snackOrderSpecification) {
-						List<AbstractFoodSpecificationProxy> foodOrderSpecification = snackOrderSpecification.getFoodOrderSpecification();
-						String display = "";
-						for(AbstractFoodSpecificationProxy foodSpecification : foodOrderSpecification){
-							display += foodSpecification.getClass().getName() + " ";
-						}
-						Window.alert(display);
+//						List<AbstractFoodSpecificationProxy> foodOrderSpecification = snackOrderSpecification.getFoodOrderSpecification();
+//						String display = "";
+//						for(AbstractFoodSpecificationProxy foodSpecification : foodOrderSpecification){
+//							display += foodSpecification.getClass().getName() + " ";
+//						}
+//						Window.alert(display);
 						setSnackOrderSpecification(snackOrderSpecification);
 					}
 				});

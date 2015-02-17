@@ -111,6 +111,7 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    registerAnchor = new Anchor(constants.newAccount(), "#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()));
 	    registerAnchor.setStylePrimaryName("sp-circle-link");
 	    
+//	    registerAnchor.get;
 	    panel.add(geneWayImage);
 	    
 	    HTML animatedText = new HTML("<div class=\"sp-container\" dir=\"ltr\">"+
@@ -125,7 +126,8 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
         										"<h2 class=\"frame-4\">" + constants.youQM() + "</h2>" +
 
         										"<h2 class=\"frame-5\"><span>" + constants.timeInTimeForChange() + "</span> <span>" + constants.forInTimeForChange() + "</span> <span>" +  constants.changeInTimeForChange() + "</span></h2>"+
-//	    										"<a class=\"sp-circle-link\" href=\"#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()) + "\">Join Now!</a>" +
+//        										registerAnchor.getHTML() + 
+        										//	    										"<a class=\"sp-circle-link\" href=\"#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()) + "\">Join Now!</a>" +
         								"</div>" +
 	    							"</div>");
 		animatedText.setWidth("100%");
@@ -138,6 +140,14 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 		animatedImages.setPixelSize(imageWidth, imageHeight);
 		animatedImages.getElement().getStyle().setProperty("margin", "auto");
 		animatedImages.getElement().getStyle().setMarginTop(50, Unit.PX);
+
+		Panel registerPanel = new Panel();
+		registerPanel.setStylePrimaryName("sp-content");
+		registerPanel.getElement().getStyle().setProperty("margin", "auto");
+		registerPanel.getElement().getStyle().setMarginTop(-80, Unit.PX);
+		registerPanel.setWidth("100%");
+//		registerAnchor.getElement().getStyle().setWidth(afterImage.getWidth(), Unit.PX);;
+		registerPanel.add(registerAnchor);
 		
 //		Panel animatedPanel = new Panel();
 ////		animatedPanel.setStylePrimaryName("crossfade");
@@ -150,23 +160,23 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 //		animatedPanel.getElement().getStyle().setMarginTop(50, Unit.PX);
 		
 		panel.add(animatedText);
-	    panel.add(registerAnchor);
 	    panel.add(new FlexSpacer());
 	    panel.add(new FixedSpacer());
 	    
 //	    panel.add(animationWidget);
 //	    panel.add(imagePanel);
 	    panel.add(animatedImages);
+	    panel.add(registerPanel);
 //	    panel.add(animatedPanel);
 	    
 	    panel.add(new FixedSpacer());
 	    panel.add(existingAccountButton);
 	    panel.add(newAccountButton);
-
 	    
 	    final MListBox languageBox = new MListBox();
 	    languageBox.getElement().getStyle().setColor(Styles.BLACK);
 	    
+//	    Window.alert("locale cookie: " + Cookies.getCookie(LocaleInfo.getLocaleCookieName()));
 	    	    
 //	    if(LocaleInfo.getCurrentLocale().isRTL()){
 //		    languageBox.getElement().getStyle().setPaddingRight(padding, Unit.PX);
@@ -194,8 +204,6 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    
 	}
 
-
-
 	private void setButtonStyle(Button button) {
 		button.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
 		button.getElement().getStyle().setColor(Styles.WHITE);
@@ -204,7 +212,6 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	    button.getElement().getStyle().setBackgroundImage("none");
 	    button.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
 	}
-
 	
 	@Override
 	public HasTapHandlers getNewAccountButton() {

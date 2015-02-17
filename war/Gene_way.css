@@ -174,16 +174,24 @@ table{
 	transform: scale(6);
 }
 .sp-circle-link {
-	position: absolute;
-	margin-top: 130px;
-	z-index: 1000;
-/* 	left: 50%; */
+/* 	position: relative;
+ */	
+ 	width: inherit;
+ 	position: absolute;
+/*  	left: 50%;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left:-50%;
+ *//*	margin-top: 130px;
+ */
+ /* 	left: 50%; */
 /* 	bottom: 100px; */
 /* 	margin-left: -50px; */
 	text-align: center;
 /* 	line-height: 100px; */
 /* 	width: 100px; */
 /* 	height: 100px; */
+	z-index: 1000;
 	background: #fff;
 	color: #3f1616;
 	font-size: 20px;
