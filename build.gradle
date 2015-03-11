@@ -23,17 +23,20 @@ dependencies{
 		compile name: 'jsonic-1.2.0'
 }
 
-sourceSets {
-        main {
-                java {
-                        srcDir 'src'
-                }
-        }
-}
+//sourceSets {
+  //      main {
+    //            java {
+      //              srcDir 'src/main/java'
+//                }
+  //              resources{
+    //            	srcDir 'src/main/resources'
+      //          }
+//        }
+//}
 
-war{ 
-        webAppDirName = file('webapp') 
-}
+//war{ 
+  //      webAppDirName = file('webapp') 
+//}
 
 //task constantsJar(type: Jar) {
 //	from sourceSets.main.output.classesDir
