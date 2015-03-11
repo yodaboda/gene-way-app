@@ -7,8 +7,8 @@ import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.nutrinfomics.geneway.client.GeneWayWidgetList;
-import com.nutrinfomics.geneway.client.TextBoxViewImpl;
 import com.nutrinfomics.geneway.client.style.Styles;
+import com.nutrinfomics.geneway.client.util.TextBoxViewImpl;
 
 public class LoginViewImpl extends TextBoxViewImpl implements LoginView {
 	private MTextBox usernameField;

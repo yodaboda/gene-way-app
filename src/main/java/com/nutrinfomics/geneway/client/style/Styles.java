@@ -10,4 +10,5 @@ public class Styles {
 	public static final String WHITE_BACKGROUND_COLOR = "background-color:" + WHITE + ";";
 	public static final String HORIZONTAL_CENTER_ALIGN = "margin-left: auto; margin-right: auto;";
 	public static final String VERTICAL_CENTER_ALIGN = "margin-top: auto; margin-bottom: auto;";
+	public static final String RED = "#FF0000";
 }

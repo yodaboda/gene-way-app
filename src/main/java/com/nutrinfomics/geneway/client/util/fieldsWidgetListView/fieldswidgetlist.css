@@ -1,0 +1,30 @@
+@CHARSET "UTF-8";
+
+.mgwt-WidgetList{
+/* 	border-top: 10px solid #65cc00;
+	margin: auto;
+	background-color: #65CC00;
+ */
+ }
+
+.mgwt-WidgetList-Entry{
+	padding-bottom: 0px;
+/* 	border: 10px solid #65cc00;
+ */}
+
+.mgwt-WidgetList-Entry-selectable{
+	padding-bottom: 0px;
+/* 	border: 10px solid #65cc00;
+ */}
+
+.mgwt-WidgetList-Entry-first{
+	padding-bottom: 0px;
+/* 	border: 10px solid #65cc00;
+ */
+ }
+
+.mgwt-WidgetList-Entry-last{
+	padding-bottom: 0px;
+	/* 	border: 10px solid #65cc00;
+ */
+ }

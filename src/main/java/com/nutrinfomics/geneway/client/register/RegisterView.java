@@ -1,10 +1,16 @@
 package com.nutrinfomics.geneway.client.register;
 
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+
 import com.google.gwt.user.client.ui.IsWidget;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.nutrinfomics.geneway.client.DetailsView;
+import com.nutrinfomics.geneway.client.util.fieldsWidgetListView.FieldsWidgetListView;
+import com.nutrinfomics.geneway.client.util.fieldsWidgetListView.ValidationTextBox;
 
-public interface RegisterView extends DetailsView {
+public interface RegisterView extends FieldsWidgetListView {
 	public HasTapHandlers getRegisterButton();
 
 	public String getEmail();
@@ -22,4 +28,6 @@ public interface RegisterView extends DetailsView {
 	public String getPhoneNumber();
 
 	public boolean isTermsBoxChecked();
+
+
 }

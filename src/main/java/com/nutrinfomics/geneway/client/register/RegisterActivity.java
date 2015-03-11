@@ -68,18 +68,7 @@ public class RegisterActivity extends MGWTAbstractActivity {
 
 			@Override
 			public void onConstraintViolation(Set<ConstraintViolation<?>> violations){
-				Window.alert("constraint violation");
-				if(! violations.isEmpty() ){
-					Iterator<ConstraintViolation<?>> iterator = violations.iterator();
-					String message = "";
-					
-					while(iterator.hasNext()){
-						ConstraintViolation<?> next = iterator.next();
-						message += next.getMessageTemplate() + " " + next.getMessage() + "\n";
-					}
-					
-					Window.alert(message);
-				}
+				registerView.constraintViolations(violations);
 			}
 			@Override
 			public void onSuccess(SessionProxy response) {

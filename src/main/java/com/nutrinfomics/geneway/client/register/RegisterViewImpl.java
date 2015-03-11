@@ -2,6 +2,7 @@ package com.nutrinfomics.geneway.client.register;
 
 
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.HTML;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
@@ -16,42 +17,46 @@ import com.googlecode.mgwt.ui.client.widget.input.MPhoneNumberTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.MTextBox;
 import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.input.radio.MRadioButton;
-import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Orientation;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.GeneWayWidgetList;
-import com.nutrinfomics.geneway.client.TextBoxViewImpl;
 import com.nutrinfomics.geneway.client.privacyPolicy.PrivacyPolicyPlace;
 import com.nutrinfomics.geneway.client.termsOfService.TermsOfServicePlace;
+import com.nutrinfomics.geneway.client.util.TextBoxViewImpl;
+import com.nutrinfomics.geneway.client.util.fieldsWidgetListView.FieldsWidgetListAppearance;
+import com.nutrinfomics.geneway.client.util.fieldsWidgetListView.FieldsWidgetListViewImpl;
+import com.nutrinfomics.geneway.client.util.fieldsWidgetListView.ValidationTextBox;
 
 
-public class RegisterViewImpl extends TextBoxViewImpl implements RegisterView {
+public class RegisterViewImpl extends FieldsWidgetListViewImpl implements RegisterView {
 	private MTextBox firstNameField;
 	private MTextBox lastNameField;
 	private MEmailTextBox emailField;
-	private MPhoneNumberTextBox phoneNumberField;
 	private MDateBox birthdateField;
 	private MNumberTextBox weightField;
 	private MNumberTextBox heightField;
 	private MListBox genderField;
-	private MTextBox usernameField;
-	private MPasswordTextBox passwordField;
-	private MPasswordTextBox repeatPasswordField;
+
 	
 	private Button registerButton;
 	private MRadioButton acceptTermsOfServicButton;
-
+	private ValidationTextBox phoneNumberValidationField;
+	private ValidationTextBox usernameValidationField;
+	private ValidationTextBox passwordValidationField;
+	private ValidationTextBox repeatPasswordValidationField;
 	public RegisterViewImpl(){
 //		ScrollPanel scrollPanel = new ScrollPanel();
 		
-		WidgetList widgetList = new GeneWayWidgetList();
+		
 	
-		phoneNumberField = new MPhoneNumberTextBox();
-		toggleBoxAppearance(phoneNumberField, constants.phonenumber());
-		widgetList.add(phoneNumberField);
+		phoneNumberValidationField = new ValidationTextBox(new MPhoneNumberTextBox(), constants.phonenumber(), 
+															"phonenumber");
+//		toggleBoxAppearance(phoneNumberField, constants.phonenumber());
+		addValidationField(phoneNumberValidationField);
+		
 		
 		firstNameField = new MTextBox();
 		toggleBoxAppearance(firstNameField, constants.privatename());
@@ -75,21 +80,22 @@ public class RegisterViewImpl extends TextBoxViewImpl implements RegisterView {
 //		genderField.addItem(constants.male());
 //		widgetList.add(new FormEntry(constants.gender(), genderField));
 		
-		usernameField = new MTextBox();
-		toggleBoxAppearance(usernameField, constants.username());
-		widgetList.add(usernameField);
+		usernameValidationField = new ValidationTextBox(new MTextBox(), constants.username(), 
+														"username");
+		addValidationField(usernameValidationField);
 		
 		emailField = new MEmailTextBox();
 		toggleBoxAppearance(emailField, constants.email());
 //		widgetList.add(emailField);
 		
-		passwordField = new MPasswordTextBox();
-		toggleBoxAppearance(passwordField, constants.password());
-		widgetList.add(passwordField);
+
+		passwordValidationField = new ValidationTextBox(new MPasswordTextBox(), constants.password(), 
+														"password");
+		addValidationField(passwordValidationField);
 		
-		repeatPasswordField = new MPasswordTextBox();
-		toggleBoxAppearance(repeatPasswordField, constants.repeatpassword());
-		widgetList.add(repeatPasswordField);
+		repeatPasswordValidationField = new ValidationTextBox(new MPasswordTextBox(), constants.repeatpassword(), 
+																"repeatPassword");
+		addValidationField(repeatPasswordValidationField);
 		
 		add(widgetList);
 
@@ -137,7 +143,7 @@ public class RegisterViewImpl extends TextBoxViewImpl implements RegisterView {
 		
 //		privateNameField.setFocus(true);
 //		usernameField.setFocus(true);
-		phoneNumberField.setFocus(true);
+		phoneNumberValidationField.getTextBox().setFocus(true);
 //		add(scrollPanel);
 	}
 
@@ -153,7 +159,7 @@ public class RegisterViewImpl extends TextBoxViewImpl implements RegisterView {
 
 	@Override
 	public String getUsername() {
-		return usernameField.getText();
+		return usernameValidationField.getTextBox().getText();
 	}
 
 	@Override
@@ -168,17 +174,17 @@ public class RegisterViewImpl extends TextBoxViewImpl implements RegisterView {
 
 	@Override
 	public String getPassword() {
-		return passwordField.getText();
+		return passwordValidationField.getTextBox().getText();
 	}
 
 	@Override
 	public String getPhoneNumber() {
-		return phoneNumberField.getValue();
+		return phoneNumberValidationField.getTextBox().getValue();
 	}
 
 	@Override
 	public String getRepeatPassword() {
-		return repeatPasswordField.getText();
+		return repeatPasswordValidationField.getTextBox().getText();
 	}
 
 	@Override
