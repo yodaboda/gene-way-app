@@ -11,18 +11,23 @@ import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.register.RegisterPlace;
+import com.nutrinfomics.geneway.client.util.GeneWayAbstractActivity;
 
-public class FirstScreenActivity extends MGWTAbstractActivity {
+public class FirstScreenActivity extends GeneWayAbstractActivity {
 
 	@Override
 	public void start(AcceptsOneWidget panel, final EventBus eventBus) {
 		super.start(panel, eventBus);
 
-		FirstScreenView firstScreenView = ClientFactoryFactory.getClientFactory().getFirstScreenView();
+		final FirstScreenView firstScreenView = ClientFactoryFactory.getClientFactory().getFirstScreenView();
 		
 		addHandlerRegistration(firstScreenView.getNewAccountButton().addTapHandler(new TapHandler() {
 			@Override
 			public void onTap(TapEvent event) {
+//				if(firstScreenView.getPassword().equals("sfae")){
+//					ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new RegisterPlace());
+//				}
+
 				if(ClientFactoryFactory.getClientFactory().isExistingCustomer()){
 					ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new LoginPlace());
 				}
@@ -32,12 +37,12 @@ public class FirstScreenActivity extends MGWTAbstractActivity {
 			}
 		}));
 		
-//		addHandlerRegistration(firstScreenView.getExistingAccountButton().addTapHandler(new TapHandler() {
-//			@Override
-//			public void onTap(TapEvent event) {
-//				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new LoginPlace());
-//			}
-//		}));
+		addHandlerRegistration(firstScreenView.getAccountAnchorButton().addTapHandler(new TapHandler() {
+			@Override
+			public void onTap(TapEvent event) {
+				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new RegisterPlace());
+			}
+		}));
 
 //		addHandlerRegistration(firstScreenView.getNewAccountAnchor().addClickHandler(new ClickHandler() {
 //			@Override

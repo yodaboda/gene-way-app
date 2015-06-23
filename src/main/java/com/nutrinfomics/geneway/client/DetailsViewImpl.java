@@ -1,8 +1,12 @@
 package com.nutrinfomics.geneway.client;
 
+
+import com.google.gwt.dom.client.Style.BorderStyle;
 import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
@@ -12,13 +16,16 @@ import com.googlecode.mgwt.ui.client.widget.button.image.AboutImageButton;
 import com.googlecode.mgwt.ui.client.widget.button.image.PreviousitemImageButton;
 import com.googlecode.mgwt.ui.client.widget.buttonbar.ButtonBar;
 import com.googlecode.mgwt.ui.client.widget.header.HeaderPanel;
-import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.Panel;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Justification;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Orientation;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.RootFlexPanel;
+import com.googlecode.mgwt.ui.client.widget.progress.ProgressIndicator;
 import com.nutrinfomics.geneway.client.about.AboutPlace;
 import com.nutrinfomics.geneway.client.event.ActionEvent;
-import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
 import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
@@ -33,19 +40,47 @@ public class DetailsViewImpl implements DetailsView{
 	private ButtonBar buttonBar;
 
 	protected GeneWayConstants constants = ClientFactoryFactory.getClientFactory().getConstants();
+	static private FlexPanel loadingPanel;
+	private Panel firstHeaderPanel;
+	static{
+		
+		loadingPanel = new FlexPanel();
+		loadingPanel.setAlignment(Alignment.CENTER);
+		loadingPanel.setJustification(Justification.CENTER);
+		loadingPanel.addStyleName("loader");
+		ProgressIndicator progressIndicator = new ProgressIndicator();
+		loadingPanel.add(progressIndicator);
+		RootPanel.getBodyElement().insertFirst(loadingPanel.getElement());
+	}
+	
 	public DetailsViewImpl(){
 		headerPanel = new HeaderPanel();
+		headerPanel.setJustification(Justification.SPACE_BETWEEN);
 		headerPanel.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
 //		headerPanel.getElement().setAttribute("style", Styles.BACKGROUND_COLOR + "border-bottom: initial; "
 //				//taken from element native style attribute
 //				+ "-webkit-box-orient: horizontal; flex-direction: row; -webkit-box-align: center; align-items: center;");
 		
+		firstHeaderPanel = new Panel();
+		firstHeaderPanel.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
+		firstHeaderPanel.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
+		Panel centerPanel = new Panel();
+		centerPanel.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
+		centerPanel.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
+		FlexPanel lastPanel = new FlexPanel();
+		lastPanel.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
+		lastPanel.setOrientation(Orientation.HORIZONTAL);
+		lastPanel.getElement().getStyle().setBorderStyle(BorderStyle.NONE);
+		
+		headerPanel.add(firstHeaderPanel);
+		headerPanel.add(centerPanel);
+		headerPanel.add(lastPanel);
+		
 		if(!MGWT.getOsDetection().isAndroid() && MGWT.getFormFactor().isPhone()) {
 			headerBackButton = new PreviousitemImageButton();
-			headerBackButton.setIconActiveColor(Styles.WHITE);
-			headerBackButton.setIconColor(Styles.WHITE);
-
-			headerPanel.add(headerBackButton);
+			toggleHeaderButton(headerBackButton);
+			
+			firstHeaderPanel.add(headerBackButton);
 		  
 			headerBackButton.addTapHandler(new TapHandler() {
 				@Override
@@ -55,12 +90,12 @@ public class DetailsViewImpl implements DetailsView{
 			});
 			hideBackButton();			
 		}
-		headerPanel.add(new FlexSpacer());
+//		headerPanel.add(new FlexSpacer());
 
 		GeneWayImageButton title = new GeneWayImageButton();
-		headerPanel.add(title);
+		centerPanel.add(title);
 		
-		headerPanel.add(new FlexSpacer());
+//		headerPanel.add(new FlexSpacer());
 
 //		if(!MGWT.getOsDetection().isAndroid() && MGWT.getFormFactor().isPhone()) {
 //			headerPanel.add(new FixedSpacer());
@@ -69,27 +104,21 @@ public class DetailsViewImpl implements DetailsView{
 
 
 		ImageButton logoutButton = new ImageButton(LocalImageHolder.get().logout());
-		logoutButton.setIconActiveColor(Styles.WHITE);
-		logoutButton.setIconColor(Styles.WHITE);
-
+		toggleHeaderButton(logoutButton);
 		logoutButton.addTapHandler(new TapHandler() {
 			
 			@Override
 			public void onTap(TapEvent event) {
 				ClientFactoryFactory.getClientFactory().logout();
-				ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new FirstScreenPlace());
 			}
 		});
-		headerPanel.add(logoutButton);
+		lastPanel.add(logoutButton);
 
 		aboutButton = new AboutImageButton();
-		aboutButton.setIconActiveColor(Styles.WHITE);
-		aboutButton.setIconColor(Styles.WHITE);
-//		aboutButton.image.getStyle().setBackgroundColor("white");
+		toggleHeaderButton(aboutButton);
 //		setAttribute("style","background-color: white;");
-//		aboutButton.setStyleName("rightAligned");
 //	    if (MGWT.getFormFactor().isPhone()) {
-	      headerPanel.add(aboutButton);
+	      lastPanel.add(aboutButton);
 //	    }
 		aboutButton.addTapHandler(new TapHandler() {
 			@Override
@@ -113,8 +142,20 @@ public class DetailsViewImpl implements DetailsView{
 		buttonBar.getElement().getStyle().setBorderWidth(0, Unit.PX);
 		main.add(buttonBar);
 		buttonBar.setVisible(false);
+		
+		hideLoader();
 	}
 
+	protected void toggleHeaderButton(ImageButton imageButton){
+		imageButton.setIconActiveColor(Styles.WHITE);
+		imageButton.setIconColor(Styles.WHITE);
+		imageButton.getElement().getStyle().setBackgroundColor(Styles.BACKGROUND_COLOR_VALUE);
+	}
+	
+	protected void addToFirstHeaderPanel(IsWidget w){
+		firstHeaderPanel.add(w);
+	}
+	
 	public void addToFooter(IsWidget w){
 		buttonBar.add(w);
 	}
@@ -173,4 +214,15 @@ public class DetailsViewImpl implements DetailsView{
 		main.remove(bodyPanel);
 		main.add(w);
 	}
+
+	@Override
+	public void displayLoader() {
+		loadingPanel.getElement().getStyle().setVisibility(Visibility.VISIBLE);
+	};
+
+	@Override
+	public void hideLoader() {
+		loadingPanel.getElement().getStyle().setVisibility(Visibility.HIDDEN);
+	};
+
 }

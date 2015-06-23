@@ -10,6 +10,7 @@ import com.google.web.bindery.requestfactory.shared.ServerFailure;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.nutrinfomics.geneway.client.ClientData.PlanPreferencesListener;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.community.CommunityUpdateProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
@@ -18,6 +19,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.AbstractFoodSpecificationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.specification.SnackOrderSpecificationProxy;
+import com.nutrinfomics.geneway.client.requestFactory.request.CommunityRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.EntityBaseRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
 import com.nutrinfomics.geneway.client.util.DateUtils;
@@ -33,6 +35,7 @@ public class ClientData {
 	private PlanPreferencesProxy planPreferences;
 	private List<String> snackOrder;
 	private SnackOrderSpecificationProxy snackOrderSpecification;
+	private List<CommunityUpdateProxy> communityUpdates;
 	
 	public interface NextSnackListener{
 		public void nextSnack(SnackProxy snackProxy, boolean snackForTommorow);
@@ -54,12 +57,25 @@ public class ClientData {
 		public void snackOrderSpecification(SnackOrderSpecificationProxy foodSpecification);
 	}
 	
+	public interface CommunityUpdatesListener{
+		public void communityUpdates(List<CommunityUpdateProxy> communityUpdates);
+	}
+	
 	public List<String> getSnackSummary() {
 		return menuSummary;
 	}
 	public void setMenuSummary(List<String> menuSummary) {
 		this.menuSummary = menuSummary;
 	}
+	public void setCommunityUpdates(
+			List<CommunityUpdateProxy> communityUpdates) {
+		this.communityUpdates = communityUpdates;
+	}
+
+	public List<CommunityUpdateProxy> getCommunityUpdates(){
+		return communityUpdates;
+	}
+	
 	public Set<FoodItemType> getIngredients() {
 		return ingredients;
 	}
@@ -131,6 +147,22 @@ public class ClientData {
 			}
 		});
 	}
+
+	public void requestCommunityUpdates(
+			final CommunityUpdatesListener communityUpdatesListener) {
+		CommunityRequest communityRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().communityRequest();
+		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().createNewSession(communityRequest);
+		communityRequest.communityUpdates(sessionProxy).fire(new GeneWayReceiver<List<CommunityUpdateProxy>>() {
+
+			@Override
+			public void onSuccess(List<CommunityUpdateProxy> communityUpdates) {
+				setCommunityUpdates(communityUpdates);
+				communityUpdatesListener.communityUpdates(communityUpdates);
+			}
+		});
+		
+	}
+
 	
 	public void requestSnackOrderSpecification(final SnackOrderSpecificationListener snackOrderSpecificationListener){
 		PlanRequest planRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().planRequest();

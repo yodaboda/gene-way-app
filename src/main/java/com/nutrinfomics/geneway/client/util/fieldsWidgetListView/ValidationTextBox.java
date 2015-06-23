@@ -2,17 +2,18 @@ package com.nutrinfomics.geneway.client.util.fieldsWidgetListView;
 
 import com.google.gwt.user.client.ui.HTML;
 import com.googlecode.mgwt.ui.client.widget.base.MTextBoxBase;
+import com.googlecode.mgwt.ui.client.widget.base.MValueBoxBase;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Orientation;
 import com.nutrinfomics.geneway.client.style.Styles;
 
-public class ValidationTextBox extends FlexPanel{
-	private MTextBoxBase textBox;
+public class ValidationTextBox<T> extends FlexPanel{
+	private MValueBoxBase<T> textBox;
 	private HTML validationText;
 	private int index;
 	private String violationTemplateIdentifier;
 	
-	public ValidationTextBox(MTextBoxBase textBox, String placeHolder, String violationTemplate){
+	public ValidationTextBox(MValueBoxBase<T> textBox, String placeHolder, String violationTemplate){
 		setOrientation(Orientation.VERTICAL);
 		setWidth("100%");
 		this.textBox = textBox;
@@ -56,7 +57,7 @@ public class ValidationTextBox extends FlexPanel{
 		validationText.getElement().getStyle().setColor(Styles.RED);
 		validationText.setText(text);
 	}
-	public MTextBoxBase getTextBox(){
+	public MValueBoxBase<T> getValueBox(){
 		return textBox;
 	}
 }

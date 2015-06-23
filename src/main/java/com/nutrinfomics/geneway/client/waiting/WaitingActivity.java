@@ -12,6 +12,7 @@ import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.AlertCallback;
 import com.nutrinfomics.geneway.client.ClientData;
+import com.nutrinfomics.geneway.client.ClientData.CommunityUpdatesListener;
 import com.nutrinfomics.geneway.client.ClientData.IngredientsListener;
 import com.nutrinfomics.geneway.client.ClientData.NextSnackListener;
 import com.nutrinfomics.geneway.client.ClientData.MenuSummaryListener;
@@ -20,8 +21,11 @@ import com.nutrinfomics.geneway.client.ClientData.SnackOrderSpecificationListene
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.home.HomePlace;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
+import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsPlace;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.community.CommunityUpdateProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CredentialsProxy;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanPreferencesProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.SnackProxy;
@@ -54,16 +58,14 @@ public class WaitingActivity extends MGWTAbstractActivity {
 	protected void authenticateUsernamePassword() {
 		AuthenticationRequest authenticationRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().authenticationRequest();
 		
-		SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().buildSession(authenticationRequest);
+		CustomerProxy customerProxy = ClientFactoryFactory.getClientFactory().buildCustomer(authenticationRequest);
 		CredentialsProxy credentials = authenticationRequest.create(CredentialsProxy.class);
-		sessionProxy.getCustomer().setCredentials(credentials);
-		final String username = ClientFactoryFactory.getClientFactory().getUsername();
-		credentials.setUsername(username);
+		customerProxy.setCredentials(credentials);
 		final String password = ClientFactoryFactory.getClientFactory().getPassword();
 		credentials.setPassword(password);
 
-		Request<SessionProxy> authenticateCustomer = authenticationRequest.authenticateCustomer(sessionProxy.getCustomer());
-		authenticateCustomer.with("customer", "customer.device");
+		Request<SessionProxy> authenticateCustomer = authenticationRequest.authenticateCustomer(customerProxy);
+		authenticateCustomer.with("customer", "customer.device", "customer.personalDetails.birthday");
 		authenticateCustomer.fire(new GeneWayReceiver<SessionProxy>() {
 			@Override
 			public void onSuccess(SessionProxy session){
@@ -111,7 +113,7 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		
 		final SessionProxy sessionProxy = ClientFactoryFactory.getClientFactory().buildSession(authenticationRequest);
 		Request<SessionProxy> authenticateSession = authenticationRequest.authenticateSession(sessionProxy);
-		authenticateSession.with("customer", "customer.device");
+		authenticateSession.with("customer", "customer.device", "customer.personalDetails.birthday");
 		authenticateSession.fire(new GeneWayReceiver<SessionProxy>() {
 			@Override
 			public void onSuccess(SessionProxy session){
@@ -129,12 +131,17 @@ public class WaitingActivity extends MGWTAbstractActivity {
 	public void success(SessionProxy session) {
 
 		ClientFactoryFactory.getClientFactory().loggedin(session);
+		if(session.getCustomer().getPersonalDetails() == null){
+			  ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new PersonalDetailsPlace());
+			  return;
+		}
 		
 		getIngredients();
 		getMenuSummary();
 		getNextSnack();
 		getSnackTimes();
 		getSnackOrderSpecification();
+//		getCommunityUpdates();
 		
 		Timer timer = new Timer(){
 			  @Override
@@ -146,6 +153,18 @@ public class WaitingActivity extends MGWTAbstractActivity {
 		timer.schedule(1500);
 	}
 	
+	private void getCommunityUpdates() {
+		ClientFactoryFactory.getClientFactory().getClientData().requestCommunityUpdates(new CommunityUpdatesListener() {
+			@Override
+			public void communityUpdates(
+					List<CommunityUpdateProxy> communityUpdates) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
+	}
 	private void getSnackTimes(){
 		ClientFactoryFactory.getClientFactory().getClientData().requestPlanPreferences(new PlanPreferencesListener() {
 			@Override

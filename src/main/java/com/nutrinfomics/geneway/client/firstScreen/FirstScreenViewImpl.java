@@ -28,6 +28,8 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.impl.HyperlinkImpl;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
+import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
+import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.animation.AnimationHelper;
 import com.googlecode.mgwt.ui.client.widget.animation.AnimationWidget;
@@ -42,6 +44,10 @@ import com.googlecode.mgwt.ui.client.widget.input.listbox.MListBox;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.panel.Panel;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FixedSpacer;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Justification;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Orientation;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.nutrinfomics.geneway.client.AbstractImageButton;
@@ -53,22 +59,29 @@ import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
 import com.nutrinfomics.geneway.client.register.RegisterPlace;
 import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.client.util.LanguageUtils;
+import com.nutrinfomics.geneway.client.util.TextBoxViewImpl;
 import com.nutrinfomics.geneway.shared.constants.GeneWayConstants;
 
-public class FirstScreenViewImpl extends DetailsViewImpl implements
+public class FirstScreenViewImpl extends TextBoxViewImpl implements
 		FirstScreenView {
 
 	private Button existingAccountButton;
 	private Button newAccountButton;
 	private Anchor registerAnchor;
+	private Button goButton;
+	private MPasswordTextBox password;
+	private Button registerAnchorButton;
 	
 	public FirstScreenViewImpl(){
 		GeneWayConstants constants = ClientFactoryFactory.getClientFactory().getConstants();
 
 		hideHeaderPanel();
 		
-		VerticalPanel panel = new VerticalPanel();
-		
+		FlexPanel panel = new FlexPanel();
+		panel.setOrientation(Orientation.VERTICAL);
+		panel.setJustification(Justification.SPACE_BETWEEN);
+		panel.setAlignment(Alignment.CENTER);
+		panel.getElement().getStyle().setProperty("height", "100%");
 //		WidgetList panel = new WidgetList();
 		
 		add(panel);
@@ -110,6 +123,8 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 
 	    registerAnchor = new Anchor(constants.startHere(), "#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new RegisterPlace()));
 	    registerAnchor.setStylePrimaryName("sp-circle-link");
+	    registerAnchorButton = new Button(constants.startHere());
+	    registerAnchorButton.setStylePrimaryName("sp-circle-link");
 	    
 //	    registerAnchor.get;
 	    panel.add(geneWayImage);
@@ -147,7 +162,10 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 		registerPanel.getElement().getStyle().setMarginTop(-80, Unit.PX);
 		registerPanel.setWidth("100%");
 //		registerAnchor.getElement().getStyle().setWidth(afterImage.getWidth(), Unit.PX);;
-		registerPanel.add(registerAnchor);
+//		registerPanel.add(registerAnchor);
+		registerPanel.add(registerAnchorButton);
+		
+		newAccountButton.getElement().getStyle().setMarginTop(80, Unit.PX);
 		
 //		Panel animatedPanel = new Panel();
 ////		animatedPanel.setStylePrimaryName("crossfade");
@@ -159,6 +177,21 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 //		animatedPanel.add(beforeImage);
 //		animatedPanel.getElement().getStyle().setMarginTop(50, Unit.PX);
 		
+//		password = new MPasswordTextBox();
+//		password.setPlaceHolder("Speak friend and enter");
+////		password.setWidth("75%");
+//		password.getElement().getStyle().setBackgroundColor(Styles.WHITE);
+//		
+//		password.setFocus(true);
+		
+		panel.add(new FixedSpacer());
+		
+//		panel.add(password);
+//		goButton = new Button(constants.start());
+//		toggleButtonAppearance(goButton);
+		
+		panel.add(new FixedSpacer());
+//		panel.add(goButton);
 		panel.add(animatedText);
 	    panel.add(new FlexSpacer());
 	    panel.add(new FixedSpacer());
@@ -216,6 +249,7 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	@Override
 	public HasTapHandlers getNewAccountButton() {
 		return newAccountButton;
+//		return goButton;
 	}
 
 	@Override
@@ -226,6 +260,16 @@ public class FirstScreenViewImpl extends DetailsViewImpl implements
 	@Override
 	public HasClickHandlers getNewAccountAnchor(){
 		return registerAnchor;
+	}
+
+	@Override
+	public String getPassword() {
+		return password.getValue();
+	}
+
+	@Override
+	public HasTapHandlers getAccountAnchorButton() {
+		return registerAnchorButton;
 	}
 
 }

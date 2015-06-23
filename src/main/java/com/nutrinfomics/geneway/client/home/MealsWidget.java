@@ -3,9 +3,13 @@ package com.nutrinfomics.geneway.client.home;
 import java.util.Date;
 
 import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
+import com.google.gwt.user.client.Random;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.datepicker.client.CalendarUtil;
 import com.google.web.bindery.requestfactory.shared.Request;
 import com.google.web.bindery.requestfactory.shared.ServerFailure;
@@ -17,10 +21,15 @@ import com.googlecode.mgwt.ui.client.widget.button.ImageButton.TextPosition;
 import com.googlecode.mgwt.ui.client.widget.button.ImageButtonAppearance.ImageButtonCss;
 import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.googlecode.mgwt.ui.client.widget.panel.Panel;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Alignment;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Justification;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPropertyHelper.Orientation;
 import com.nutrinfomics.geneway.client.ClientData;
 import com.nutrinfomics.geneway.client.GeneWayImageButtonAppearance;
 import com.nutrinfomics.geneway.client.ClientData.NextSnackListener;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
+import com.nutrinfomics.geneway.client.ProgressChartPanel;
 import com.nutrinfomics.geneway.client.home.SnackWidget.State;
 import com.nutrinfomics.geneway.client.icon.LocalImageHolder;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsPlace;
@@ -84,10 +93,49 @@ public class MealsWidget extends AbstractTabBarWidget implements NextSnackListen
 		
 		snackPanel = new Panel();
 		snackPanel.setRound(true);
+		
 		actionPanel = new Panel();
 		actionPanel.setRound(true);
+		actionPanel.getElement().getStyle().setProperty("alignSelf", "flex-end");
+		actionPanel.getElement().getStyle().setProperty("WebkitAlignSelf", "flex-end");
+
+		FlexPanel updateSharingPanel = new FlexPanel();
+		updateSharingPanel.setOrientation(Orientation.HORIZONTAL);
+		updateSharingPanel.setJustification(Justification.CENTER);
+		updateSharingPanel.setAlignment(Alignment.CENTER);
+		String milestone = "Congratulations for losing " + (Random.nextInt(5) + 1) + "kg in one week!";
+		HTML congratulationHTML = new HTML(milestone);
+		congratulationHTML.getElement().getStyle().setColor(Styles.GREEN_DARK);
+		congratulationHTML.getElement().getStyle().setPaddingTop(5, Unit.PT);
+//		congratulationHTML.getElement().getStyle().setProperty("alignSelf", "center");
+//		congratulationHTML.getElement().getStyle().setProperty("WebkitAlignSelf", "center");
+		updateSharingPanel.add(congratulationHTML);
+
+		
+//	  	HTML faceSharing = new HTML("<div id=\"fb-root\"></div>"
+//	  			+ "<script>(function(d, s, id) {"
+//	  			+ "var js, fjs = d.getElementsByTagName(s)[0];"
+//	  			+ "if (d.getElementById(id)) return;"
+//	  			+ "js = d.createElement(s); js.id = id;"
+//	  			+ "js.src = \"//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=598977940112238\";"
+//	  			+ "fjs.parentNode.insertBefore(js, fjs);"
+//	  			+ "}(document, 'script', 'facebook-jssdk'));</script>");
+//
+//		RootPanel.getBodyElement().insertFirst(faceSharing.getElement());
+//		HTML facebookShare = new HTML("<div class=\"fb-share-button\" data-href=\"https://developers.facebook.com/docs/plugins/\" data-layout=\"button\"></div>");
+
+		HTML facebookShare = new HTML("<a href=\"http://www.facebook.com/sharer.php?u=http://www.gene-way.com\" target=\"_blank\"><img class=\"shareImg\" width=\"30\" style=\"padding:5px;\" src=\"http://www.simplesharebuttons.com/images/somacro/facebook.png\" alt=\"Facebook\" /></a>"
+				+ "<a href=\"http://twitter.com/share?url=http://www.gene-way.com&text=" + milestone + "&hashtags=gene-way\" target=\"_blank\"><img class=\"shareImg\" width=\"30\" style=\"padding:5px;\" src=\"http://www.simplesharebuttons.com/images/somacro/twitter.png\" alt=\"Twitter\" /></a> "
+				+ "<a href=\"https://plus.google.com/share?url=http://www.gene-way.com\" target=\"_blank\"><img class=\"shareImg\" width=\"30\" style=\"padding:5px;\" src=\"http://www.simplesharebuttons.com/images/somacro/google.png\" alt=\"Google\" /></a>");
+ 
+//<!-- Google+ -->
+// ");
+		updateSharingPanel.add(facebookShare);
+		
+		add(updateSharingPanel);
 		
 		add(snackPanel);
+//		add(ProgressChartPanel.getInstance());
 		add(actionPanel);
 		
 		ClientData clientData = ClientFactoryFactory.getClientFactory().getClientData();

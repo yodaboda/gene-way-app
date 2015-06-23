@@ -7,8 +7,7 @@ import com.nutrinfomics.geneway.server.domain.customer.Credentials;
 
 @ProxyFor(value = Credentials.class, locator = EntityBaseLocator.class)
 public interface CredentialsProxy extends EntityBaseProxy {
-	public String getUsername();
-	public void setUsername(String username);
+
 
 	public String getPassword();
 	public void setPassword(String password);

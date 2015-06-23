@@ -27,6 +27,9 @@ import com.nutrinfomics.geneway.shared.FoodItemType;
 			AcceptAllSpecificationProxy.class})
 public interface PlanRequest extends RequestContext{
 	
+	Request<Void> setDemo(SessionProxy session);
+
+	
 	Request<SnackProxy> getNextSnack(SessionProxy session, String dateString);
 
 	Request<Set<FoodItemType>> getIngredients(SessionProxy sessionProxy, String dateString);

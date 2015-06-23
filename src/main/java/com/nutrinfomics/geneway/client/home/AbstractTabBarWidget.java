@@ -14,6 +14,7 @@ abstract public class AbstractTabBarWidget extends FlexPanel{
 	public AbstractTabBarWidget(){
 		this.setOrientation(Orientation.VERTICAL);
 		this.setJustification(Justification.SPACE_BETWEEN);
+		getElement().getStyle().setProperty("height", "100%");
 	}
 
 }

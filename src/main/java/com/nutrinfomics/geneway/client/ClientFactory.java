@@ -13,6 +13,9 @@ import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsView;
 import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
 import com.nutrinfomics.geneway.client.login.LoginView;
+import com.nutrinfomics.geneway.client.payment.PaymentView;
+import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsView;
+import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierView;
 import com.nutrinfomics.geneway.client.privacyPolicy.PrivacyPolicyView;
 import com.nutrinfomics.geneway.client.register.RegisterView;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayRequestFactory;
@@ -21,6 +24,7 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
+import com.nutrinfomics.geneway.client.status.StatusView;
 import com.nutrinfomics.geneway.client.termsOfService.TermsOfServiceView;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
 import com.nutrinfomics.geneway.server.domain.plan.Plan;
@@ -111,4 +115,21 @@ public interface ClientFactory {
 	public TermsOfServiceView getTermsOfServiceView();
 
 	public PrivacyPolicyView getPrivacyPolicyView();
+
+	public CustomerProxy buildCustomer(RequestContext requestContext);
+
+	public void setExistingCustomer(boolean existingCustomer);
+
+	public PersonalDetailsView getPersonalDetailsView();
+
+	public StatusView getStatusView();
+
+	public PaymentView getPaymentView();
+
+	public PersonalIdentifierView getPersonalIdentifierView();
+
+	public void setIdentified(boolean bool);
+	
+	public boolean isIdentified();
+
 }

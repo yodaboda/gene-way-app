@@ -1,9 +1,12 @@
 package com.nutrinfomics.geneway.client.register;
 
 
+import com.google.gwt.dom.client.Style.FontStyle;
+import com.google.gwt.dom.client.Style.FontWeight;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.googlecode.mgwt.dom.client.event.tap.HasTapHandlers;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
@@ -24,6 +27,7 @@ import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.GeneWayWidgetList;
 import com.nutrinfomics.geneway.client.privacyPolicy.PrivacyPolicyPlace;
+import com.nutrinfomics.geneway.client.style.Styles;
 import com.nutrinfomics.geneway.client.termsOfService.TermsOfServicePlace;
 import com.nutrinfomics.geneway.client.util.TextBoxViewImpl;
 import com.nutrinfomics.geneway.client.util.fieldsWidgetListView.FieldsWidgetListAppearance;
@@ -42,15 +46,20 @@ public class RegisterViewImpl extends FieldsWidgetListViewImpl implements Regist
 
 	
 	private Button registerButton;
-	private MRadioButton acceptTermsOfServicButton;
+	private ValidationTextBox<String> nickNameValidationField;
 	private ValidationTextBox phoneNumberValidationField;
 	private ValidationTextBox usernameValidationField;
 	private ValidationTextBox passwordValidationField;
 	private ValidationTextBox repeatPasswordValidationField;
+	private Button termsButton;
+	private Button privacyButton;
+	private CheckBox acceptTermsOfServiceCheckBox;
 	public RegisterViewImpl(){
 //		ScrollPanel scrollPanel = new ScrollPanel();
 		
-		
+		nickNameValidationField = new ValidationTextBox<String>(new MTextBox(), constants.nickname(), 
+				"nickname");
+		addValidationField(nickNameValidationField);
 	
 		phoneNumberValidationField = new ValidationTextBox(new MPhoneNumberTextBox(), constants.phonenumber(), 
 															"phonenumber");
@@ -82,7 +91,7 @@ public class RegisterViewImpl extends FieldsWidgetListViewImpl implements Regist
 		
 		usernameValidationField = new ValidationTextBox(new MTextBox(), constants.username(), 
 														"username");
-		addValidationField(usernameValidationField);
+//		addValidationField(usernameValidationField);
 		
 		emailField = new MEmailTextBox();
 		toggleBoxAppearance(emailField, constants.email());
@@ -99,29 +108,42 @@ public class RegisterViewImpl extends FieldsWidgetListViewImpl implements Regist
 		
 		add(widgetList);
 
-		Anchor termsAnchor = new Anchor(constants.termsOfService(), "#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new TermsOfServicePlace()));
-
-		Anchor privacyAnchor = new Anchor(constants.privacyPolicy(), "#" + ClientFactoryFactory.getClientFactory().getPlaceHistoryMapper().getToken(new PrivacyPolicyPlace()));
-		
+		termsButton = new Button(constants.termsOfService());
+		toggleButtonAppearance(termsButton);
+		termsButton.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
+		termsButton.getElement().getStyle().setColor(Styles.HYPER_LINK_BLUE);
+		privacyButton = new Button(constants.privacyPolicy());
+		toggleButtonAppearance(privacyButton);
+		privacyButton.getElement().getStyle().setFontWeight(FontWeight.NORMAL);
+		privacyButton.getElement().getStyle().setColor(Styles.HYPER_LINK_BLUE);
+//		privacyButton.setSmall(true);
 		FlexPanel termsPanel = new FlexPanel();
-		termsPanel.setOrientation(Orientation.HORIZONTAL);
-		termsPanel.getElement().getStyle().setPaddingTop(20, Unit.PX);
-		termsPanel.add(new HTML("I accept "));
-		termsPanel.add(termsAnchor);
-		termsPanel.add(new HTML(constants.and()));
-		termsPanel.add(privacyAnchor);
+		termsPanel.setOrientation(Orientation.VERTICAL);
+		termsPanel.getElement().getStyle().setMarginTop(10, Unit.PX);
+		termsPanel.getElement().getStyle().setProperty("WebkitAlignItems", "center");
+		termsPanel.getElement().getStyle().setProperty("alignItems", "center");
+
+		FlexPanel firstRowPanel = new FlexPanel();
+		firstRowPanel.setOrientation(Orientation.HORIZONTAL);
+		firstRowPanel.getElement().getStyle().setProperty("WebkitAlignItems", "center");
+		firstRowPanel.getElement().getStyle().setProperty("alignItems", "center");
+
+		acceptTermsOfServiceCheckBox = new CheckBox();
+		acceptTermsOfServiceCheckBox.getElement().getStyle().setMarginRight(4, Unit.PX);
+		firstRowPanel.add(acceptTermsOfServiceCheckBox);
+		firstRowPanel.add(new HTML(" " + constants.acceptTerms() + " "));
 		
-		acceptTermsOfServicButton = new MRadioButton("terms");
-		acceptTermsOfServicButton.addTapHandler(new TapHandler() {
-			private boolean previousState = false;
-			@Override
-			public void onTap(TapEvent event) {
-				if(previousState) acceptTermsOfServicButton.setValue(false);
-				previousState = acceptTermsOfServicButton.getValue();
-			}
-		});
-//		acceptTermsOfServicButton.setText(constants.ßacceptTerms());
-		termsPanel.add(acceptTermsOfServicButton);
+		FlexPanel secondRowPanel = new FlexPanel();
+		secondRowPanel.setOrientation(Orientation.HORIZONTAL);
+		secondRowPanel.getElement().getStyle().setProperty("WebkitAlignItems", "center");
+		secondRowPanel.getElement().getStyle().setProperty("alignItems", "center");
+
+		secondRowPanel.add(termsButton);
+		secondRowPanel.add(new HTML(constants.and() + " "));
+		secondRowPanel.add(privacyButton);
+
+		termsPanel.add(firstRowPanel);
+		termsPanel.add(secondRowPanel);
 		
 		add(new FlexSpacer());
 		add(new FixedSpacer());
@@ -143,7 +165,9 @@ public class RegisterViewImpl extends FieldsWidgetListViewImpl implements Regist
 		
 //		privateNameField.setFocus(true);
 //		usernameField.setFocus(true);
-		phoneNumberValidationField.getTextBox().setFocus(true);
+		nickNameValidationField.getValueBox().setFocus(true);
+
+//		phoneNumberValidationField.getValueBox().setFocus(true);
 //		add(scrollPanel);
 	}
 
@@ -153,13 +177,18 @@ public class RegisterViewImpl extends FieldsWidgetListViewImpl implements Regist
 	}
 
 	@Override
+	public String getNickName(){
+		return nickNameValidationField.getValueBox().getValue();
+	}
+	
+	@Override
 	public String getEmail() {
 		return emailField.getText();
 	}
 
 	@Override
 	public String getUsername() {
-		return usernameValidationField.getTextBox().getText();
+		return usernameValidationField.getValueBox().getText();
 	}
 
 	@Override
@@ -174,21 +203,32 @@ public class RegisterViewImpl extends FieldsWidgetListViewImpl implements Regist
 
 	@Override
 	public String getPassword() {
-		return passwordValidationField.getTextBox().getText();
+		return passwordValidationField.getValueBox().getText();
 	}
 
 	@Override
 	public String getPhoneNumber() {
-		return phoneNumberValidationField.getTextBox().getValue();
+		return phoneNumberValidationField.getValueBox().getText();
 	}
 
 	@Override
 	public String getRepeatPassword() {
-		return repeatPasswordValidationField.getTextBox().getText();
+		return repeatPasswordValidationField.getValueBox().getText();
 	}
 
 	@Override
 	public boolean isTermsBoxChecked() {
-		return acceptTermsOfServicButton.getValue();
+		return acceptTermsOfServiceCheckBox.getValue();
 	}
+
+	@Override
+	public HasTapHandlers getPrivacyButton() {
+		return privacyButton;
+	}
+
+	@Override
+	public HasTapHandlers getTermsButton() {
+		return termsButton;
+	}
+
 }

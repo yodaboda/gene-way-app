@@ -1,6 +1,5 @@
 package com.nutrinfomics.geneway.client;
 
-import com.google.gwt.dom.client.Style.VerticalAlign;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetListAppearance;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetListDefaultAppearance;

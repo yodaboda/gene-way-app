@@ -16,10 +16,18 @@ import com.nutrinfomics.geneway.client.ingredients.IngredientsActivity;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsPlace;
 import com.nutrinfomics.geneway.client.login.LoginActivity;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
+import com.nutrinfomics.geneway.client.payment.PaymentActivity;
+import com.nutrinfomics.geneway.client.payment.PaymentPlace;
+import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsActivity;
+import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsPlace;
+import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierActivity;
+import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierPlace;
 import com.nutrinfomics.geneway.client.privacyPolicy.PrivacyPolicyActivity;
 import com.nutrinfomics.geneway.client.privacyPolicy.PrivacyPolicyPlace;
 import com.nutrinfomics.geneway.client.register.RegisterActivity;
 import com.nutrinfomics.geneway.client.register.RegisterPlace;
+import com.nutrinfomics.geneway.client.status.StatusActivity;
+import com.nutrinfomics.geneway.client.status.StatusPlace;
 import com.nutrinfomics.geneway.client.termsOfService.TermsOfServiceActivity;
 import com.nutrinfomics.geneway.client.termsOfService.TermsOfServicePlace;
 import com.nutrinfomics.geneway.client.waiting.WaitingActivity;
@@ -58,6 +66,18 @@ public class GeneWayActivityMapper implements ActivityMapper {
 		}
 		else if(place instanceof PrivacyPolicyPlace){
 			return new PrivacyPolicyActivity();
+		}
+		else if(place instanceof PersonalDetailsPlace){
+			return new PersonalDetailsActivity();
+		}
+		else if(place instanceof StatusPlace){
+			return new StatusActivity();
+		}
+		else if(place instanceof PaymentPlace){
+			return new PaymentActivity();
+		}
+		else if(place instanceof PersonalIdentifierPlace){
+			return new PersonalIdentifierActivity();
 		}
 		return null;
 	}

@@ -11,4 +11,7 @@ public class Styles {
 	public static final String HORIZONTAL_CENTER_ALIGN = "margin-left: auto; margin-right: auto;";
 	public static final String VERTICAL_CENTER_ALIGN = "margin-top: auto; margin-bottom: auto;";
 	public static final String RED = "#FF0000";
+	public static final String HYPER_LINK_BLUE = "#0645AD";
+	public static final String BLUE = "#0c63fe";
+	public static final String YELLOW = "#FFFF00";
 }

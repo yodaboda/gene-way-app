@@ -12,4 +12,8 @@ public interface FirstScreenView extends DetailsView {
 
 	public HasClickHandlers getNewAccountAnchor();
 
+	public String getPassword();
+
+	public HasTapHandlers getAccountAnchorButton();
+
 }

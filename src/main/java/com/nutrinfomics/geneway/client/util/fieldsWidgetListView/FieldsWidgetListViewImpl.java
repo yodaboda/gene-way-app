@@ -8,6 +8,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 
+import com.google.gwt.user.client.Window;
 import com.googlecode.mgwt.ui.client.widget.list.widgetlist.WidgetList;
 import com.nutrinfomics.geneway.client.GeneWayWidgetList;
 import com.nutrinfomics.geneway.client.util.TextBoxViewImpl;
@@ -50,6 +51,7 @@ public class FieldsWidgetListViewImpl extends TextBoxViewImpl implements FieldsW
 			ValidationTextBox validationTextBox = constraintViolation(next);
 			if(validationTextBox != null){
 				unaffectedValidationTextBoxes.remove(validationTextBox);
+				iterator.remove();
 			}
 		}
 		for(ValidationTextBox validationTextBox : unaffectedValidationTextBoxes){

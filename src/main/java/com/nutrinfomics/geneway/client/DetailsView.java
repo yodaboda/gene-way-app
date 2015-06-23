@@ -4,12 +4,16 @@ import com.google.gwt.user.client.ui.IsWidget;
 
 public interface DetailsView extends IsWidget{
 
-	public abstract void showAboutButton();
+	public void showAboutButton();
 
-	public abstract void hideAboutButton();
+	public void hideAboutButton();
 
-	public abstract void showBackButton();
+	public void showBackButton();
 
-	public abstract void hideBackButton();
+	public void hideBackButton();
+	
+	public void displayLoader();
+	
+	public void hideLoader();
 
 }

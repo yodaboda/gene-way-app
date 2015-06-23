@@ -12,6 +12,7 @@ import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs.AlertCallback;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
+import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CustomerProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.shared.AuthenticationException;
@@ -42,14 +43,14 @@ public class CodeActivity extends MGWTAbstractActivity {
 			@Override
 			public void onTap(TapEvent event) {
 				AuthenticationRequest authenticationRequest = ClientFactoryFactory.getClientFactory().getRequestFactory().authenticationRequest();
-				SessionProxy session = ClientFactoryFactory.getClientFactory().buildSession(authenticationRequest);
-				session.getCustomer().getDevice().setCode(codeView.getEnteredCode());
-				Request<SessionProxy> authenticateCode = authenticationRequest.authenticateCode(session);
-				authenticateCode.with("customer", "customer.device");
-				authenticateCode.fire(new GeneWayReceiver<SessionProxy>() {
+				CustomerProxy customerProxy = ClientFactoryFactory.getClientFactory().buildCustomer(authenticationRequest);
+				customerProxy.getDevice().setCode(codeView.getEnteredCode());
+				Request<Boolean> authenticateCode = authenticationRequest.authenticateCode(customerProxy);
+				authenticateCode.fire(new GeneWayReceiver<Boolean>() {
 					@Override
-					public void onSuccess(SessionProxy sessionProxy) {
-						if(sessionProxy != null){
+					public void onSuccess(Boolean success) {
+						if(success){
+							ClientFactoryFactory.getClientFactory().setExistingCustomer(true);
 							Dialogs.alert(constants.verified(), constants.phoneVerified(), new AlertCallback() {
 								@Override
 								public void onButtonPressed() {
@@ -65,6 +66,7 @@ public class CodeActivity extends MGWTAbstractActivity {
 					@Override
 					public void onFailure(ServerFailure error) {
 						String errorMessage = error.getMessage();
+//						Dialogs.alert("error", errorMessage, null);
 						if(error.getExceptionType().equals(AuthenticationException.class.toString()) &&
 								errorMessage.equals(AuthenticationExceptionType.EXPIRED.toString()) ){
 							Dialogs.alert(constants.codeExpiredTitle(), constants.codeExpiredText(), null);

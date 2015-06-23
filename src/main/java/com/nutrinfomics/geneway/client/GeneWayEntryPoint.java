@@ -11,6 +11,7 @@ import com.googlecode.mgwt.ui.client.util.SuperDevModeUtil;
 import com.googlecode.mgwt.ui.client.widget.animation.AnimationWidget;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
+import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierPlace;
 import com.nutrinfomics.geneway.client.waiting.WaitingPlace;
 
 public class GeneWayEntryPoint implements EntryPoint {
@@ -41,7 +42,8 @@ public class GeneWayEntryPoint implements EntryPoint {
 	    GeneWayHistoryObserver historyObserver = new GeneWayHistoryObserver();
 	    MGWTPlaceHistoryHandler historyHandler = new MGWTPlaceHistoryHandler(historyMapper, historyObserver);
 	    Place place;
-	    if(ClientFactoryFactory.getClientFactory().isLoggedIn()) place = new WaitingPlace();
+	    if(! ClientFactoryFactory.getClientFactory().isIdentified()) place = new PersonalIdentifierPlace();
+	    else if(ClientFactoryFactory.getClientFactory().isLoggedIn()) place = new WaitingPlace();
 	    else place = new FirstScreenPlace();
 	    historyHandler.register(ClientFactoryFactory.getClientFactory().getPlaceController(), ClientFactoryFactory.getClientFactory().getEventBus(), place);
 	    historyHandler.handleCurrentHistory();

@@ -9,8 +9,6 @@ import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
 import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
-import com.google.web.bindery.requestfactory.gwt.client.DefaultRequestTransport;
-import com.google.web.bindery.requestfactory.shared.EntityProxyId;
 import com.google.web.bindery.requestfactory.shared.RequestContext;
 import com.google.web.bindery.requestfactory.shared.RequestFactory;
 import com.googlecode.gwtphonegap.client.PhoneGap;
@@ -24,6 +22,7 @@ import com.nutrinfomics.geneway.client.about.AboutView;
 import com.nutrinfomics.geneway.client.about.AboutViewImpl;
 import com.nutrinfomics.geneway.client.code.CodeView;
 import com.nutrinfomics.geneway.client.code.CodeViewImpl;
+import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenView;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenViewImpl;
 import com.nutrinfomics.geneway.client.home.HomeView;
@@ -31,8 +30,16 @@ import com.nutrinfomics.geneway.client.home.HomeViewImpl;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsView;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsViewImpl;
 import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
+import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.login.LoginViewImpl;
+import com.nutrinfomics.geneway.client.payment.PaymentActivity;
+import com.nutrinfomics.geneway.client.payment.PaymentView;
+import com.nutrinfomics.geneway.client.payment.PaymentViewImpl;
+import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsView;
+import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsViewImpl;
+import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierView;
+import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierViewImpl;
 import com.nutrinfomics.geneway.client.privacyPolicy.PrivacyPolicyView;
 import com.nutrinfomics.geneway.client.privacyPolicy.PrivacyPolicyViewImpl;
 import com.nutrinfomics.geneway.client.register.RegisterView;
@@ -45,6 +52,8 @@ import com.nutrinfomics.geneway.client.requestFactory.proxy.device.SessionProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.plan.PlanProxy;
 import com.nutrinfomics.geneway.client.requestFactory.request.AuthenticationRequest;
 import com.nutrinfomics.geneway.client.requestFactory.request.PlanRequest;
+import com.nutrinfomics.geneway.client.status.StatusView;
+import com.nutrinfomics.geneway.client.status.StatusViewImpl;
 import com.nutrinfomics.geneway.client.termsOfService.TermsOfServiceView;
 import com.nutrinfomics.geneway.client.termsOfService.TermsOfServiceViewImpl;
 import com.nutrinfomics.geneway.client.waiting.WaitingView;
@@ -82,6 +91,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private PlaceHistoryMapper placeHistoryMapper;
 	static private ClientData clientData = new ClientData();
 	static private SessionProxy session;
+	static private boolean existingCustomer;
+	static private PersonalDetailsView personalDetailsView;
+	static private StatusView statusView;
+	static private PaymentView paymentView;
+	static private PersonalIdentifierView personalIdentifierView;
 	
 	@Override
 	public EventBus getEventBus() {
@@ -191,18 +205,26 @@ public class ClientFactoryImpl implements ClientFactory {
 		return requestFactory;
 	}
 
-	@Override
-	public SessionProxy buildSession(RequestContext requestContext) {
-		SessionProxy sessionProxy = createNewSession(requestContext);
-		
+	@Override 
+	public CustomerProxy buildCustomer(RequestContext requestContext){
 		CustomerProxy customerProxy = requestContext.create(CustomerProxy.class);
 		DeviceProxy deviceProxy = requestContext.create(DeviceProxy.class);
 			
 		deviceProxy.setUuid(getUUID());
-		deviceProxy.setPhonenumber(getPhonenumber());
 
 		deviceProxy.setCustomer(customerProxy);
 		customerProxy.setDevice(deviceProxy);
+		
+		customerProxy.setNickName("niiiiiicckkkk");
+
+		return customerProxy;
+	}
+	
+	@Override
+	public SessionProxy buildSession(RequestContext requestContext) {
+		SessionProxy sessionProxy = createNewSession(requestContext);
+		
+		CustomerProxy customerProxy = buildCustomer(requestContext);
 			
 		sessionProxy.setCustomer(customerProxy);
 		customerProxy.setSession(sessionProxy);
@@ -358,6 +380,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public void logout() {
 		setSID(null);
+		ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new LoginPlace());
 	}
 
 	@Override
@@ -367,14 +390,21 @@ public class ClientFactoryImpl implements ClientFactory {
 
 	@Override
 	public boolean isExistingCustomer() {
-		return getPhonenumber() != null;
+		String exCustomer = Cookies.getCookie(AccessConstants.EXISTING_USER.toString());
+		if(exCustomer == null) return false;
+		return Boolean.parseBoolean(exCustomer);
+	}
+	
+	@Override
+	public void setExistingCustomer(boolean existingCustomer){
+		Date expires = new Date(System.currentTimeMillis() + Long.MAX_VALUE); //Indefinite duration
+		Cookies.setCookie(AccessConstants.EXISTING_USER.toString(), existingCustomer + "", expires, null, "/", false);
 	}
 
 	@Override
 	public void loggedin(SessionProxy sessionProxy) {
 		setSession(sessionProxy);
 		setSID(sessionProxy.getSid());
-		setPhonenumber(sessionProxy.getCustomer().getDevice().getPhonenumber());
 	}
 
 	@Override
@@ -391,5 +421,51 @@ public class ClientFactoryImpl implements ClientFactory {
 			privacyPolicyView = new PrivacyPolicyViewImpl();
 		}
 		return privacyPolicyView;
+	}
+	
+	@Override
+	public PersonalDetailsView getPersonalDetailsView(){
+		if(personalDetailsView == null){
+			personalDetailsView = new PersonalDetailsViewImpl();
+		}
+		return personalDetailsView;		
+	}
+
+	@Override
+	public StatusView getStatusView() {
+		if(statusView == null){
+			statusView = new StatusViewImpl();
+		}
+		return statusView;
+	}
+
+	@Override
+	public PaymentView getPaymentView() {
+		if(paymentView == null){
+			paymentView = new PaymentViewImpl();
+		}
+		return paymentView;
+	}
+
+	@Override
+	public PersonalIdentifierView getPersonalIdentifierView() {
+		if(personalIdentifierView == null){
+			personalIdentifierView = new PersonalIdentifierViewImpl();
+		}
+		return personalIdentifierView;
+	}
+
+	@Override
+	public void setIdentified(boolean bool) {
+		Date expires = new Date(System.currentTimeMillis() + Long.MAX_VALUE); //Indefinite duration
+		Cookies.setCookie(AccessConstants.IDENTIFIED.toString(), bool + "", expires, null, "/", false);
+		
+	}
+
+	@Override
+	public boolean isIdentified() {
+		String identified = Cookies.getCookie(AccessConstants.IDENTIFIED.toString());
+		if(identified == null) return false;
+		return Boolean.parseBoolean(identified);
 	}
 }

@@ -1,0 +1,48 @@
+@-webkit-keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-moz-keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@-o-keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.mgwt-ImageButton-image {
+    -webkit-animation: blink 2s;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation: blink 2s;
+    -moz-animation-iteration-count: infinite;
+    -o-animation: blink 2s;
+    -o-animation-iteration-count: infinite;
+}
+
+.mgwt-ImageButton{
+	border: 0px none transparent;
+	background-color: transparent;
+	border-radius:0px;
+	box-shadow: none;
+}

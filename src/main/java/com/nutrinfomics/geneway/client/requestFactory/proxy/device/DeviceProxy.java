@@ -16,10 +16,6 @@ public interface DeviceProxy extends EntityBaseProxy{
 	public CustomerProxy getCustomer();
 
 	public void setCustomer(CustomerProxy customer);
-
-	public void setPhonenumber(String phonenumber);
-
-	public String getPhonenumber();
 	
 	public String getCode();
 

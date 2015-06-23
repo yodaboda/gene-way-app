@@ -16,6 +16,7 @@ dependencies{
         compile 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
         compile 'com.google.web.bindery:requestfactory-apt:2.7.0'
         compile 'javax.validation:validation-api:1.0.0.GA'
+        compile 'com.googlecode.gwt-charts:gwt-charts:0.9.10'
         compile project(':shared') 
 		compile project(':domain')
 		

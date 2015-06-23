@@ -6,9 +6,10 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
+import com.nutrinfomics.geneway.client.util.GeneWayAbstractActivity;
 import com.nutrinfomics.geneway.client.waiting.WaitingPlace;
 
-public class LoginActivity extends MGWTAbstractActivity {
+public class LoginActivity extends GeneWayAbstractActivity {
 
 	private LoginView loginView;
 	
@@ -32,7 +33,6 @@ public class LoginActivity extends MGWTAbstractActivity {
 
 	protected void login() {
 		
-		ClientFactoryFactory.getClientFactory().setUsername(loginView.getUsername());
 		ClientFactoryFactory.getClientFactory().setPassword(loginView.getPassword());
 		
 		ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new WaitingPlace());				  
