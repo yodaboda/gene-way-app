@@ -33,6 +33,8 @@ import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
 import com.nutrinfomics.geneway.client.login.LoginView;
 import com.nutrinfomics.geneway.client.login.LoginViewImpl;
+import com.nutrinfomics.geneway.client.nda.NDAView;
+import com.nutrinfomics.geneway.client.nda.NDAViewImpl;
 import com.nutrinfomics.geneway.client.payment.PaymentActivity;
 import com.nutrinfomics.geneway.client.payment.PaymentView;
 import com.nutrinfomics.geneway.client.payment.PaymentViewImpl;
@@ -96,6 +98,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	static private StatusView statusView;
 	static private PaymentView paymentView;
 	static private PersonalIdentifierView personalIdentifierView;
+	static private NDAView ndaView;
 	
 	@Override
 	public EventBus getEventBus() {
@@ -467,5 +470,13 @@ public class ClientFactoryImpl implements ClientFactory {
 		String identified = Cookies.getCookie(AccessConstants.IDENTIFIED.toString());
 		if(identified == null) return false;
 		return Boolean.parseBoolean(identified);
+	}
+
+	@Override
+	public NDAView getNDAView() {
+		if(ndaView == null){
+			ndaView = new NDAViewImpl();
+		}
+		return ndaView;
 	}
 }

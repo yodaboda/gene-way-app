@@ -13,6 +13,7 @@ import com.nutrinfomics.geneway.client.home.HomeView;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsView;
 import com.nutrinfomics.geneway.client.localization.GeneWayMessages;
 import com.nutrinfomics.geneway.client.login.LoginView;
+import com.nutrinfomics.geneway.client.nda.NDAView;
 import com.nutrinfomics.geneway.client.payment.PaymentView;
 import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsView;
 import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierView;
@@ -131,5 +132,7 @@ public interface ClientFactory {
 	public void setIdentified(boolean bool);
 	
 	public boolean isIdentified();
+
+	public NDAView getNDAView();
 
 }

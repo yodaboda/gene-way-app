@@ -16,6 +16,8 @@ import com.nutrinfomics.geneway.client.ingredients.IngredientsActivity;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsPlace;
 import com.nutrinfomics.geneway.client.login.LoginActivity;
 import com.nutrinfomics.geneway.client.login.LoginPlace;
+import com.nutrinfomics.geneway.client.nda.NDAActivity;
+import com.nutrinfomics.geneway.client.nda.NDAPlace;
 import com.nutrinfomics.geneway.client.payment.PaymentActivity;
 import com.nutrinfomics.geneway.client.payment.PaymentPlace;
 import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsActivity;
@@ -78,6 +80,9 @@ public class GeneWayActivityMapper implements ActivityMapper {
 		}
 		else if(place instanceof PersonalIdentifierPlace){
 			return new PersonalIdentifierActivity();
+		}
+		else if(place instanceof NDAPlace){
+			return new NDAActivity();
 		}
 		return null;
 	}

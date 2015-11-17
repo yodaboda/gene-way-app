@@ -1,6 +1,7 @@
 package com.nutrinfomics.geneway.client.util.fieldsWidgetListView;
 
 import com.google.gwt.user.client.ui.HTML;
+import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.widget.base.MTextBoxBase;
 import com.googlecode.mgwt.ui.client.widget.base.MValueBoxBase;
 import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexPanel;
@@ -46,6 +47,14 @@ public class ValidationTextBox<T> extends FlexPanel{
 		textBox.setPlaceHolder(placeHolder);
 //		textBox.setWidth("30%");
 		textBox.getElement().getStyle().setBackgroundColor(Styles.WHITE);
+		textBox.getElement().getStyle().setColor(Styles.BLACK);
+		
+		//TODO: on android, the color of the text of the input field is white
+		// and hence it is not possible to see it. As a workaround, set the 
+		// background color to lightblue
+		if(MGWT.getOsDetection().isAndroid()){
+			textBox.getElement().getStyle().setBackgroundColor(Styles.LIGHTBLUE);
+		}
 	}
 
 	public void resetValidationText(){

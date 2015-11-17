@@ -29,12 +29,16 @@ public class PersonalDetailsViewImpl extends FieldsWidgetListViewImpl implements
 	private MListBox genderBox;
 	private ValidationTextBox<String> heightValidationField;
 	private ValidationTextBox<String> weightValidationField;
+	private MDateBox birthdayDateBox;
 	
 	public PersonalDetailsViewImpl(){
 
 
-		birthdayValidationField = new ValidationTextBox<Date>(new MDateBox(), constants.birthdate(), "birthdate");
-		addValidationField(birthdayValidationField);
+//		birthdayValidationField = new ValidationTextBox<Date>(new MDateBox(), constants.birthdate(), "birthdate");
+//		addValidationField(birthdayValidationField);
+
+		birthdayDateBox = new MDateBox();
+		widgetList.add(birthdayDateBox);
 		
 		genderBox = new MListBox();
 		genderBox.addItem(Gender.FEMALE.toString(), constants.female());
@@ -62,12 +66,13 @@ public class PersonalDetailsViewImpl extends FieldsWidgetListViewImpl implements
 	    
 	    add(new FlexSpacer());
 	    add(nextButton);
-	    add(new FlexSpacer());
-	    add(demoButton);
+//	    add(new FlexSpacer());
+//	    add(demoButton);
 	    
 		bodyCenterAlign();
-		    
-		birthdayValidationField.getValueBox().setFocus(true);
+		
+		birthdayDateBox.setFocus(true);
+//		birthdayValidationField.getValueBox().setFocus(true);
 	}
 	
 	@Override
@@ -82,7 +87,8 @@ public class PersonalDetailsViewImpl extends FieldsWidgetListViewImpl implements
 	
 	@Override
 	public Date getBirthdayDate(){
-		return birthdayValidationField.getValueBox().getValue();
+		return birthdayDateBox.getValue();
+//		return birthdayValidationField.getValueBox().getValue();
 	}
 	
 	@Override

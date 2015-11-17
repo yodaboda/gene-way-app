@@ -28,4 +28,5 @@ public interface AuthenticationRequest extends RequestContext {
 	Request<Boolean> authenticateCode(CustomerProxy customerProxy);
 	
 	Request<Boolean> unlock(IdentifierProxy identifierProxy);
+	Request<String> confirmValuationTermsOfService(String uuid);
 }

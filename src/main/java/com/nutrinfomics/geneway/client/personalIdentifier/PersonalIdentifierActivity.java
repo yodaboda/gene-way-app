@@ -14,6 +14,7 @@ import com.googlecode.mgwt.ui.client.widget.dialog.Dialogs;
 import com.nutrinfomics.geneway.client.ClientFactoryFactory;
 import com.nutrinfomics.geneway.client.code.CodePlace;
 import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace;
+import com.nutrinfomics.geneway.client.nda.NDAPlace;
 import com.nutrinfomics.geneway.client.requestFactory.GeneWayReceiver;
 import com.nutrinfomics.geneway.client.requestFactory.contact.ContactInformationProxy;
 import com.nutrinfomics.geneway.client.requestFactory.proxy.customer.CredentialsProxy;
@@ -70,8 +71,8 @@ public class PersonalIdentifierActivity extends GeneWayAbstractActivity {
 			public void onSuccess(Boolean bool) {
 				personalIdentifierView.hideLoader();
 				if(bool){
-					ClientFactoryFactory.getClientFactory().setIdentified(true);
-					ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new FirstScreenPlace());									
+//					ClientFactoryFactory.getClientFactory().setIdentified(true);
+					ClientFactoryFactory.getClientFactory().getPlaceController().goTo(new NDAPlace());									
 				}
 				else{
 					Dialogs.alert(constants.unlockingFailedTitle(), constants.unlockingFailedText(), null);

@@ -2,9 +2,15 @@ package com.nutrinfomics.geneway.client.payment;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.HTML;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
+import com.googlecode.mgwt.ui.client.widget.panel.flex.FlexSpacer;
 import com.nutrinfomics.geneway.client.DetailsViewImpl;
+import com.nutrinfomics.geneway.client.style.Styles;
+import com.nutrinfomics.geneway.client.util.fieldsWidgetListView.FieldsWidgetListViewImpl;
 
-public class PaymentViewImpl extends DetailsViewImpl implements PaymentView {
+public class PaymentViewImpl extends FieldsWidgetListViewImpl implements PaymentView {
+
+	private Button demoButton;
 
 	public PaymentViewImpl(){
 		HTML html = new HTML("<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">"
@@ -24,5 +30,18 @@ public class PaymentViewImpl extends DetailsViewImpl implements PaymentView {
 							+ "</form>"
 						);
 		add(html);
+		
+		demoButton = new Button(constants.demo());
+	    toggleButtonAppearance(demoButton);
+	    demoButton.setSmall(true);
+	    demoButton.getElement().getStyle().setColor(Styles.GREEN_DARK);
+	    
+	    add(new FlexSpacer());
+	    add(demoButton);
+	}
+
+	@Override
+	public Button getDemoButton() {
+		return demoButton;
 	}
 }

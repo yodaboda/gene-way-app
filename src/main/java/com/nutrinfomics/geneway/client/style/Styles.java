@@ -14,4 +14,5 @@ public class Styles {
 	public static final String HYPER_LINK_BLUE = "#0645AD";
 	public static final String BLUE = "#0c63fe";
 	public static final String YELLOW = "#FFFF00";
+	public static final String LIGHTBLUE = "#ADD8E6";
 }

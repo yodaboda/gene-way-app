@@ -8,6 +8,7 @@ import com.nutrinfomics.geneway.client.firstScreen.FirstScreenPlace.FirstScreenP
 import com.nutrinfomics.geneway.client.home.HomePlace.HomePlaceTokenizer;
 import com.nutrinfomics.geneway.client.ingredients.IngredientsPlace.IngredientsPlaceTokenizer;
 import com.nutrinfomics.geneway.client.login.LoginPlace.LoginPlaceTokenizer;
+import com.nutrinfomics.geneway.client.nda.NDAPlace.NDAPlaceTokenizer;
 import com.nutrinfomics.geneway.client.payment.PaymentPlace.PaymentPlaceTokenizer;
 import com.nutrinfomics.geneway.client.personalDetails.PersonalDetailsPlace.PersonalDetailsPlaceTokenizer;
 import com.nutrinfomics.geneway.client.personalIdentifier.PersonalIdentifierPlace.PersonalIdentifierPlaceTokenizer;
@@ -22,6 +23,7 @@ import com.nutrinfomics.geneway.client.waiting.WaitingPlace.WaitingPlaceTokenize
 				IngredientsPlaceTokenizer.class, CodePlaceTokenizer.class, 
 				TermsOfSevicePlaceTokenizer.class, PrivacyPolicyPlaceTokenizer.class,
 				PersonalDetailsPlaceTokenizer.class, StatusPlaceTokenizer.class, 
-				PaymentPlaceTokenizer.class, PersonalIdentifierPlaceTokenizer.class})
+				PaymentPlaceTokenizer.class, PersonalIdentifierPlaceTokenizer.class,
+				NDAPlaceTokenizer.class})
 public interface GeneWayPlaceHistoryMapper extends PlaceHistoryMapper{
 }
