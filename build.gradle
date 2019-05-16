@@ -11,48 +11,34 @@ buildscript {
 apply plugin: 'gwt'
 apply plugin: 'war'
 
+apply from: '../gene-way-shared/config.gradle'
+
 dependencies{
-        compile 'com.googlecode.mgwt:mgwt:2.0.1-SNAPSHOT'
-        compile 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
-        compile 'com.google.web.bindery:requestfactory-apt:2.7.0'
-        compile 'javax.validation:validation-api:1.0.0.GA'
-        compile 'com.googlecode.gwt-charts:gwt-charts:0.9.10'
-        compile project(':shared') 
-		compile project(':domain')
-		
-		compile name: 'langdetect'
-		compile name: 'jsonic-1.2.0'
+	implementation 'com.googlecode.mgwt:mgwt:2.0.1-SNAPSHOT'
+	implementation 'com.googlecode.gwtphonegap:gwtphonegap:3.5.0.0'
+	implementation 'com.google.web.bindery:requestfactory-apt:2.7.0'
+	implementation 'com.googlecode.gwt-charts:gwt-charts:0.9.10'
+	implementation 'com.google.gwt:gwt-servlet:2.7.0'
+	implementation 'javax.validation:validation-api:1.0.0.GA'
+	implementation 'com.cybozu.labs:langdetect:1.1-20120112'
+	
+	compile 	fileTree(dir: '../gene-way-shared/build/libs', include: ['*.jar'])
+	compile 	fileTree(dir: '../gene-way-domain/build/libs', include: ['*.jar'])
+	compile 	fileTree(dir: '../gene-way-server/build/libs', include: ['*.jar'])
+
+//	providedCompile "javax.servlet:servlet-api:2.5"
+//	providedCompile "javax.persistence:javax.persistence-api:2.2"
+//	providedCompile "javax.inject:javax.inject:1"
+//	providedCompile "javax.transaction:jta:1.1"
+	
+//	provided group: 'com.google.gwt:gwt-user:2.8.2'
+//	provided group: 'com.google.gwt:gwt-codeserver:2.8.2'
+//	provided group: 'com.google.gwt:gwt-dev:2.8.2'
 }
 
-//sourceSets {
-  //      main {
-    //            java {
-      //              srcDir 'src/main/java'
-//                }
-  //              resources{
-    //            	srcDir 'src/main/resources'
-      //          }
-//        }
-//}
-
-//war{ 
-  //      webAppDirName = file('webapp') 
-//}
-
-//task constantsJar(type: Jar) {
-//	from sourceSets.main.output.classesDir
-//	include 'src/com/nutrinfomics/geneway/client/constants/*.properties'
-//	baseName = 'constants'
-//	jar.includeEmptyDirs = false
-//}
-
-//configurations {
-//    constants
-//}
-
-//artifacts {
-//    constants constantsJar
-//}
+javadoc {
+    failOnError = false
+}
 
 gwt {
 	gwtVersion='2.7.0'
